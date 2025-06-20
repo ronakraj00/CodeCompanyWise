@@ -1298,6 +1298,12 @@
             /* fallback for browsers without color-mix */
             /* background: #e6f9ed !important; */
         }
+        .themed-hr {
+            border: none;
+            border-top: 2px solid var(--border-main);
+            margin: 32px 0 18px 0;
+            width: 100%;
+        }
     </style>
 </head>
 <body>
@@ -1350,7 +1356,7 @@
             <h2 style="margin-bottom: 20px;">Browse</h2>
             <button id="githubBrowseBtn" class="reset-btn" style="background: var(--bg-card); color: var(--text-muted); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px;">Click To Browse Company Questions</button>
             <div id="githubModal" style="display:none;"></div>
-            <hr style="border: none; border-top: 1.5px solid #23232a; margin: 32px 0 18px 0;">
+            <hr class="themed-hr">
             <div id="savedFilesSection">
                 <h2>Your Saved Files</h2>
                 <div id="savedFilesList" style="display: flex; flex-wrap: wrap; gap: 10px;">
