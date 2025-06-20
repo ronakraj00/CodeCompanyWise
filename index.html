@@ -3,68 +3,310 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LeetCode Progress Tracker</title>
+    <title>Company wise LeetCode Progress Tracker</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --bg-main: #18181b;
+            --bg-card: #23232a;
+            --bg-accent: #23232b;
+            --text-main: #f4f4f5;
+            --text-muted: #a1a1aa;
+            --border-main: #3d3d3d;
+            --accent: #6366f1;
+            --accent2: #22c55e;
+            --accent3: #eab308;
+            --accent4: #ef4444;
+            --shadow: 0 2px 12px 0 #0000001a;
+            --transition: background 0.3s, color 0.3s, border 0.3s;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(0,0,0,0.45);
+            --hover-bg: #23232b;
         }
-
+        .theme-light {
+            --bg-main: #f7f7fa;
+            --bg-card: #fff;
+            --bg-accent: #fefeff;
+            --text-main: #23232a;
+            --text-muted: #6b7280;
+            --border-main: #d1d5db;
+            --accent: #6366f1;
+            --accent2: #22c55e;
+            --accent3: #eab308;
+            --accent4: #ef4444;
+            --shadow: 0 2px 12px 0 #6366f122;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(100,100,120,0.18);
+            --hover-bg: #f1f5fb;
+        }
+        .theme-solarized {
+            --bg-main: #fdf6e3;
+            --bg-card: #f5ecd7;
+            --bg-accent: #fff7e5;
+            --text-main: #657b83;
+            --text-muted: #93a1a1;
+            --border-main: #d1cfae;
+            --accent: #268bd2;
+            --accent2: #859900;
+            --accent3: #b58900;
+            --accent4: #dc322f;
+            --shadow: 0 2px 12px 0 #b5890033;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(200,180,100,0.13);
+            --hover-bg: #ece5c7;
+        }
+        .theme-forest {
+            --bg-main: #1b2b1b;
+            --bg-card: #223322;
+            --bg-accent: #2d4a2d;
+            --text-main: #e6ffe6;
+            --text-muted: #a3c9a3;
+            --border-main: #3a5c3a;
+            --accent: #4ade80;
+            --accent2: #22d3ee;
+            --accent3: #a3e635;
+            --accent4: #facc15;
+            --shadow: 0 2px 12px 0 #4ade8033;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(34,211,238,0.13);
+            --hover-bg: #294429;
+        }
+        .theme-ocean {
+            --bg-main: #0a192f;
+            --bg-card: #112240;
+            --bg-accent: #233554;
+            --text-main: #dbeafe;
+            --text-muted: #7dd3fc;
+            --border-main: #334155;
+            --accent: #38bdf8;
+            --accent2: #06b6d4;
+            --accent3: #818cf8;
+            --accent4: #f472b6;
+            --shadow: 0 2px 12px 0 #38bdf833;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(6,182,212,0.13);
+            --hover-bg: #1e293b;
+        }
+        .theme-cyberpunk {
+            --bg-main: #18122B;
+            --bg-card: #232046;
+            --bg-accent: #2d1e4a;
+            --text-main: #f8fafc;
+            --text-muted: #f472b6;
+            --border-main: #a21caf;
+            --accent: #f472b6;
+            --accent2: #facc15;
+            --accent3: #38bdf8;
+            --accent4: #a21caf;
+            --shadow: 0 2px 12px 0 #f472b633;
+            --pill-bg: color-mix(in srgb, var(--accent) 10%, var(--bg-accent) 90%);
+            --pill-text: var(--accent);
+            --progress-bar-bg: var(--bg-accent);
+            --progress-bar-border: var(--border-main);
+            --progress-bar-gradient: linear-gradient(90deg, var(--accent), var(--accent2));
+            --divider: var(--border-main);
+            --modal-overlay: rgba(250,204,21,0.13);
+            --hover-bg: #3b0764;
+        }
         body {
+            background: var(--bg-main);
+            color: var(--text-main);
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
-            color: #333;
+            transition: var(--transition);
         }
-
         .container {
             max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
         }
-
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            color: white;
+            margin-bottom: 36px;
+            position: relative;
         }
-
+        /* Refined Theme Toggle */
+        .theme-toggle {
+            position: absolute;
+            top: 18px;
+            right: 24px;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+        }
+        .theme-toggle-btn {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            background: var(--bg-accent);
+            color: var(--accent);
+            border: 1.5px solid var(--border-main);
+            box-shadow: var(--shadow);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.35em;
+            cursor: pointer;
+            transition: var(--transition), box-shadow 0.2s;
+            outline: none;
+            position: relative;
+        }
+        .theme-toggle-btn:focus-visible {
+            box-shadow: 0 0 0 3px var(--accent);
+        }
+        .theme-toggle-btn:hover, .theme-toggle-btn:focus {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+        }
+        .theme-toggle-btn svg {
+            width: 1.5em;
+            height: 1.5em;
+            display: block;
+        }
+        .theme-toggle-btn .theme-toggle-arrow {
+            margin-left: 0.2em;
+            font-size: 0.8em;
+            transition: transform 0.2s;
+        }
+        .theme-dropdown {
+            position: absolute;
+            top: 54px;
+            right: 0;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            border-radius: 14px;
+            box-shadow: var(--shadow);
+            z-index: 100;
+            min-width: 170px;
+            display: none;
+            flex-direction: column;
+            padding: 8px 0;
+            opacity: 0;
+            transform: translateY(-8px) scale(0.98);
+            pointer-events: none;
+            transition: opacity 0.18s, transform 0.18s;
+        }
+        .theme-dropdown.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+        .theme-dropdown-item {
+            width: calc(100% - 20px);
+            background: none;
+            border: none;
+            color: var(--text-main);
+            text-align: left;
+            padding: 12px 22px 12px 18px;
+            font-size: 1.08em;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: background 0.18s, color 0.18s;
+            margin: 10px;
+        }
+        .theme-dropdown-item svg {
+            width: 1.2em;
+            height: 1.2em;
+        }
+        .theme-dropdown-item.active, .theme-dropdown-item:hover, .theme-dropdown-item:focus {
+            background: var(--accent);
+            color: #fff;
+            outline: none;
+            border-color: var(--accent);
+        }
+        .theme-dropdown-item:focus-visible {
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        /* Smooth transitions for theme changes */
+        * {
+            transition: var(--transition);
+        }
         .header h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            font-size: 2.8rem;
+            margin-bottom: 8px;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+            position: relative;
+            display: inline-block;
         }
-
+        .header h1::after {
+            content: '';
+            display: block;
+            margin: 0 auto;
+            margin-top: 8px;
+            width: 60%;
+            height: 4px;
+            border-radius: 2px;
+            background: linear-gradient(90deg, var(--accent) 40%, var(--accent2) 100%);
+            opacity: 0.7;
+        }
+        .header p {
+            font-size: 1.18rem;
+            color: var(--text-muted);
+            margin-top: 10px;
+            font-weight: 500;
+            letter-spacing: 0.01em;
+        }
         .upload-section {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 30px;
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 28px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1px solid var(--border-main);
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
         }
-
         .file-input-wrapper {
             position: relative;
             display: inline-block;
             cursor: pointer;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-            padding: 15px 30px;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            background: var(--bg-accent);
+            color: var(--accent);
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 500;
+            border: 1px solid var(--border-main);
+            transition: background 0.2s, border 0.2s;
         }
-
         .file-input-wrapper:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            background: var(--hover-bg);
+            border-color: var(--accent);
         }
-
         .file-input-wrapper input[type=file] {
             position: absolute;
             top: 0;
@@ -74,400 +316,1151 @@
             opacity: 0;
             cursor: pointer;
         }
-
         .stats-section {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-
         .stat-card {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
             text-align: center;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1px solid var(--border-main);
+            transition: box-shadow 0.2s, border 0.2s;
         }
-
         .stat-card:hover {
-            transform: translateY(-5px);
+            box-shadow: 0 4px 16px 0 var(--shadow);
+            border-color: var(--accent);
+            background: var(--hover-bg);
         }
-
         .stat-number {
-            font-size: 2.5rem;
-            font-weight: bold;
-            margin-bottom: 10px;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
         }
-
         .stat-label {
-            font-size: 1.1rem;
-            color: #666;
+            font-size: 1rem;
+            color: #a1a1aa;
         }
-
-        .easy { color: #4ade80; }
-        .medium { color: #f59e0b; }
-        .hard { color: #ef4444; }
-        .completed { color: #10b981; }
-
+        .easy { color: var(--accent2); }
+        .medium { color: var(--accent3); }
+        .hard { color: var(--accent4); }
+        .completed { color: #6366f1; }
         .controls {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1px solid var(--border-main);
         }
-
-        .filter-row {
+        .filter-controls-group {
             display: flex;
-            gap: 15px;
-            align-items: center;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+            gap: 18px;
+            align-items: flex-end;
+            background: var(--bg-accent);
+            border-radius: 10px;
+            padding: 16px 18px 10px 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-main);
         }
-
+        .filter-search-group {
+            display: flex;
+            gap: 18px;
+            align-items: flex-end;
+            background: var(--bg-accent);
+            border-radius: 10px;
+            padding: 16px 18px 10px 18px;
+            margin-bottom: 12px;
+            border: 1px solid var(--border-main);
+        }
+        .filter-actions-group {
+            display: flex;
+            gap: 12px;
+            align-items: flex-end;
+            background: var(--bg-accent);
+            border-radius: 10px;
+            padding: 16px 18px 10px 18px;
+            margin-bottom: 0;
+            border: 1px solid var(--border-main);
+        }
         .filter-group {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         select, input[type="text"] {
             padding: 10px 15px;
-            border: 2px solid #e5e7eb;
-            border-radius: 8px;
+            border: 1px solid var(--border-main);
+            background: var(--bg-accent);
+            color: var(--text-main);
+            border-radius: 6px;
             font-size: 1rem;
-            transition: border-color 0.3s ease;
+            transition: border-color 0.2s, background 0.2s;
         }
-
         select:focus, input[type="text"]:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #6366f1;
+            background: #23232b;
         }
-
         .reset-btn {
-            background: #ef4444;
-            color: white;
-            border: none;
+            background: var(--bg-accent);
+            color: var(--accent);
+            border: 1px solid var(--border-main);
             padding: 10px 20px;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             font-size: 1rem;
-            transition: background 0.3s ease;
+            font-weight: 500;
+            transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px 0 #0000000d;
         }
-
-        .reset-btn:hover {
-            background: #dc2626;
+        .reset-btn:hover, .reset-btn:focus {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 4px 16px 0 var(--shadow);
         }
-
+        .reset-btn[style*='background: #059669'],
+        .reset-btn[style*='background: #7c3aed'] {
+            background: var(--bg-accent) !important;
+            color: var(--text-main) !important;
+            border: 1px solid var(--border-main) !important;
+        }
+        .reset-btn[style*='background: #059669']:hover,
+        .reset-btn[style*='background: #7c3aed']:hover {
+            background: var(--bg-main) !important;
+            color: var(--accent) !important;
+            border-color: var(--accent) !important;
+        }
         .progress-bar {
             width: 100%;
-            height: 20px;
-            background: #e5e7eb;
-            border-radius: 10px;
+            height: 18px;
+            background: var(--progress-bar-bg);
+            border-radius: 8px;
             overflow: hidden;
             margin-bottom: 10px;
+            border: 1px solid var(--progress-bar-border);
         }
-
         .progress-fill {
             height: 100%;
-            background: linear-gradient(90deg, #10b981, #34d399);
-            transition: width 0.3s ease;
+            background: var(--progress-bar-gradient);
+            transition: width 0.3s cubic-bezier(.4,2,.6,1);
         }
-
         .chart-container {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px;
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
             margin-bottom: 30px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1px solid var(--border-main);
         }
-
         .questions-table {
-            background: rgba(255, 255, 255, 0.95);
-            border-radius: 15px;
-            padding: 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            background: var(--bg-card);
+            border-radius: 10px;
+            padding: 24px;
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1px solid var(--border-main);
             overflow-x: auto;
+            min-width: 0;
+            width: 100%;
+            display: block;
         }
-
+        .questions-table table {
+            min-width: 800px;
+            width: 100%;
+            table-layout: auto;
+        }
+        .questions-table th, .questions-table td {
+            white-space: nowrap;
+        }
         table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border-radius: 8px;
+            overflow: hidden;
         }
-
         th, td {
-            padding: 15px;
+            padding: 14px;
             text-align: left;
-            border-bottom: 1px solid #e5e7eb;
+            border-bottom: 1px solid var(--border-main);
         }
-
         th {
-            background: #f8fafc;
+            background: var(--bg-card);
             font-weight: 600;
-            color: #374151;
+            color: var(--text-main);
             position: sticky;
             top: 0;
             z-index: 10;
         }
-
         tr:hover {
-            background: #f8fafc;
+            background: var(--hover-bg);
         }
-
         .question-title {
             font-weight: 600;
-            color: #1f2937;
-        }
-
-        .question-link {
-            color: #667eea;
+            color: var(--text-main);
             text-decoration: none;
-            font-size: 0.9rem;
         }
-
+        .question-title:hover {
+            text-decoration: underline;
+            color: var(--text-muted);
+        }
+        .question-id {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+        .question-link {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 0.95rem;
+        }
         .question-link:hover {
             text-decoration: underline;
+            color: var(--accent2);
         }
-
         .difficulty-badge {
             padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 0.8rem;
+            border-radius: 16px;
+            font-size: 0.85rem;
             font-weight: 600;
             text-transform: uppercase;
+            border: 1px solid var(--border-main);
         }
-
         .difficulty-easy {
-            background: #dcfce7;
-            color: #166534;
+            background: color-mix(in srgb, var(--accent2) 10%, transparent) !important;
+            color: var(--accent2) !important;
+            border-color: color-mix(in srgb, var(--accent2) 20%, transparent) !important;
         }
-
         .difficulty-medium {
-            background: #fef3c7;
-            color: #92400e;
+            background: color-mix(in srgb, var(--accent3) 10%, transparent) !important;
+            color: var(--accent3) !important;
+            border-color: color-mix(in srgb, var(--accent3) 20%, transparent) !important;
         }
-
         .difficulty-hard {
-            background: #fee2e2;
-            color: #991b1b;
+            background: color-mix(in srgb, var(--accent4) 10%, transparent) !important;
+            color: var(--accent4) !important;
+            border-color: color-mix(in srgb, var(--accent4) 20%, transparent) !important;
         }
-
-        .checkbox {
-            width: 20px;
-            height: 20px;
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 8px 0;
             cursor: pointer;
-            transform: scale(1.2);
+            width: 100%;
+            height: 100%;
         }
-
+        .checkbox {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid var(--accent);
+            border-radius: 6px;
+            background: var(--bg-accent);
+            cursor: pointer;
+            display: inline-block;
+            position: relative;
+            transition: border-color 0.2s, background 0.2s;
+            margin: 0;
+            vertical-align: middle;
+        }
+        .checkbox:checked {
+            background: var(--accent);
+            border-color: var(--accent);
+        }
+        .checkbox:focus {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+        .checkbox:checked::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            width: 7px;
+            height: 13px;
+            border: solid #fff;
+            border-width: 0 2px 2px 0;
+            border-radius: 1px;
+            transform: translate(-50%, -50%) rotate(45deg);
+            pointer-events: none;
+        }
+        td:first-child {
+            text-align: center;
+            vertical-align: middle;
+            padding-left: 0;
+            padding-right: 0;
+        }
         .acceptance-rate {
             font-weight: 600;
+            color: var(--accent2);
         }
-
         .frequency-bar {
             width: 100px;
-            height: 8px;
-            background: #e5e7eb;
-            border-radius: 4px;
+            height: 10px;
+            background: var(--bg-accent);
+            border-radius: 6px;
             overflow: hidden;
+            border: 1px solid var(--border-main);
+            margin: 0 auto;
         }
-
         .frequency-fill {
             height: 100%;
-            background: linear-gradient(90deg, #3b82f6, #1d4ed8);
+            background: var(--accent);
+            border-radius: 6px 0 0 6px;
+            transition: width 0.3s cubic-bezier(.4,2,.6,1);
         }
-
         .no-data {
             text-align: center;
             padding: 60px 20px;
-            color: #6b7280;
-            font-size: 1.2rem;
+            color: #a1a1aa;
+            font-size: 1.1rem;
         }
-
         .saved-file-btn {
-            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
-            color: white;
-            border: none;
-            padding: 10px 15px;
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border-main);
+            padding: 12px 18px 12px 18px;
             border-radius: 8px;
             cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 1px 2px 0 #0000000d;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            min-width: 180px;
+            position: relative;
+            width: fit-content;
+            max-width: 260px;
+            word-break: break-all;
         }
-
-        .saved-file-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+        .saved-file-btn:hover, .saved-file-btn:focus {
+            background: var(--hover-bg);
+            border-color: var(--accent);
+            color: var(--accent);
+            outline: none;
         }
-
         .saved-file-btn.active {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
         }
-
+        .file-actions {
+            position: absolute;
+            bottom: 8px;
+            right: 8px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .file-menu-btn {
+            background: none;
+            border: none;
+            color: #a1a1aa;
+            font-size: 1.3rem;
+            cursor: pointer;
+            padding: 2px 6px;
+            border-radius: 4px;
+            transition: background 0.2s, color 0.2s;
+        }
+        .file-menu-btn:hover, .file-menu-btn:focus {
+            background: var(--hover-bg);
+            color: var(--accent);
+            outline: none;
+            border-color: var(--accent);
+        }
+        .file-menu-popover {
+            display: none;
+            position: absolute;
+            top: 32px;
+            right: 0;
+            background: var(--bg-card);
+            border: 1px solid var(--border-main);
+            border-radius: 8px;
+            box-shadow: 0 4px 24px #00000022;
+            z-index: 100;
+            min-width: 120px;
+        }
+        .file-menu-popover.show {
+            display: block;
+        }
+        .file-menu-item {
+            width: 100%;
+            background: none;
+            border: none;
+            color: var(--accent4);
+            text-align: left;
+            padding: 10px 16px;
+            font-size: 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+        }
+        .file-menu-item:hover, .file-menu-item:focus {
+            background: var(--hover-bg);
+            color: #fff;
+            outline: none;
+            border-color: var(--accent4);
+        }
         .delete-file-btn {
-            background: #ef4444;
-            color: white;
+            background: var(--accent4);
+            color: #fff;
             border: none;
             padding: 5px 8px;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.8rem;
             margin-left: 5px;
-            transition: background 0.3s ease;
+            transition: background 0.2s;
         }
-
+        .delete-file-btn:hover, .delete-file-btn:focus {
+            background: var(--accent4);
+            outline: none;
+            border-color: var(--accent4);
+        }
         @media (max-width: 768px) {
             .container {
                 padding: 10px;
             }
-
-            .filter-row {
+            .filter-controls-group, .filter-search-group, .filter-actions-group {
                 flex-direction: column;
                 align-items: stretch;
             }
-
             .filter-group {
                 justify-content: space-between;
             }
-
             .header h1 {
                 font-size: 2rem;
             }
-
             table {
                 font-size: 0.9rem;
             }
-
             th, td {
                 padding: 10px;
             }
+        }
+        .collapsible-section {
+            margin-bottom: 28px;
+            border-radius: 12px;
+            overflow: hidden;
+            background: none;
+            box-shadow: 0 2px 12px 0 #0000000d;
+            border: 1.5px solid var(--border-main);
+            transition: box-shadow 0.2s;
+        }
+        .collapsible-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            background: linear-gradient(90deg, var(--bg-main) 80%, var(--bg-accent) 100%) !important;
+            color: var(--text-main) !important;
+            font-size: 1.18rem;
+            font-weight: 600;
+            padding: 20px 28px 18px 28px;
+            border: none;
+            border-radius: 12px 12px 0 0;
+            transition: background 0.2s, color 0.2s, box-shadow 0.2s;
+            user-select: none;
+            outline: none;
+            position: relative;
+        }
+        .collapsible-header:focus-visible {
+            box-shadow: 0 0 0 2px #6366f1;
+            z-index: 2;
+        }
+        .collapsible-header:hover {
+            background: var(--hover-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .collapsible-chevron {
+            display: flex;
+            align-items: center;
+            transition: transform 0.25s cubic-bezier(.4,2,.6,1);
+            width: 1.3em;
+            height: 1.3em;
+        }
+        .collapsible-section.collapsed .collapsible-chevron {
+            transform: rotate(-90deg);
+        }
+        .collapsible-divider {
+            width: 100%;
+            height: 1.5px;
+            background: var(--divider);
+            border-radius: 1px;
+            margin: 0 0 0 0;
+        }
+        .collapsible-content {
+            display: block;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 28px;
+            background: var(--bg-card);
+            border-radius: 0 0 12px 12px;
+            transition: max-height 0.35s cubic-bezier(.4,2,.6,1), padding 0.2s;
+        }
+        .collapsible-section:not(.collapsed) .collapsible-content {
+            padding: 22px 28px 28px 28px;
+            max-height: 5000px;
+            overflow: visible;
+            transition: max-height 0.5s cubic-bezier(.4,2,.6,1), padding 0.2s;
+        }
+        .collapsible-section.collapsed .collapsible-content {
+            padding: 0 28px;
+            max-height: 0;
+        }
+        #questionsSection.collapsible-section:not(.collapsed) .collapsible-content {
+            max-height: none;
+        }
+        .questions-table-scroll {
+            overflow-x: auto;
+            width: 100%;
+        }
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: var(--modal-overlay);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal {
+            background: var(--bg-card);
+            border-radius: 12px;
+            box-shadow: 0 8px 32px #00000044;
+            padding: 32px 28px 24px 28px;
+            min-width: 340px;
+            max-width: 95vw;
+            max-height: 80vh;
+            overflow-y: auto;
+            color: var(--text-main);
+            position: relative;
+        }
+        .modal h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 18px;
+        }
+        .modal-search {
+            width: calc(100% - 20px);
+            padding: 10px 14px;
+            border-radius: 6px;
+            border: 1px solid var(--border-main);
+            background: var(--bg-accent);
+            color: var(--text-main);
+            margin-bottom: 18px;
+            font-size: 1rem;
+        }
+        .modal-list {
+            max-height: 45vh;
+            overflow-y: auto;
+            margin-bottom: 10px;
+        }
+        .modal-list-item {
+            text-transform: capitalize;
+            padding: 10px 20px;
+            border-bottom: 1px solid var(--border-main);
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+            transition: background 0.2s;
+        }
+        .modal-list-item:last-child {
+            border-bottom: none;
+        }
+        .modal-list-item:hover, .modal-list-item:focus {
+            background: var(--hover-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .modal-list-item strong {
+            font-size: 1.05em;
+        }
+        .modal-close {
+            position: absolute;
+            top: 12px;
+            right: 18px;
+            background: none;
+            border: none;
+            color: #a1a1aa;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .modal-close:hover {
+            color: #ef4444;
+        }
+        .advanced-features {
+            width: 350px;
+            background: var(--bg-card) !important;
+            border: 1.5px solid var(--border-main) !important;
+            margin-top: 24px;
+            border-radius: 10px;
+            
+            box-shadow: 0 2px 8px 0 #0000000d;
+            overflow: hidden;
+        }
+        .advanced-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            background:var(--bg-main);
+            color: #a1a1aa;
+            font-size: 1.08rem;
+            font-weight: 600;
+            padding: 14px 22px;
+            border: none;
+            border-radius: 10px 10px 0 0;
+            user-select: none;
+            outline: none;
+        }
+        .advanced-header:hover {
+            background: var(--hover-bg);
+            color: var(--accent);
+            border-color: var(--accent);
+        }
+        .advanced-chevron {
+            transition: transform 0.2s;
+            font-size: 1.1em;
+        }
+        .advanced-features.collapsed .advanced-chevron {
+            transform: rotate(-90deg);
+        }
+        .advanced-content {
+            display: block;
+            max-height: 0;
+            overflow: hidden;
+            padding: 0 22px;
+            background: var(--bg-card);
+            border-radius: 0 0 10px 10px;
+            transition: max-height 0.3s, padding 0.2s;
+        }
+        .advanced-features:not(.collapsed) .advanced-content {
+            padding: 18px 22px 22px 22px;
+            max-height: 800px;
+        }
+        .advanced-features.collapsed .advanced-content {
+            padding: 0 22px;
+            max-height: 0;
+        }
+        #savedFilesList {
+            margin-top: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-bottom: 10px;
+        }
+        .saved-file-progress-pill {
+            display: inline-block;
+            /* border: 1px solid #6366f1; */
+            border-radius: 50px;
+            padding: 1px 8px;
+            font-size: 0.7em;
+            font-weight: 600;
+            color: var(--pill-text);
+            background: var(--pill-bg);
+            margin-top: 4px;
+        }
+        .refined-charts {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+        .chart-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px 0 #0000000d;
+            padding: 22px 18px 18px 18px;
+            margin-bottom: 8px;
+            flex: 1 1 320px;
+            min-width: 220px;
+            max-width: 420px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .chart-title {
+            font-size: 1.08em;
+            color: #a1a1aa;
+            font-weight: 600;
+            margin-bottom: 12px;
+            text-align: center;
+        }
+        @media (max-width: 1100px) {
+            .refined-charts {
+                flex-direction: column;
+                gap: 18px;
+            }
+            .chart-card {
+                max-width: 100%;
+                min-width: 0;
+            }
+        }
+        .collapsible-section.stats-card, .collapsible-section.controls-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            border-radius: 14px;
+            box-shadow: 0 2px 12px 0 #0000000d;
+            margin-bottom: 28px;
+        }
+        .stats-section {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            margin-bottom: 30px;
+            justify-content: space-between;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            border-radius: 12px;
+            padding: 24px 32px;
+            text-align: center;
+            box-shadow: 0 2px 8px 0 #0000000d;
+            transition: box-shadow 0.2s, border 0.2s, background 0.2s;
+            min-width: 120px;
+            flex: 1 1 120px;
+            margin: 0 0 0 0;
+        }
+        .stat-card:hover {
+            box-shadow: 0 4px 16px 0 #6366f133;
+            border-color: #6366f1;
+            background: var(--hover-bg);
+        }
+        .stat-number {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .stat-label {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        .controls {
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-main);
+            border-radius: 12px;
+            padding: 24px 32px;
+            margin-bottom: 0;
+            box-shadow: 0 2px 8px 0 #0000000d;
+            display: flex;
+            flex-direction: column;
+            gap: 18px;
+        }
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 18px;
+            align-items: center;
+            margin-bottom: 0;
+        }
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            min-width: 140px;
+        }
+        .filter-group label {
+            color: #a1a1aa;
+            font-size: 0.98em;
+            font-weight: 500;
+            margin-bottom: 2px;
+        }
+        .filter-group select, .filter-group input[type="text"] {
+            background: var(--bg-accent);
+            color: var(--text-main);
+            border: 1.5px solid var(--border-main);
+            border-radius: 8px;
+            padding: 10px 12px;
+            font-size: 1em;
+            transition: border 0.18s, box-shadow 0.18s;
+        }
+        .filter-group select:focus, .filter-group input[type="text"]:focus {
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 0 0 2px var(--accent);
+            background: var(--bg-accent);
+        }
+        .reset-btn {
+            background: var(--bg-accent);
+            color: var(--accent);
+            border: 1.5px solid var(--border-main);
+            border-radius: 8px;
+            padding: 10px 18px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.18s, border 0.18s, color 0.18s, box-shadow 0.18s;
+            margin-top: 8px;
+        }
+        .reset-btn:hover, .reset-btn:focus {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            outline: none;
+            box-shadow: 0 4px 16px 0 #6366f133;
+        }
+        @media (max-width: 900px) {
+            .stats-section {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 14px;
+            }
+            .controls {
+                padding: 18px 10px;
+            }
+            .filter-row {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            margin: 18px 0 0 0;
+            flex-wrap: wrap;
+            max-width: 100%;
+            overflow-x: auto;
+        }
+        .pagination-btn {
+            /* min-width: 36px; */
+            padding: 6px 10px;
+            font-size: 0.98em;
+            background: var(--bg-accent);
+            color: var(--accent);
+            border: 1.5px solid var(--border-main);
+            border-radius: 6px;
+            padding: 6px 14px;
+            font-size: 1em;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.18s, border 0.18s, color 0.18s;
+        }
+        @media (max-width: 600px) {
+            .pagination {
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start;
+                padding-bottom: 6px;
+            }
+            .pagination-btn {
+                width: fit-content;
+                /* min-width: 32px; */
+                padding: 6px 6px;
+                font-size: 0.95em;
+            }
+        }
+        .pagination-btn.active, .pagination-btn:focus {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            outline: none;
+        }
+        .pagination-btn[disabled] {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        @media (max-width: 600px) {
+            .theme-toggle {
+                position: static;
+                width: 100%;
+                display: flex;
+                justify-content: flex-end;
+                margin-bottom: 10px;
+                box-shadow: none;
+            }
+            .theme-toggle-btn {
+                width: 36px;
+                height: 36px;
+                font-size: 1.05em;
+            }
+            .header {
+                padding-top: 0;
+            }
+        }
+        .questions-table.collapsible-section {
+            max-width: 1200px;
+            margin: 0 auto 28px auto;
+            border-radius: 12px;
+            padding: 0;
+            box-shadow: 0 2px 8px 0 #0000000d;
+            border: 1.5px solid var(--border-main);
+        }
+        .questions-table-scroll {
+            padding: 0 0 18px 0;
+        }
+        .questions-table table {
+            margin-top: 0;
+        }
+        .collapsible-content {
+            padding: 0 32px 32px 32px;
+        }
+        @media (max-width: 900px) {
+            .questions-table.collapsible-section {
+                max-width: 100%;
+                padding: 0;
+            }
+            .collapsible-content {
+                padding: 0 8px 18px 8px;
+            }
+        }
+        .stat-card,
+        .controls,
+        .chart-container,
+        .collapsible-section {
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        #advancedFeatures .file-input-wrapper,
+        #advancedFeatures input[type="text"],
+        #advancedFeatures #saveFileBtn {
+            background: var(--bg-accent) !important;
+            color: var(--text-main) !important;
+            border: 1.5px solid var(--border-main) !important;
+            border-radius: 8px !important;
+            font-size: 1em !important;
+            transition: background 0.2s, border 0.2s, color 0.2s;
+        }
+        #advancedFeatures #saveFileBtn {
+            background: var(--accent2) !important;
+            color: #fff !important;
+            font-weight: 600 !important;
+            border: none !important;
+        }
+        #advancedFeatures #saveFileBtn:hover, #advancedFeatures #saveFileBtn:focus {
+            background: var(--accent) !important;
+            color: #fff !important;
+        }
+        #advancedFeatures input[type="text"]::placeholder {
+            color: var(--text-muted) !important;
+            opacity: 1;
+        }
+        .question-row-completed {
+            background: color-mix(in srgb, var(--accent2) 12%, var(--bg-card) 88%) !important;
+            /* fallback for browsers without color-mix */
+            /* background: #e6f9ed !important; */
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="header">
-            <h1>🚀 LeetCode Progress Tracker</h1>
-            <p>Track your coding journey and visualize your progress</p>
-        </div>
-
-        <div class="upload-section">
-            <h2 style="margin-bottom: 20px;">📁 Upload Your CSV File</h2>
-            
-            <div id="savedFilesSection" style="display: none; margin-bottom: 20px;">
-                <h3 style="margin-bottom: 15px; color: #374151;">📚 Previously Uploaded Files</h3>
-                <div id="savedFilesList" style="display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;"></div>
-            </div>
-
-            <div style="display: flex; align-items: center; gap: 20px; flex-wrap: wrap;">
-                <div class="file-input-wrapper">
-                    <input type="file" id="csvFile" accept=".csv" />
-                    <span>Choose New CSV File</span>
-                </div>
-                <div style="display: flex; align-items: center; gap: 10px;">
-                    <input type="text" id="fileNameInput" placeholder="Enter file name (optional)" 
-                           style="padding: 10px; border: 2px solid #e5e7eb; border-radius: 8px;">
-                    <button id="saveFileBtn" style="display: none; background: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer;">
-                        💾 Save File
+        <div class="header" style="position: relative;">
+            <div class="theme-toggle" id="themeToggle">
+                <button class="theme-toggle-btn" id="themeToggleBtn" aria-haspopup="true" aria-expanded="false" aria-label="Change theme" tabindex="0">
+                    <span id="themeIcon" aria-hidden="true">
+                        <svg id="icon-moon" style="display:block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+                        <svg id="icon-sun" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"/></svg>
+                        <svg id="icon-solar" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="6" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
+                        <svg id="icon-forest" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
+                        <svg id="icon-ocean" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/></svg>
+                        <svg id="icon-cyberpunk" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 12h10M7 17h6"/></svg>
+                    </span>
+                    <!-- <span class="theme-toggle-arrow" aria-hidden="true">▼</span> -->
+                </button>
+                <div class="theme-dropdown" id="themeDropdown" role="menu" aria-label="Theme selection">
+                    <button class="theme-dropdown-item" data-theme="dark" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
+                        Dark
+                    </button>
+                    <button class="theme-dropdown-item" data-theme="light" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"/></svg>
+                        Light
+                    </button>
+                    <button class="theme-dropdown-item" data-theme="solarized" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="6" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
+                        Solarized
+                    </button>
+                    <button class="theme-dropdown-item" data-theme="forest" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
+                        Forest
+                    </button>
+                    <button class="theme-dropdown-item" data-theme="ocean" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/></svg>
+                        Ocean
+                    </button>
+                    <button class="theme-dropdown-item" data-theme="cyberpunk" role="menuitem" tabindex="0">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 12h10M7 17h6"/></svg>
+                        Cyberpunk
                     </button>
                 </div>
             </div>
-            <p style="margin-top: 15px; color: #666;">
-                Upload a CSV file with columns: ID, Title, Acceptance, Difficulty, Frequency, Leetcode Question Link
-            </p>
+            <h1>🏢 Company-wise LeetCode Progress Tracker</h1>
+            <p>Track your LeetCode questions by company, save your progress, and visualize your journey to success.</p>
         </div>
 
-        <div id="statsSection" class="stats-section" style="display: none;">
-            <div class="stat-card">
-                <div class="stat-number completed" id="completedCount">0</div>
-                <div class="stat-label">Completed</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number" id="totalCount">0</div>
-                <div class="stat-label">Total Questions</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number easy" id="easyCount">0</div>
-                <div class="stat-label">Easy</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number medium" id="mediumCount">0</div>
-                <div class="stat-label">Medium</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-number hard" id="hardCount">0</div>
-                <div class="stat-label">Hard</div>
-            </div>
-        </div>
-
-        <div id="progressSection" style="display: none;">
-            <div class="controls">
-                <h3 style="margin-bottom: 20px;">📊 Progress Overview</h3>
-                <div class="progress-bar">
-                    <div class="progress-fill" id="progressFill" style="width: 0%"></div>
+        <div class="upload-section">
+            <h2 style="margin-bottom: 20px;">Browse</h2>
+            <button id="githubBrowseBtn" class="reset-btn" style="background: var(--bg-card); color: var(--text-muted); font-size: 1.1rem; font-weight: 600; margin-bottom: 18px;">Click To Browse Company Questions</button>
+            <div id="githubModal" style="display:none;"></div>
+            <hr style="border: none; border-top: 1.5px solid #23232a; margin: 32px 0 18px 0;">
+            <div id="savedFilesSection">
+                <h2>Your Saved Files</h2>
+                <div id="savedFilesList" style="display: flex; flex-wrap: wrap; gap: 10px;">
+                    <!-- Saved files will be dynamically added here -->
                 </div>
-                <div id="progressText">0% Complete (0/0)</div>
+            </div>
+            <div class="advanced-features collapsed" id="advancedFeatures">
+                <div class="advanced-header"><span class="advanced-chevron">▶</span> Upload Your Own CSV File</div>
+                <div class="advanced-content">
+                    <div style="margin-bottom: 12px; color: #a1a1aa; font-size: 1.01em;">
+                        <span>Want to track your own set of LeetCode questions? Upload a custom CSV file below and save it for progress tracking.</span>
+                    </div>
+                    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; margin-bottom: 10px;">
+                        <div class="file-input-wrapper" style="margin-bottom: 0;">
+                            <input type="file" id="csvFile" accept=".csv" />
+                            <span>Select File</span>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <input type="text" id="fileNameInput" placeholder="Enter file name (required to save)" 
+                                style="padding: 10px; border: 2px solid #23232b; background: #23232b; color: #f4f4f5; border-radius: 8px; font-size: 1em;">
+                            <button id="saveFileBtn" style="display: none; background: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: 500;">
+                                💾 Save File
+                            </button>
+                        </div>
+                    </div>
+                    <div style="margin-top: 8px; color: #6366f1; font-size: 0.97em;">
+                        <span>CSV columns required: <b>ID, Title, Acceptance, Difficulty, Frequency, Leetcode Question Link</b></span>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div id="chartSection" class="chart-container" style="display: none;">
-            <h3 style="margin-bottom: 20px;">📈 Progress by Difficulty</h3>
-            <canvas id="progressChart" width="400" height="200"></canvas>
-        </div>
-
-        <div id="controlsSection" class="controls" style="display: none;">
-            <h3 style="margin-bottom: 20px;">🔍 Filters & Controls</h3>
-            <div class="filter-row">
-                <div class="filter-group">
-                    <label>Difficulty:</label>
-                    <select id="difficultyFilter">
-                        <option value="">All Difficulties</option>
-                        <option value="Easy">Easy</option>
-                        <option value="Medium">Medium</option>
-                        <option value="Hard">Hard</option>
-                    </select>
+        <div id="statsSection" class="collapsible-section stats-card collapsed">
+            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Stats</div>
+            <div class="collapsible-content">
+                <div class="stats-section">
+                    <div class="stat-card">
+                        <div class="stat-number completed" id="completedCount">0</div>
+                        <div class="stat-label">Completed</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number" id="totalCount">0</div>
+                        <div class="stat-label">Total Questions</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number easy" id="easyCount">0</div>
+                        <div class="stat-label">Easy</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number medium" id="mediumCount">0</div>
+                        <div class="stat-label">Medium</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-number hard" id="hardCount">0</div>
+                        <div class="stat-label">Hard</div>
+                    </div>
                 </div>
-                <div class="filter-group">
-                    <label>Status:</label>
-                    <select id="statusFilter">
-                        <option value="">All Status</option>
-                        <option value="completed">Completed</option>
-                        <option value="pending">Not Completed</option>
-                    </select>
-                </div>
-                <div class="filter-group">
-                    <label>Search:</label>
-                    <input type="text" id="searchInput" placeholder="Search questions...">
-                </div>
-                <button class="reset-btn" onclick="resetProgress()">🔄 Reset Current Progress</button>
-                <button class="reset-btn" onclick="exportProgress()" style="background: #059669; margin-left: 10px;">📥 Export Progress</button>
-                <button class="reset-btn" onclick="importProgress()" style="background: #7c3aed; margin-left: 10px;">📤 Import Progress</button>
             </div>
         </div>
 
-        <div id="questionsSection" class="questions-table" style="display: none;">
-            <h3>📝 Questions List</h3>
-            <div id="questionsContainer">
-                <div class="no-data">No data available. Please upload a CSV file.</div>
+        <div id="chartSection" class="collapsible-section collapsed" hidden>
+            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Progress Visulalized</div>
+            <div class="collapsible-content">
+                <div class="chart-container refined-charts">
+                    <div class="chart-card" style="max-width: 320px; min-width: 220px;">
+                        <h3 class="chart-title">Bar: Completed vs Remaining</h3>
+                        <canvas id="progressChart" width="260" height="200"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Doughnut: Completion by Difficulty</h3>
+                        <canvas id="doughnutChart" width="220" height="220"></canvas>
+                    </div>
+                    <div class="chart-card">
+                        <h3 class="chart-title">Line: Cumulative Progress Over Time</h3>
+                        <canvas id="lineChart" width="420" height="200"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
+
+        <div id="controlsSection" class="collapsible-section controls-card collapsed">
+            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Filters & Controls</div>
+            <div class="collapsible-content">
+                <div class="filter-controls-group">
+                    <div class="filter-group">
+                        <label>Difficulty:</label>
+                        <select id="difficultyFilter">
+                            <option value="">All Difficulties</option>
+                            <option value="Easy">Easy</option>
+                            <option value="Medium">Medium</option>
+                            <option value="Hard">Hard</option>
+                        </select>
+                    </div>
+                    <div class="filter-group">
+                        <label>Status:</label>
+                        <select id="statusFilter">
+                            <option value="">All Status</option>
+                            <option value="completed">Completed</option>
+                            <option value="pending">Not Completed</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-search-group">
+                    <div class="filter-group">
+                        <label>Search:</label>
+                        <input type="text" id="searchInput" placeholder="Search questions...">
+                    </div>
+                </div>
+                <div class="filter-actions-group">
+                    <button class="reset-btn" onclick="resetProgress()">🔄 Reset Current Progress</button>
+                    <button class="reset-btn" onclick="exportProgress()" style="background: #059669;">📥 Export Progress</button>
+                    <button class="reset-btn" onclick="importProgress()" style="background: #7c3aed;">📤 Import Progress</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="questionsSection" class="questions-table collapsible-section">
+            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Questions List</div>
+            <div class="collapsible-content">
+                <div id="questionsContainer">
+                    <div class="no-data">No data available. Please upload a CSV file.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom Modal Dialog -->
+    <div id="customModalOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center;">
+      <div id="customModal" style="background:var(--bg-card); color:var(--text-main); border-radius:14px; box-shadow:0 8px 32px #00000044; padding:32px 28px 24px 28px; min-width:320px; max-width:90vw; max-height:80vh; display:flex; flex-direction:column; align-items:center; border:1.5px solid var(--border-main);">
+        <div id="customModalMessage" style="font-size:1.08rem; margin-bottom:24px; text-align:center;"></div>
+        <div id="customModalButtons" style="display:flex; gap:16px;"></div>
+      </div>
     </div>
 
     <script>
         let questionsData = [];
         let completedQuestions = new Set();
         let chart = null;
+        let doughnutChart = null;
+        let lineChart = null;
         let savedFiles = new Map(); // Store saved files with their data and progress
         let currentFileName = '';
         let currentFileData = null;
+        let currentQuestionsPage = 1;
+        const QUESTIONS_PER_PAGE = 20; // Number of questions per page in the table
+        function getPageKey(fileName) {
+            return 'leetcode_page_' + fileName;
+        }
 
         // Check if localStorage is available, fallback to cookies if not
         function isLocalStorageAvailable() {
@@ -606,7 +1599,7 @@
                     error: function(error) {
                         alert('Error parsing CSV: ' + error.message);
                         // Reset button text on error
-                        wrapper.textContent = 'Choose New CSV File';
+                        wrapper.textContent = 'Select File';
                         document.getElementById('saveFileBtn').style.display = 'none';
                     }
                 });
@@ -650,46 +1643,94 @@
             // Hide save button after saving
             document.getElementById('saveFileBtn').style.display = 'none';
             alert('File saved successfully!');
+
+            // Update last selected file
+            persistentStorage.setItem('leetcode_last_selected_file', customName);
         });
 
         function displaySavedFiles() {
             const container = document.getElementById('savedFilesList');
             const section = document.getElementById('savedFilesSection');
-            
+            if (!container || !section) return;
             if (savedFiles.size === 0) {
                 section.style.display = 'none';
                 return;
             }
-            
             section.style.display = 'block';
             container.innerHTML = '';
             
             [...savedFiles.entries()].forEach(([fileName, fileInfo]) => {
                 const fileBtn = document.createElement('div');
-                fileBtn.style.cssText = 'display: flex; align-items: center; margin-bottom: 5px;';
+                fileBtn.style.cssText = 'display: flex; align-items: flex-start; margin-bottom: 5px; position: relative;';
                 
                 const loadBtn = document.createElement('button');
                 loadBtn.className = 'saved-file-btn' + (currentFileName === fileName ? ' active' : '');
-                
-                // Show upload date and last updated
-                const uploadDate = new Date(fileInfo.uploadDate).toLocaleDateString();
-                const lastUpdated = fileInfo.lastUpdated ? new Date(fileInfo.lastUpdated).toLocaleDateString() : uploadDate;
-                
-                loadBtn.innerHTML = `📄 ${fileName}<br><small style="opacity: 0.8;">${fileInfo.progress.length} completed • Updated: ${lastUpdated}</small>`;
-                loadBtn.style.cssText = 'line-height: 1.3; text-align: left; min-height: 50px;';
+                // Show completed/total
+                const total = fileInfo.data ? fileInfo.data.length : 0;
+                function capitalizeWords(str) {
+                    return str.replace(/\b\w/g, c => c.toUpperCase());
+                }
+                function addSpaceBeforeYear(str) {
+                    // Replace underscores with spaces for display
+                    str = str.replace(/_/g, ' ');
+                    // Add a space before a 4-digit year at the end of the string, e.g., 'Summer2023' -> 'Summer 2023'
+                    str = str.replace(/(\D)(\d{4})$/, '$1 $2');
+                    // Add a space between numbers and letters (e.g., 6months -> 6 Months, 1year -> 1 Year)
+                    str = str.replace(/(\d+)([a-zA-Z]+)/g, '$1 $2');
+                    // Special case: Alltime -> All Time
+                    str = str.replace(/Alltime/i, 'All Time');
+                    // Special case: 6months -> 6 Months, 1year -> 1 Year (already handled by previous regex, but ensure capitalization)
+                    return str;
+                }
+                let completed = 0;
+                if (fileInfo.progress && fileInfo.data) {
+                    // Only count as completed those IDs that exist in the file's questions
+                    const validIds = new Set(fileInfo.data.map(q => q.ID?.toString()));
+                    completed = fileInfo.progress.filter(id => validIds.has(id?.toString())).length;
+                }
+                let displayName = addSpaceBeforeYear(capitalizeWords(fileName));
+                loadBtn.innerHTML = `📄 ${displayName}<br><span class="saved-file-progress-pill">${completed} / ${total}</span>`;
+                loadBtn.style.cssText = 'line-height: 1.3; text-align: left; min-height: 50px; flex: 1;';
                 loadBtn.onclick = () => loadSavedFile(fileName);
-                
-                const deleteBtn = document.createElement('button');
-                deleteBtn.className = 'delete-file-btn';
-                deleteBtn.innerHTML = '🗑️';
-                deleteBtn.title = 'Delete this file';
-                deleteBtn.onclick = (e) => {
+
+                // Three-dots menu
+                const menuActions = document.createElement('div');
+                menuActions.className = 'file-actions';
+                const menuBtn = document.createElement('button');
+                menuBtn.className = 'file-menu-btn';
+                menuBtn.innerHTML = '⋯';
+                menuBtn.title = 'File actions';
+                menuActions.appendChild(menuBtn);
+                // Popover
+                const menuPopover = document.createElement('div');
+                menuPopover.className = 'file-menu-popover';
+                menuPopover.innerHTML = `<button class="file-menu-item" type="button">Delete</button>`;
+                menuActions.appendChild(menuPopover);
+                // Show/hide popover logic
+                menuBtn.onclick = (e) => {
                     e.stopPropagation();
+                    // Close all other popovers
+                    document.querySelectorAll('.file-menu-popover').forEach(pop => pop.classList.remove('show'));
+                    menuPopover.classList.toggle('show');
+                    // Add a one-time event listener to close on outside click
+                    function closeMenu(e) {
+                        if (!menuActions.contains(e.target)) {
+                            menuPopover.classList.remove('show');
+                            document.removeEventListener('mousedown', closeMenu);
+                        }
+                    }
+                    setTimeout(() => {
+                        document.addEventListener('mousedown', closeMenu);
+                    }, 0);
+                };
+                // Delete action
+                menuPopover.querySelector('.file-menu-item').onclick = (e) => {
+                    e.stopPropagation();
+                    menuPopover.classList.remove('show');
                     deleteSavedFile(fileName);
                 };
-                
                 fileBtn.appendChild(loadBtn);
-                fileBtn.appendChild(deleteBtn);
+                fileBtn.appendChild(menuActions);
                 container.appendChild(fileBtn);
             });
         }
@@ -706,14 +1747,24 @@
             currentFileData = fileInfo.data;
             completedQuestions = new Set(fileInfo.progress || []);
             
+            // Restore page for this file
+            const savedPage = persistentStorage.getItem(getPageKey(fileName));
+            if (savedPage && !isNaN(Number(savedPage))) {
+                currentQuestionsPage = Number(savedPage);
+            } else {
+                currentQuestionsPage = 1;
+            }
             updateDisplay();
             showSections();
             displaySavedFiles(); // Update active state
             
             // Update file input display
             const wrapper = document.querySelector('.file-input-wrapper span');
-            wrapper.textContent = `Loaded: ${fileName}`;
+            wrapper.textContent = 'Select File';
             document.getElementById('saveFileBtn').style.display = 'none';
+
+            // Update last selected file
+            persistentStorage.setItem('leetcode_last_selected_file', fileName);
         }
 
         function deleteSavedFile(fileName) {
@@ -731,37 +1782,41 @@
                     completedQuestions.clear();
                     hideSections();
                     const wrapper = document.querySelector('.file-input-wrapper span');
-                    wrapper.textContent = 'Choose New CSV File';
+                    wrapper.textContent = 'Select File';
+                }
+
+                // If the deleted file was the last selected, remove the key
+                if (currentFileName === fileName) {
+                    persistentStorage.removeItem('leetcode_last_selected_file');
                 }
             }
         }
 
         function showSections() {
-            document.getElementById('statsSection').style.display = 'grid';
-            document.getElementById('progressSection').style.display = 'block';
-            document.getElementById('chartSection').style.display = 'block';
-            document.getElementById('controlsSection').style.display = 'block';
-            document.getElementById('questionsSection').style.display = 'block';
+            document.getElementById('statsSection').classList.remove('collapsed');
+            document.getElementById('chartSection').classList.remove('collapsed');
+            document.getElementById('controlsSection').classList.remove('collapsed');
+            document.getElementById('questionsSection').classList.remove('collapsed');
         }
 
         function hideSections() {
-            document.getElementById('statsSection').style.display = 'none';
-            document.getElementById('progressSection').style.display = 'none';
-            document.getElementById('chartSection').style.display = 'none';
-            document.getElementById('controlsSection').style.display = 'none';
-            document.getElementById('questionsSection').style.display = 'none';
+            document.getElementById('statsSection').classList.add('collapsed');
+            document.getElementById('chartSection').classList.add('collapsed');
+            document.getElementById('controlsSection').classList.add('collapsed');
+            document.getElementById('questionsSection').classList.add('collapsed');
         }
 
         function updateDisplay() {
             updateStats();
-            updateProgress();
             updateChart();
             renderQuestions();
         }
 
         function updateStats() {
             const total = questionsData.length;
-            const completed = completedQuestions.size;
+            // Only count as completed those IDs that exist in the current questionsData
+            const validIds = new Set(questionsData.map(q => q.ID?.toString()));
+            const completed = Array.from(completedQuestions).filter(id => validIds.has(id?.toString())).length;
             const easy = questionsData.filter(q => q.Difficulty === 'Easy').length;
             const medium = questionsData.filter(q => q.Difficulty === 'Medium').length;
             const hard = questionsData.filter(q => q.Difficulty === 'Hard').length;
@@ -773,23 +1828,25 @@
             document.getElementById('hardCount').textContent = hard;
         }
 
-        function updateProgress() {
-            const total = questionsData.length;
-            const completed = completedQuestions.size;
-            const percentage = total > 0 ? Math.round((completed / total) * 100) : 0;
-
-            document.getElementById('progressFill').style.width = percentage + '%';
-            document.getElementById('progressText').textContent = 
-                `${percentage}% Complete (${completed}/${total})`;
+        function getThemeVar(name) {
+            return getComputedStyle(document.body).getPropertyValue(name).trim();
         }
 
         function updateChart() {
             const ctx = document.getElementById('progressChart').getContext('2d');
-            
+            const doughnutCtx = document.getElementById('doughnutChart').getContext('2d');
+            const lineCtx = document.getElementById('lineChart').getContext('2d');
+            const easyColor = getThemeVar('--accent2');
+            const mediumColor = getThemeVar('--accent3');
+            const hardColor = getThemeVar('--accent4');
+            const accentColor = getThemeVar('--accent');
+            const cardBg = getThemeVar('--bg-card');
+            const borderMain = getThemeVar('--border-main');
+            const textMuted = getThemeVar('--text-muted');
+            const textMain = getThemeVar('--text-main');
             const easyTotal = questionsData.filter(q => q.Difficulty === 'Easy').length;
             const mediumTotal = questionsData.filter(q => q.Difficulty === 'Medium').length;
             const hardTotal = questionsData.filter(q => q.Difficulty === 'Hard').length;
-            
             const easyCompleted = questionsData.filter(q => 
                 q.Difficulty === 'Easy' && completedQuestions.has(q.ID.toString())
             ).length;
@@ -800,42 +1857,192 @@
                 q.Difficulty === 'Hard' && completedQuestions.has(q.ID.toString())
             ).length;
 
-            if (chart) {
-                chart.destroy();
-            }
+            if (chart) chart.destroy();
+            if (doughnutChart) doughnutChart.destroy();
+            if (lineChart) lineChart.destroy();
 
+            // Bar Chart
             chart = new Chart(ctx, {
                 type: 'bar',
                 data: {
                     labels: ['Easy', 'Medium', 'Hard'],
+                    datasets: [
+                        {
+                            label: 'Completed',
+                            data: [easyCompleted, mediumCompleted, hardCompleted],
+                            backgroundColor: [easyColor, mediumColor, hardColor],
+                            borderRadius: 16,
+                            borderSkipped: false,
+                            barPercentage: 0.55,
+                            categoryPercentage: 0.55,
+                            borderWidth: 0,
+                        },
+                        {
+                            label: 'Remaining',
+                            data: [easyTotal - easyCompleted, mediumTotal - mediumCompleted, hardTotal - hardCompleted],
+                            backgroundColor: [accentColor, accentColor, accentColor],
+                            borderRadius: 16,
+                            borderSkipped: false,
+                            barPercentage: 0.55,
+                            categoryPercentage: 0.55,
+                            borderWidth: 0,
+                        }
+                    ]
+                },
+                options: {
+                    responsive: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: textMuted,
+                                font: { family: 'inherit', size: 13, weight: 500 },
+                                boxWidth: 16,
+                                boxHeight: 16,
+                                padding: 18
+                            }
+                        },
+                        title: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: cardBg,
+                            titleColor: textMain,
+                            bodyColor: textMain,
+                            borderColor: borderMain,
+                            borderWidth: 1,
+                            padding: 12,
+                            caretSize: 6,
+                            cornerRadius: 8
+                        }
+                    },
+                    layout: {
+                        padding: 10
+                    },
+                    scales: {
+                        x: {
+                            stacked: true,
+                            grid: {
+                                display: false,
+                                drawBorder: false
+                            },
+                            ticks: {
+                                color: textMuted,
+                                font: { family: 'inherit', size: 13 }
+                            }
+                        },
+                        y: {
+                            stacked: true,
+                            beginAtZero: true,
+                            grid: {
+                                color: borderMain,
+                                borderColor: borderMain,
+                                drawBorder: false,
+                                lineWidth: 1.2
+                            },
+                            ticks: {
+                                color: textMuted,
+                                font: { family: 'inherit', size: 13 },
+                                stepSize: 1
+                            }
+                        }
+                    }
+                }
+            });
+
+            // Doughnut Chart
+            doughnutChart = new Chart(doughnutCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Easy', 'Medium', 'Hard'],
                     datasets: [{
-                        label: 'Completed',
                         data: [easyCompleted, mediumCompleted, hardCompleted],
-                        backgroundColor: ['#4ade80', '#f59e0b', '#ef4444'],
-                        borderColor: ['#22c55e', '#d97706', '#dc2626'],
-                        borderWidth: 2
-                    }, {
-                        label: 'Remaining',
-                        data: [easyTotal - easyCompleted, mediumTotal - mediumCompleted, hardTotal - hardCompleted],
-                        backgroundColor: ['#dcfce7', '#fef3c7', '#fee2e2'],
-                        borderColor: ['#bbf7d0', '#fde68a', '#fecaca'],
-                        borderWidth: 1
+                        backgroundColor: [easyColor, mediumColor, hardColor],
+                        borderColor: borderMain,
+                        borderWidth: 2,
                     }]
                 },
                 options: {
                     responsive: true,
-                    scales: {
-                        x: {
-                            stacked: true
-                        },
-                        y: {
-                            stacked: true,
-                            beginAtZero: true
-                        }
-                    },
+                    cutout: '70%',
                     plugins: {
                         legend: {
-                            position: 'top',
+                            position: 'bottom',
+                            labels: {
+                                color: textMuted,
+                                font: { family: 'inherit', size: 13 }
+                            }
+                        },
+                        tooltip: {
+                            backgroundColor: cardBg,
+                            titleColor: textMain,
+                            bodyColor: textMain,
+                            borderColor: borderMain,
+                            borderWidth: 1,
+                        }
+                    }
+                }
+            });
+
+            // Line Chart (Cumulative Progress Over Time)
+            // Build a timeline of completion
+            let progressTimeline = [];
+            if (questionsData.length > 0 && savedFiles.has(currentFileName)) {
+                const fileInfo = savedFiles.get(currentFileName);
+                if (fileInfo.progressHistory) {
+                    progressTimeline = fileInfo.progressHistory;
+                } else if (fileInfo.progress) {
+                    // Fallback: just show current progress as a flat line
+                    progressTimeline = [{ date: fileInfo.lastUpdated || fileInfo.uploadDate, completed: fileInfo.progress.length }];
+                }
+            }
+            // If no timeline, show a flat line
+            if (progressTimeline.length === 0) {
+                progressTimeline = [{ date: new Date().toISOString(), completed: easyCompleted + mediumCompleted + hardCompleted }];
+            }
+            // Format for chart.js
+            const lineLabels = progressTimeline.map(p => new Date(p.date).toLocaleDateString());
+            const lineData = progressTimeline.map(p => p.completed);
+            lineChart = new Chart(lineCtx, {
+                type: 'line',
+                data: {
+                    labels: lineLabels,
+                    datasets: [{
+                        label: 'Cumulative Completed',
+                        data: lineData,
+                        fill: true,
+                        borderColor: accentColor,
+                        backgroundColor: accentColor + '22', // 13% opacity
+                        tension: 0.3,
+                        pointRadius: 3,
+                        pointBackgroundColor: accentColor,
+                        pointBorderColor: borderMain,
+                        pointHoverRadius: 5,
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: cardBg,
+                            titleColor: textMain,
+                            bodyColor: textMain,
+                            borderColor: borderMain,
+                            borderWidth: 1,
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: { color: borderMain, drawBorder: false },
+                            ticks: { color: textMuted, font: { family: 'inherit', size: 12 } }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            grid: { color: borderMain, drawBorder: false },
+                            ticks: { color: textMuted, font: { family: 'inherit', size: 12 } }
                         }
                     }
                 }
@@ -843,6 +2050,13 @@
         }
 
         function renderQuestions() {
+            // Restore page for current file if available
+            if (currentFileName) {
+                const savedPage = persistentStorage.getItem(getPageKey(currentFileName));
+                if (savedPage && !isNaN(Number(savedPage))) {
+                    currentQuestionsPage = Number(savedPage);
+                }
+            }
             const container = document.getElementById('questionsContainer');
             const difficultyFilter = document.getElementById('difficultyFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
@@ -861,6 +2075,13 @@
                 return matchesDifficulty && matchesStatus && matchesSearch;
             });
 
+            // Paging logic
+            const totalPages = Math.max(1, Math.ceil(filteredQuestions.length / QUESTIONS_PER_PAGE));
+            if (currentQuestionsPage > totalPages) currentQuestionsPage = totalPages;
+            const startIdx = (currentQuestionsPage - 1) * QUESTIONS_PER_PAGE;
+            const endIdx = startIdx + QUESTIONS_PER_PAGE;
+            const pageQuestions = filteredQuestions.slice(startIdx, endIdx);
+
             if (filteredQuestions.length === 0) {
                 container.innerHTML = '<div class="no-data">No questions match your filters.</div>';
                 return;
@@ -869,57 +2090,60 @@
             const maxFrequency = Math.max(...questionsData.map(q => q.Frequency || 0));
 
             const tableHTML = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>✓</th>
-                            <th>ID</th>
-                            <th>Title</th>
-                            <th>Difficulty</th>
-                            <th>Acceptance</th>
-                            <th>Frequency</th>
-                            <th>Link</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${filteredQuestions.map(question => {
-                            const isCompleted = completedQuestions.has(question.ID.toString());
-                            const frequencyWidth = maxFrequency > 0 ? (question.Frequency / maxFrequency) * 100 : 0;
-                            
-                            return `
-                                <tr>
-                                    <td>
-                                        <input type="checkbox" class="checkbox" 
-                                               ${isCompleted ? 'checked' : ''} 
-                                               onchange="toggleQuestion(${question.ID})">
-                                    </td>
-                                    <td>${question.ID}</td>
-                                    <td class="question-title">${question.Title}</td>
-                                    <td>
-                                        <span class="difficulty-badge difficulty-${question.Difficulty.toLowerCase()}">
-                                            ${question.Difficulty}
-                                        </span>
-                                    </td>
-                                    <td class="acceptance-rate">${question.Acceptance}</td>
-                                    <td>
-                                        <div class="frequency-bar">
-                                            <div class="frequency-fill" style="width: ${frequencyWidth}%"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <a href="${question['Leetcode Question Link']}" 
-                                           target="_blank" class="question-link">
-                                            View Problem
-                                        </a>
-                                    </td>
-                                </tr>
-                            `;
-                        }).join('')}
-                    </tbody>
-                </table>
+                <div class="questions-table-scroll">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>✓</th>
+                                <th>ID</th>
+                                <th>Title</th>
+                                <th>Difficulty</th>
+                                <th>Acceptance</th>
+                                <th>Frequency</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            ${pageQuestions.map(question => {
+                                const isCompleted = completedQuestions.has(question.ID.toString());
+                                const frequencyWidth = maxFrequency > 0 ? (question.Frequency / maxFrequency) * 100 : 0;
+                                
+                                return `
+                                    <tr class="${isCompleted ? 'question-row-completed' : ''}">
+                                        <td><label class="checkbox-label"><input type="checkbox" class="checkbox" 
+                                                   ${isCompleted ? 'checked' : ''} 
+                                                   onchange="toggleQuestion(${question.ID})"></label></td>
+                                        <td class="question-id">${question.ID}</td>
+                                        <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title}</a></td>
+                                        <td>
+                                            <span class="difficulty-badge difficulty-${question.Difficulty.toLowerCase()}">
+                                                ${question.Difficulty}
+                                            </span>
+                                        </td>
+                                        <td class="acceptance-rate">${question.Acceptance}</td>
+                                        <td>
+                                            <div class="frequency-bar">
+                                                <div class="frequency-fill" style="width: ${frequencyWidth}%"></div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                `;
+                            }).join('')}
+                        </tbody>
+                    </table>
+                </div>
             `;
-
-            container.innerHTML = tableHTML;
+            // Pagination controls
+            let paginationHTML = '';
+            if (totalPages > 1) {
+                paginationHTML = '<div class="pagination">';
+                paginationHTML += `<button class="pagination-btn" ${currentQuestionsPage === 1 ? 'disabled' : ''} onclick="window.changeQuestionsPage(${currentQuestionsPage - 1})">Prev</button>`;
+                for (let i = 1; i <= totalPages; i++) {
+                    paginationHTML += `<button class="pagination-btn${i === currentQuestionsPage ? ' active' : ''}" onclick="window.changeQuestionsPage(${i})">${i}</button>`;
+                }
+                paginationHTML += `<button class="pagination-btn" ${currentQuestionsPage === totalPages ? 'disabled' : ''} onclick="window.changeQuestionsPage(${currentQuestionsPage + 1})">Next</button>`;
+                paginationHTML += '</div>';
+            }
+            container.innerHTML = tableHTML + paginationHTML;
         }
 
         function toggleQuestion(id) {
@@ -1010,6 +2234,344 @@
         // Initialize
         loadSavedFiles();
         displaySavedFiles();
+
+        // Collapsible section toggling
+        window.addEventListener('DOMContentLoaded', function() {
+            // Ensure only Questions List is open by default
+            document.getElementById('statsSection').classList.add('collapsed');
+            document.getElementById('chartSection').classList.add('collapsed');
+            document.getElementById('controlsSection').classList.add('collapsed');
+            document.getElementById('questionsSection').classList.remove('collapsed');
+            // Collapsible logic
+            document.querySelectorAll('.collapsible-header').forEach(header => {
+                header.addEventListener('click', function() {
+                    const section = header.closest('.collapsible-section');
+                    section.classList.toggle('collapsed');
+                });
+                header.setAttribute('tabindex', '0');
+                header.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        header.click();
+                    }
+                });
+            });
+            // Advanced features toggle (with null check)
+            const adv = document.getElementById('advancedFeatures');
+            if (adv) {
+                const advHeader = adv.querySelector('.advanced-header');
+                if (advHeader) {
+                    advHeader.addEventListener('click', function() {
+                        adv.classList.toggle('collapsed');
+                    });
+                    advHeader.setAttribute('tabindex', '0');
+                    advHeader.addEventListener('keydown', function(e) {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                            e.preventDefault();
+                            advHeader.click();
+                        }
+                    });
+                }
+            }
+        });
+
+        // After displaySavedFiles() in initialization, add:
+        const lastFile = persistentStorage.getItem('leetcode_last_selected_file');
+        if (lastFile && savedFiles.has(lastFile)) loadSavedFile(lastFile);
+
+        // Add JS for modal, search, GitHub API fetch, and CSV loading:
+        (function() {
+            const githubBtn = document.getElementById('githubBrowseBtn');
+            const modal = document.getElementById('githubModal');
+            let csvList = [];
+            let filteredList = [];
+            let searchInput;
+            let listContainer;
+            function closeModal() { modal.style.display = 'none'; modal.innerHTML = ''; }
+            function showModal() {
+                modal.innerHTML = `
+                    <div class="modal-overlay">
+                        <div class="modal">
+                            <button class="modal-close" title="Close">&times;</button>
+                            <h2>Browse Company CSVs from GitHub</h2>
+                            <input class="modal-search" placeholder="Search company or time..." />
+                            <div class="modal-list"></div>
+                        </div>
+                    </div>
+                `;
+                modal.style.display = 'block';
+                searchInput = modal.querySelector('.modal-search');
+                listContainer = modal.querySelector('.modal-list');
+                modal.querySelector('.modal-close').onclick = closeModal;
+                modal.querySelector('.modal-overlay').onclick = e => { if (e.target === modal.querySelector('.modal-overlay')) closeModal(); };
+                searchInput.oninput = function() { renderList(searchInput.value); };
+                renderList('');
+            }
+            function renderList(query) {
+                listContainer.innerHTML = '';
+                filteredList = csvList.filter(f => f.name.toLowerCase().includes(query.toLowerCase()));
+                if (filteredList.length === 0) {
+                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No files found.</div>';
+                    return;
+                }
+                filteredList.forEach(f => {
+                    const item = document.createElement('div');
+                    item.className = 'modal-list-item';
+                    item.tabIndex = 0;
+                    item.innerHTML = `<strong>${f.company}</strong> <span style="font-size:0.95em; color:#a1a1aa;">${f.period}</span>`;
+                    item.onclick = () => selectCSV(f);
+                    item.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') selectCSV(f); };
+                    listContainer.appendChild(item);
+                });
+            }
+            async function fetchCSVList() {
+                // Use GitHub API to list CSVs in the repo
+                const apiUrl = 'https://api.github.com/repos/krishnadey30/LeetCode-Questions-CompanyWise/contents';
+                const res = await fetch(apiUrl);
+                const files = await res.json();
+                csvList = files.filter(f => f.name.endsWith('.csv')).map(f => {
+                    // Parse company and period from filename
+                    const match = f.name.match(/([a-zA-Z0-9\-]+)_([a-zA-Z0-9]+)\.csv/);
+                    return {
+                        name: f.name,
+                        download_url: f.download_url || `https://raw.githubusercontent.com/krishnadey30/LeetCode-Questions-CompanyWise/master/${f.name}`,
+                        company: match ? match[1].replace(/_/g, ' ') : f.name,
+                        period: match ? match[2].replace(/_/g, ' ') : '',
+                    };
+                });
+            }
+            async function selectCSV(file) {
+                closeModal();
+                // Fetch and parse CSV
+                try {
+                    const res = await fetch(file.download_url);
+                    const csvText = await res.text();
+                    Papa.parse(csvText, {
+                        header: true,
+                        skipEmptyLines: true,
+                        dynamicTyping: true,
+                        complete: function(results) {
+                            currentFileData = results.data;
+                            questionsData = results.data;
+                            currentFileName = file.name.replace('.csv', '') + '_' + Date.now();
+                            loadCompletedQuestions();
+                            updateDisplay();
+                            showSections();
+                            // Suggest saving
+                            setTimeout(() => {
+                                if (confirm('Do you want to save this file for progress tracking?')) {
+                                    savedFiles.set(file.company + ' ' + file.period, {
+                                        data: currentFileData,
+                                        progress: [...completedQuestions],
+                                        uploadDate: new Date().toISOString(),
+                                        lastUpdated: new Date().toISOString(),
+                                        originalName: file.name
+                                    });
+                                    currentFileName = file.company + ' ' + file.period;
+                                    saveSavedFiles();
+                                    displaySavedFiles();
+                                    alert('File saved successfully!');
+                                }
+                            }, 300);
+                        },
+                        error: function(error) {
+                            alert('Error parsing CSV: ' + error.message);
+                        }
+                    });
+                } catch (e) {
+                    alert('Error fetching CSV: ' + e.message);
+                }
+            }
+            githubBtn.onclick = async function() {
+                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading...</h2></div></div>';
+                modal.style.display = 'block';
+                await fetchCSVList();
+                showModal();
+            };
+        })();
+
+        // Paging handler
+        window.changeQuestionsPage = function(page) {
+            currentQuestionsPage = page;
+            if (currentFileName) {
+                persistentStorage.setItem(getPageKey(currentFileName), String(page));
+            }
+            renderQuestions();
+        }
+
+        // THEME TOGGLE LOGIC (refined)
+        const themeMap = {
+            dark: {
+                class: '',
+                icon: 'icon-moon',
+                name: 'Dark'
+            },
+            light: {
+                class: 'theme-light',
+                icon: 'icon-sun',
+                name: 'Light'
+            },
+            solarized: {
+                class: 'theme-solarized',
+                icon: 'icon-solar',
+                name: 'Solarized'
+            },
+            forest: {
+                class: 'theme-forest',
+                icon: 'icon-forest',
+                name: 'Forest'
+            },
+            ocean: {
+                class: 'theme-ocean',
+                icon: 'icon-ocean',
+                name: 'Ocean'
+            },
+            cyberpunk: {
+                class: 'theme-cyberpunk',
+                icon: 'icon-cyberpunk',
+                name: 'Cyberpunk'
+            }
+        };
+        function setTheme(theme) {
+            Object.values(themeMap).forEach(t => t.class && document.body.classList.remove(t.class));
+            if (themeMap[theme].class) document.body.classList.add(themeMap[theme].class);
+            // Show only the correct SVG icon
+            Object.values(themeMap).forEach(t => document.getElementById(t.icon).style.display = 'none');
+            document.getElementById(themeMap[theme].icon).style.display = 'block';
+            localStorage.setItem('leetcode_theme', theme);
+            // Re-render charts to update theme colors
+            if (typeof updateChart === 'function') setTimeout(updateChart, 0);
+        }
+        function getSavedTheme() {
+            return localStorage.getItem('leetcode_theme') || 'dark';
+        }
+        document.addEventListener('DOMContentLoaded', function() {
+            // Apply saved theme
+            setTheme(getSavedTheme());
+            // Toggle dropdown
+            const btn = document.getElementById('themeToggleBtn');
+            const dropdown = document.getElementById('themeDropdown');
+            btn.onclick = function(e) {
+                e.stopPropagation();
+                const expanded = dropdown.classList.toggle('show');
+                btn.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+                if (expanded) dropdown.querySelector('.theme-dropdown-item.active')?.focus();
+            };
+            // Dropdown item click
+            dropdown.querySelectorAll('.theme-dropdown-item').forEach(item => {
+                item.onclick = function(e) {
+                    const theme = item.getAttribute('data-theme');
+                    setTheme(theme);
+                    dropdown.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                    btn.focus();
+                };
+                item.onkeydown = function(e) {
+                    if (e.key === 'Enter' || e.key === ' ') { item.click(); }
+                    if (e.key === 'ArrowDown') { e.preventDefault(); item.nextElementSibling?.focus(); }
+                    if (e.key === 'ArrowUp') { e.preventDefault(); item.previousElementSibling?.focus(); }
+                    if (e.key === 'Escape') { dropdown.classList.remove('show'); btn.setAttribute('aria-expanded', 'false'); btn.focus(); }
+                };
+            });
+            // Keyboard: open with Enter/Space
+            btn.onkeydown = function(e) {
+                if (e.key === 'Enter' || e.key === ' ') { btn.click(); }
+                if (e.key === 'ArrowDown') { dropdown.classList.add('show'); dropdown.querySelector('.theme-dropdown-item.active')?.focus(); }
+            };
+            // Close dropdown on outside click
+            document.addEventListener('mousedown', function(e) {
+                if (!dropdown.contains(e.target) && !btn.contains(e.target)) {
+                    dropdown.classList.remove('show');
+                    btn.setAttribute('aria-expanded', 'false');
+                }
+            });
+            // Highlight active
+            function updateActive() {
+                const current = getSavedTheme();
+                dropdown.querySelectorAll('.theme-dropdown-item').forEach(item => {
+                    if (item.getAttribute('data-theme') === current) item.classList.add('active');
+                    else item.classList.remove('active');
+                });
+            }
+            updateActive();
+            // Update active on theme change
+            btn.addEventListener('click', updateActive);
+            dropdown.querySelectorAll('.theme-dropdown-item').forEach(item => {
+                item.addEventListener('click', updateActive);
+            });
+        });
+
+        // Custom Modal Dialog Logic
+        function showCustomModal(type, message, onConfirm, onCancel) {
+          const overlay = document.getElementById('customModalOverlay');
+          const modal = document.getElementById('customModal');
+          const msg = document.getElementById('customModalMessage');
+          const btns = document.getElementById('customModalButtons');
+          msg.textContent = message;
+          btns.innerHTML = '';
+          overlay.style.display = 'flex';
+          function close() { overlay.style.display = 'none'; }
+          if (type === 'alert') {
+            const ok = document.createElement('button');
+            ok.textContent = 'OK';
+            ok.className = 'reset-btn';
+            ok.onclick = () => { close(); if (onConfirm) onConfirm(); };
+            btns.appendChild(ok);
+          } else if (type === 'confirm') {
+            const yes = document.createElement('button');
+            yes.textContent = 'Yes';
+            yes.className = 'reset-btn';
+            yes.onclick = () => { close(); if (onConfirm) onConfirm(); };
+            const no = document.createElement('button');
+            no.textContent = 'No';
+            no.className = 'reset-btn';
+            no.onclick = () => { close(); if (onCancel) onCancel(); };
+            btns.appendChild(yes);
+            btns.appendChild(no);
+          } else if (type === 'prompt') {
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'modal-search';
+            input.style.marginBottom = '18px';
+            btns.appendChild(input);
+            const ok = document.createElement('button');
+            ok.textContent = 'OK';
+            ok.className = 'reset-btn';
+            ok.onclick = () => { close(); if (onConfirm) onConfirm(input.value); };
+            btns.appendChild(ok);
+            const cancel = document.createElement('button');
+            cancel.textContent = 'Cancel';
+            cancel.className = 'reset-btn';
+            cancel.onclick = () => { close(); if (onCancel) onCancel(); };
+            btns.appendChild(cancel);
+          }
+          overlay.onclick = e => { if (e.target === overlay) close(); };
+        }
+        // Replace alert, confirm, prompt in code below
+        window.alert = (msg) => showCustomModal('alert', msg);
+        window.confirm = (msg) => new Promise(res => showCustomModal('confirm', msg, () => res(true), () => res(false)));
+        window.prompt = (msg, def) => new Promise(res => showCustomModal('prompt', msg, v => res(v), () => res(null)));
+    </script>
+    <footer style="background: var(--bg-card); color: var(--text-muted); border-top: 1.5px solid var(--border-main); text-align: center; padding: 24px 10px 18px 10px; font-size: 1.08em; margin-top: 40px;">
+        Created with <span id="footer-emoji" aria-label="love">❤️</span> by 
+        <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600; text-decoration: none;">Ronak Raj</a>
+    </footer>
+    <script>
+      // Emoji alternator for footer
+      (function() {
+        const emojiSpan = document.getElementById('footer-emoji');
+        if (!emojiSpan) return;
+        const emojis = [
+          { char: '❤️', label: 'love' },
+          { char: '\ud83e\udde0', label: 'brain' } // 🧠
+        ];
+        let idx = 0;
+        setInterval(() => {
+          idx = 1 - idx;
+          emojiSpan.textContent = emojis[idx].char;
+          emojiSpan.setAttribute('aria-label', emojis[idx].label);
+        }, 1000);
+      })();
     </script>
 </body>
 </html>
