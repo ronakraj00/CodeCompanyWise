@@ -1617,6 +1617,40 @@
             }
         }
 
+        // Add this mapping function before any CSV parsing logic:
+        function mapCSVRow(row, idx) {
+            // Normalize keys: trim whitespace from all keys
+            const cleanRow = {};
+            for (const key in row) {
+                if (Object.hasOwn(row, key)) {
+                    cleanRow[key.trim()] = row[key];
+                }
+            }
+            // Normalize difficulty
+            let difficulty = (cleanRow['Difficulty'] || '').toLowerCase();
+            if (difficulty === 'easy') difficulty = 'Easy';
+            else if (difficulty === 'medium') difficulty = 'Medium';
+            else if (difficulty === 'hard') difficulty = 'Hard';
+            else difficulty = '';
+
+            // Format acceptance rate as percentage string
+            let acceptance = '';
+            if (cleanRow['Acceptance Rate'] !== undefined && cleanRow['Acceptance Rate'] !== '') {
+                let val = parseFloat(cleanRow['Acceptance Rate']);
+                if (!isNaN(val)) acceptance = (val * 100).toFixed(1) + '%';
+            }
+
+            return {
+                ID: idx + 1,
+                Title: cleanRow['Title'] || '',
+                Acceptance: acceptance,
+                Difficulty: difficulty,
+                Frequency: cleanRow['Frequency'] || '',
+                'Leetcode Question Link': cleanRow['Link'] || '',
+                Topics: cleanRow['Topics'] || ''
+            };
+        }
+
         document.getElementById('csvFile').addEventListener('change', function(event) {
             const file = event.target.files[0];
             if (file) {
@@ -1633,9 +1667,11 @@
                     skipEmptyLines: true,
                     dynamicTyping: true,
                     complete: function(results) {
-                        currentFileData = results.data;
-                        questionsData = results.data;
-                        currentFileName = file.name.replace('.csv', '') + '_' + Date.now();
+                        // Map to internal format
+                        currentFileData = results.data.map(mapCSVRow);
+                        questionsData = currentFileData;
+                        // Remove .csv and any leading numbers/dots/spaces
+                        currentFileName = file.name.replace('.csv', '').replace(/^\d+\.\s*/, '');
                         loadCompletedQuestions();
                         updateDisplay();
                         showSections();
@@ -1729,7 +1765,7 @@
                 let completed = 0;
                 if (fileInfo.progress && fileInfo.data) {
                     // Only count as completed those IDs that exist in the file's questions
-                    const validIds = new Set(fileInfo.data.map(q => q.ID?.toString()));
+                    const validIds = new Set(fileInfo.data.filter(q => q.ID != null).map(q => q.ID.toString()));
                     completed = fileInfo.progress.filter(id => validIds.has(id?.toString())).length;
                 }
                 let displayName = addSpaceBeforeYear(capitalizeWords(fileName));
@@ -1859,7 +1895,7 @@
         function updateStats() {
             const total = questionsData.length;
             // Only count as completed those IDs that exist in the current questionsData
-            const validIds = new Set(questionsData.map(q => q.ID?.toString()));
+            const validIds = new Set(questionsData.filter(q => q.ID != null).map(q => q.ID.toString()));
             const completed = Array.from(completedQuestions).filter(id => validIds.has(id?.toString())).length;
             const easy = questionsData.filter(q => q.Difficulty === 'Easy').length;
             const medium = questionsData.filter(q => q.Difficulty === 'Medium').length;
@@ -1892,13 +1928,13 @@
             const mediumTotal = questionsData.filter(q => q.Difficulty === 'Medium').length;
             const hardTotal = questionsData.filter(q => q.Difficulty === 'Hard').length;
             const easyCompleted = questionsData.filter(q => 
-                q.Difficulty === 'Easy' && completedQuestions.has(q.ID.toString())
+                q.Difficulty === 'Easy' && q.ID != null && completedQuestions.has(q.ID.toString())
             ).length;
             const mediumCompleted = questionsData.filter(q => 
-                q.Difficulty === 'Medium' && completedQuestions.has(q.ID.toString())
+                q.Difficulty === 'Medium' && q.ID != null && completedQuestions.has(q.ID.toString())
             ).length;
             const hardCompleted = questionsData.filter(q => 
-                q.Difficulty === 'Hard' && completedQuestions.has(q.ID.toString())
+                q.Difficulty === 'Hard' && q.ID != null && completedQuestions.has(q.ID.toString())
             ).length;
 
             if (chart) chart.destroy();
@@ -2108,13 +2144,13 @@
 
             let filteredQuestions = questionsData.filter(question => {
                 const matchesDifficulty = !difficultyFilter || question.Difficulty === difficultyFilter;
-                const isCompleted = completedQuestions.has(question.ID.toString());
+                const isCompleted = question.ID != null && completedQuestions.has(question.ID.toString());
                 const matchesStatus = !statusFilter || 
                     (statusFilter === 'completed' && isCompleted) ||
                     (statusFilter === 'pending' && !isCompleted);
                 const matchesSearch = !searchQuery || 
-                    question.Title.toLowerCase().includes(searchQuery) ||
-                    question.ID.toString().includes(searchQuery);
+                    (question.Title && question.Title.toLowerCase().includes(searchQuery)) ||
+                    (question.ID != null && question.ID.toString().includes(searchQuery));
 
                 return matchesDifficulty && matchesStatus && matchesSearch;
             });
@@ -2148,22 +2184,22 @@
                         </thead>
                         <tbody>
                             ${pageQuestions.map(question => {
-                                const isCompleted = completedQuestions.has(question.ID.toString());
+                                const isCompleted = question.ID != null && completedQuestions.has(question.ID.toString());
                                 const frequencyWidth = maxFrequency > 0 ? (question.Frequency / maxFrequency) * 100 : 0;
                                 
                                 return `
                                     <tr class="${isCompleted ? 'question-row-completed' : ''}">
                                         <td><label class="checkbox-label"><input type="checkbox" class="checkbox" 
                                                    ${isCompleted ? 'checked' : ''} 
-                                                   onchange="toggleQuestion(${question.ID})"></label></td>
-                                        <td class="question-id">${question.ID}</td>
-                                        <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title}</a></td>
+                                                   onchange="toggleQuestion(${question.ID != null ? question.ID : 'null'})"></label></td>
+                                        <td class="question-id">${question.ID != null ? question.ID : ''}</td>
+                                        <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title || ''}</a></td>
                                         <td>
-                                            <span class="difficulty-badge difficulty-${question.Difficulty.toLowerCase()}">
-                                                ${question.Difficulty}
+                                            <span class="difficulty-badge difficulty-${question.Difficulty ? question.Difficulty.toLowerCase() : ''}">
+                                                ${question.Difficulty || ''}
                                             </span>
                                         </td>
-                                        <td class="acceptance-rate">${question.Acceptance}</td>
+                                        <td class="acceptance-rate">${question.Acceptance || ''}</td>
                                         <td>
                                             <div class="frequency-bar">
                                                 <div class="frequency-fill" style="width: ${frequencyWidth}%"></div>
@@ -2191,6 +2227,7 @@
         }
 
         function toggleQuestion(id) {
+            if (id == null) return;
             const idStr = id.toString();
             if (completedQuestions.has(idStr)) {
                 completedQuestions.delete(idStr);
@@ -2327,18 +2364,22 @@
         (function() {
             const githubBtn = document.getElementById('githubBrowseBtn');
             const modal = document.getElementById('githubModal');
+            let companyFolders = [];
             let csvList = [];
             let filteredList = [];
             let searchInput;
             let listContainer;
-            function closeModal() { modal.style.display = 'none'; modal.innerHTML = ''; }
-            function showModal() {
+            let currentView = 'companies'; // or 'csvs'
+            let selectedCompany = null;
+            let selectedCompanyUrl = null;
+            function closeModal() { modal.style.display = 'none'; modal.innerHTML = ''; currentView = 'companies'; selectedCompany = null; selectedCompanyUrl = null; }
+            function showCompanyModal() {
                 modal.innerHTML = `
                     <div class="modal-overlay">
                         <div class="modal">
                             <button class="modal-close" title="Close">&times;</button>
-                            <h2>Browse Company CSVs from GitHub</h2>
-                            <input class="modal-search" placeholder="Search company or time..." />
+                            <h2>Browse Companies from GitHub</h2>
+                            <input class="modal-search" placeholder="Search company..." />
                             <div class="modal-list"></div>
                         </div>
                     </div>
@@ -2348,42 +2389,154 @@
                 listContainer = modal.querySelector('.modal-list');
                 modal.querySelector('.modal-close').onclick = closeModal;
                 modal.querySelector('.modal-overlay').onclick = e => { if (e.target === modal.querySelector('.modal-overlay')) closeModal(); };
-                searchInput.oninput = function() { renderList(searchInput.value); };
-                renderList('');
+                searchInput.oninput = function() { renderCompanyList(searchInput.value); };
+                renderCompanyList('');
             }
-            function renderList(query) {
+            function showCSVModal(company, folderUrl) {
+                modal.innerHTML = `
+                    <div class="modal-overlay">
+                        <div class="modal">
+                            <button class="modal-close" title="Close">&times;</button>
+                            <button class="reset-btn" id="backToCompanies" style="margin-bottom:12px;">← Back to Companies</button>
+                            <h2>CSVs for <span style="color:var(--accent);">${company}</span></h2>
+                            <input class="modal-search" placeholder="Search period..." />
+                            <div class="modal-list"></div>
+                        </div>
+                    </div>
+                `;
+                modal.style.display = 'block';
+                searchInput = modal.querySelector('.modal-search');
+                listContainer = modal.querySelector('.modal-list');
+                modal.querySelector('.modal-close').onclick = closeModal;
+                modal.querySelector('.modal-overlay').onclick = e => { if (e.target === modal.querySelector('.modal-overlay')) closeModal(); };
+                document.getElementById('backToCompanies').onclick = function() {
+                    currentView = 'companies';
+                    selectedCompany = null;
+                    selectedCompanyUrl = null;
+                    showCompanyModal();
+                };
+                searchInput.oninput = function() { renderCSVList(searchInput.value); };
+                renderCSVList('');
+            }
+            function renderCompanyList(query) {
                 listContainer.innerHTML = '';
-                filteredList = csvList.filter(f => f.name.toLowerCase().includes(query.toLowerCase()));
+                filteredList = companyFolders.filter(f => f.name.toLowerCase().includes(query.toLowerCase()));
                 if (filteredList.length === 0) {
-                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No files found.</div>';
+                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No companies found.</div>';
                     return;
                 }
                 filteredList.forEach(f => {
                     const item = document.createElement('div');
                     item.className = 'modal-list-item';
                     item.tabIndex = 0;
-                    item.innerHTML = `<strong>${f.company}</strong> <span style="font-size:0.95em; color:#a1a1aa;">${f.period}</span>`;
+                    item.innerHTML = `<strong>${f.name.replace(/_/g, ' ')}</strong>`;
+                    item.onclick = () => {
+                        selectedCompany = f.name.replace(/_/g, ' ');
+                        selectedCompanyUrl = f.url;
+                        currentView = 'csvs';
+                        fetchCSVsForCompany(f.url, selectedCompany);
+                    };
+                    item.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') item.onclick(); };
+                    listContainer.appendChild(item);
+                });
+            }
+            function renderCSVList(query) {
+                listContainer.innerHTML = '';
+                filteredList = csvList.filter(f => f.period.toLowerCase().includes(query.toLowerCase()));
+                if (filteredList.length === 0) {
+                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No CSVs found for this company.</div>';
+                    return;
+                }
+                filteredList.forEach(f => {
+                    const item = document.createElement('div');
+                    item.className = 'modal-list-item';
+                    item.tabIndex = 0;
+                    item.innerHTML = `<strong>${f.period}</strong>`;
                     item.onclick = () => selectCSV(f);
                     item.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') selectCSV(f); };
                     listContainer.appendChild(item);
                 });
             }
-            async function fetchCSVList() {
-                // Use GitHub API to list CSVs in the repo
-                const apiUrl = 'https://api.github.com/repos/krishnadey30/LeetCode-Questions-CompanyWise/contents';
-                const res = await fetch(apiUrl);
-                const files = await res.json();
-                csvList = files.filter(f => f.name.endsWith('.csv')).map(f => {
-                    // Parse company and period from filename
-                    const match = f.name.match(/([a-zA-Z0-9\-]+)_([a-zA-Z0-9]+)\.csv/);
-                    return {
-                        name: f.name,
-                        download_url: f.download_url || `https://raw.githubusercontent.com/krishnadey30/LeetCode-Questions-CompanyWise/master/${f.name}`,
-                        company: match ? match[1].replace(/_/g, ' ') : f.name,
-                        period: match ? match[2].replace(/_/g, ' ') : '',
-                    };
-                });
+            // Remove the hardcoded GITHUB_TOKEN and add a function to fetch it
+            let GITHUB_TOKEN = null;
+            async function getGithubToken() {
+                if (GITHUB_TOKEN) return GITHUB_TOKEN;
+                try {
+                    const res = await fetch('https://portfolio-api-dwyy.onrender.com/api/github-token');
+                    const data = await res.json();
+                    if (data.token) {
+                        GITHUB_TOKEN = data.token;
+                        return GITHUB_TOKEN;
+                    } else {
+                        throw new Error('Token not found in response');
+                    }
+                } catch (e) {
+                    throw new Error('Failed to fetch GitHub token: ' + (e.message || e));
+                }
             }
+            async function fetchCompanyFolders() {
+                try {
+                    const token = await getGithubToken();
+                    const rootUrl = 'https://api.github.com/repos/liquidslr/leetcode-company-wise-problems/contents';
+                    const rootRes = await fetch(rootUrl, {
+                        headers: {
+                            'Authorization': `token ${token}`
+                        }
+                    });
+                    if (!rootRes.ok) throw new Error('GitHub API error: ' + rootRes.status);
+                    const rootFiles = await rootRes.json();
+                    companyFolders = rootFiles.filter(f => f.type === 'dir');
+                    return true;
+                } catch (err) {
+                    companyFolders = [];
+                    return err.message || 'Unknown error';
+                }
+            }
+            async function fetchCSVsForCompany(folderUrl, company) {
+                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading CSVs...</h2></div></div>';
+                modal.style.display = 'block';
+                try {
+                    const token = await getGithubToken();
+                    const folderRes = await fetch(folderUrl, {
+                        headers: {
+                            'Authorization': `token ${token}`
+                        }
+                    });
+                    if (!folderRes.ok) throw new Error('GitHub API error: ' + folderRes.status);
+                    const folderFiles = await folderRes.json();
+                    csvList = folderFiles.filter(f => f.name.endsWith('.csv')).map(f => {
+                        const period = f.name.replace('.csv', '').replace(/_/g, ' ');
+                        return {
+                            name: f.name,
+                            download_url: f.download_url,
+                            company: company,
+                            period: period
+                        };
+                    });
+                    showCSVModal(company, folderUrl);
+                } catch (err) {
+                    csvList = [];
+                    modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error loading CSVs</h2><div style=\"color:#ef4444; margin:18px 0;\">${err.message || 'Unknown error'}</div></div></div>`;
+                    modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
+                }
+            }
+            githubBtn.onclick = async function() {
+                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading Companies...</h2></div></div>';
+                modal.style.display = 'block';
+                const result = await fetchCompanyFolders();
+                if (result === true) {
+                    if (companyFolders.length === 0) {
+                        modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>No companies found.</h2></div></div>`;
+                        modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
+                        return;
+                    }
+                    showCompanyModal();
+                } else {
+                    // result is error message
+                    modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error loading from GitHub</h2><div style=\"color:#ef4444; margin:18px 0;\">${result}</div><div style=\"color:#a1a1aa; font-size:0.98em;\">Try again later or check your internet connection.<br>If you are using a VPN or firewall, GitHub API may be blocked.</div></div></div>`;
+                    modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
+                }
+            };
             async function selectCSV(file) {
                 closeModal();
                 // Fetch and parse CSV
@@ -2395,23 +2548,27 @@
                         skipEmptyLines: true,
                         dynamicTyping: true,
                         complete: function(results) {
-                            currentFileData = results.data;
-                            questionsData = results.data;
-                            currentFileName = file.name.replace('.csv', '') + '_' + Date.now();
+                            // Map to internal format
+                            currentFileData = results.data.map(mapCSVRow);
+                            questionsData = currentFileData;
+                            // Remove any leading numbers/dots/spaces from company and period
+                            const cleanCompany = file.company.replace(/^\d+\.\s*/, '');
+                            const cleanPeriod = file.period.replace(/^\d+\.\s*/, '');
+                            currentFileName = cleanCompany + ' ' + cleanPeriod;
                             loadCompletedQuestions();
                             updateDisplay();
                             showSections();
                             // Suggest saving
                             setTimeout(() => {
                                 if (confirm('Do you want to save this file for progress tracking?')) {
-                                    savedFiles.set(file.company + ' ' + file.period, {
+                                    savedFiles.set(cleanCompany + ' ' + cleanPeriod, {
                                         data: currentFileData,
                                         progress: [...completedQuestions],
                                         uploadDate: new Date().toISOString(),
                                         lastUpdated: new Date().toISOString(),
                                         originalName: file.name
                                     });
-                                    currentFileName = file.company + ' ' + file.period;
+                                    currentFileName = cleanCompany + ' ' + cleanPeriod;
                                     saveSavedFiles();
                                     displaySavedFiles();
                                     alert('File saved successfully!');
@@ -2426,12 +2583,6 @@
                     alert('Error fetching CSV: ' + e.message);
                 }
             }
-            githubBtn.onclick = async function() {
-                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading...</h2></div></div>';
-                modal.style.display = 'block';
-                await fetchCSVList();
-                showModal();
-            };
         })();
 
         // Paging handler
