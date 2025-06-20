@@ -2596,15 +2596,15 @@
         window.confirm = (msg) => new Promise(res => showCustomModal('confirm', msg, () => res(true), () => res(false)));
         window.prompt = (msg, def) => new Promise(res => showCustomModal('prompt', msg, v => res(v), () => res(null)));
     </script>
-    <footer style="position:fixed; left:0; right:0; bottom:0; width:100vw; background:var(--bg-card); color:var(--text-muted); border-top:1.5px solid var(--border-main); text-align:center; padding:18px 0 20px 0; font-size:1.08em; z-index:9999; box-sizing:border-box;">
+    <footer style="width: fit-content; margin: 24px auto 0px auto; background:var(--bg-card); color:var(--text-muted); border-top:1.5px solid var(--border-main); border-radius: 24px 24px 0px 0px; text-align:center; padding:18px 32px 20px 32px; font-size:1.08em; box-sizing:border-box;">
         Created with <span id="footer-emoji" aria-label="love">❤️</span> by 
         <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600; text-decoration: none;">Ronak Raj</a>
     </footer>
     <style>
       @media (max-width: 600px) {
-        footer { font-size: 0.98em !important; padding: 14px 0 10px 0 !important; }
+        footer { font-size: 0.98em !important; padding: 20px 30px 20px 30px !important; }
       }
-      .container { padding-bottom: 70px !important; }
+      .container { padding-bottom: 0 !important; }
     </style>
     <script>
       // Emoji alternator for footer
