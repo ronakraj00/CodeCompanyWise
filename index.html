@@ -1365,6 +1365,7 @@
             border-bottom: 1px solid var(--border-main);
             background: var(--bg-accent);
             flex-shrink: 0;
+            background: var(--bg-card);
         }
         .github-modal-search {
             width: 100%;
@@ -2860,8 +2861,8 @@
                 let contentHtml = '';
                 if (showBack) {
                     contentHtml += `
-                        <div class="github-modal-search-wrapper" style="border-bottom:none; padding-bottom:0;">
-                            <button class="back-btn" id="backToCompanies">
+                        <div class="github-modal-search-wrapper" style="background:var(--bg-card) !important; border-bottom:none; padding-bottom:0;">
+                            <button class="back-btn" style="background:var(--bg-card) !important;" id="backToCompanies">
                                 ${ICONS.backArrow}
                                 <span>Back to Companies</span>
                             </button>
