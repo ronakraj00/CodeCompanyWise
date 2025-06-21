@@ -1458,6 +1458,13 @@
                             <option value="pending">Not Completed</option>
                         </select>
                     </div>
+                    <div class="filter-group">
+                        <label>&nbsp;</label>
+                        <div style="display: flex; align-items: center; gap: 8px; height: 42.5px; padding-bottom: 1px;">
+                            <input type="checkbox" id="hideDifficultyCheckbox" class="checkbox">
+                            <label for="hideDifficultyCheckbox" style="cursor: pointer; user-select: none;">Hide Difficulty</label>
+                        </div>
+                    </div>
                 </div>
                 <div class="filter-search-group">
                     <div class="filter-group">
@@ -2141,6 +2148,7 @@
             const difficultyFilter = document.getElementById('difficultyFilter').value;
             const statusFilter = document.getElementById('statusFilter').value;
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
+            const hideDifficulty = document.getElementById('hideDifficultyCheckbox').checked;
 
             let filteredQuestions = questionsData.filter(question => {
                 const matchesDifficulty = !difficultyFilter || question.Difficulty === difficultyFilter;
@@ -2177,7 +2185,7 @@
                                 <th>✓</th>
                                 <th>ID</th>
                                 <th>Title</th>
-                                <th>Difficulty</th>
+                                ${!hideDifficulty ? '<th>Difficulty</th>' : ''}
                                 <th>Acceptance</th>
                                 <th>Frequency</th>
                             </tr>
@@ -2194,11 +2202,11 @@
                                                    onchange="toggleQuestion(${question.ID != null ? question.ID : 'null'})"></label></td>
                                         <td class="question-id">${question.ID != null ? question.ID : ''}</td>
                                         <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title || ''}</a></td>
-                                        <td>
+                                        ${!hideDifficulty ? `<td>
                                             <span class="difficulty-badge difficulty-${question.Difficulty ? question.Difficulty.toLowerCase() : ''}">
                                                 ${question.Difficulty || ''}
                                             </span>
-                                        </td>
+                                        </td>` : ''}
                                         <td class="acceptance-rate">${question.Acceptance || ''}</td>
                                         <td>
                                             <div class="frequency-bar">
@@ -2311,10 +2319,29 @@
         document.getElementById('difficultyFilter').addEventListener('change', renderQuestions);
         document.getElementById('statusFilter').addEventListener('change', renderQuestions);
         document.getElementById('searchInput').addEventListener('input', renderQuestions);
+        document.getElementById('hideDifficultyCheckbox').addEventListener('change', function() {
+            const difficultyFilter = document.getElementById('difficultyFilter');
+            difficultyFilter.disabled = this.checked;
+            if (this.checked) {
+                difficultyFilter.value = '';
+            }
+            persistentStorage.setItem('leetcode_hide_difficulty', String(this.checked));
+            renderQuestions();
+        });
 
         // Initialize
         loadSavedFiles();
         displaySavedFiles();
+
+        // Restore hide difficulty state
+        const hideDifficultySaved = persistentStorage.getItem('leetcode_hide_difficulty') === 'true';
+        const hideCheckbox = document.getElementById('hideDifficultyCheckbox');
+        const difficultyFilterInput = document.getElementById('difficultyFilter');
+        hideCheckbox.checked = hideDifficultySaved;
+        difficultyFilterInput.disabled = hideDifficultySaved;
+        if (hideDifficultySaved) {
+            difficultyFilterInput.value = '';
+        }
 
         // Collapsible section toggling
         window.addEventListener('DOMContentLoaded', function() {
