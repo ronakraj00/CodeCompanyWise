@@ -1460,6 +1460,30 @@
             100% { transform: rotate(360deg); }
         }
 
+        /* Ensure modal-loading and fun-message have a fixed width and wrap text */
+        .modal-loading {
+            min-width: 260px;
+            max-width: 340px;
+            width: 100%;
+            box-sizing: border-box;
+            text-align: center;
+            margin: 0 auto;
+        }
+        #fun-message {
+            display: block;
+            min-width: 220px;
+            max-width: 320px;
+            margin: 0 auto;
+            word-break: break-word;
+            white-space: normal;
+        }
+
+        .modal, .modal-loading {
+            min-width: 360px;
+            max-width: 450px;
+            width: 100%;
+        }
+
         /* Revamped Footer */
         .site-footer {
             background: var(--bg-card);
@@ -3136,20 +3160,18 @@
                                 updateDisplay();
                                 showSections();
                                 // Suggest saving
-                                setTimeout(async () => {
-                                    if (await window.confirm('Do you want to save this file for progress tracking?')) {
-                                        savedFiles.set(cleanCompany + ' ' + cleanPeriod, {
-                                            data: currentFileData,
-                                            progress: [...completedQuestions],
-                                            uploadDate: new Date().toISOString(),
-                                            lastUpdated: new Date().toISOString(),
-                                            originalName: file.name
-                                        });
-                                        currentFileName = cleanCompany + ' ' + cleanPeriod;
-                                        saveSavedFiles();
-                                        displaySavedFiles();
-                                        await window.alert('File saved successfully!');
-                                    }
+                                setTimeout(() => {
+                                    savedFiles.set(cleanCompany + ' ' + cleanPeriod, {
+                                        data: currentFileData,
+                                        progress: [...completedQuestions],
+                                        uploadDate: new Date().toISOString(),
+                                        lastUpdated: new Date().toISOString(),
+                                        originalName: file.name
+                                    });
+                                    currentFileName = cleanCompany + ' ' + cleanPeriod;
+                                    saveSavedFiles();
+                                    displaySavedFiles();
+                                    window.alert('File saved successfully!');
                                 }, 300);
                             },
                             error: function(error) {
