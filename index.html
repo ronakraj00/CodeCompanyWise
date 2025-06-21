@@ -43,6 +43,7 @@
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
     <style>
         :root {
             --bg-main: #18181b;
@@ -666,7 +667,7 @@
             background: var(--bg-card);
             color: var(--text-main);
             border: 1px solid var(--border-main);
-            padding: 12px 18px 12px 18px;
+            padding: 12px 48px 12px 18px;
             border-radius: 8px;
             cursor: pointer;
             font-size: 1rem;
@@ -678,9 +679,12 @@
             align-items: flex-start;
             min-width: 180px;
             position: relative;
-            width: fit-content;
+            width: 260px;
             max-width: 260px;
-            word-break: break-all;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            min-height: 50px;
+            justify-content: center;
         }
         .saved-file-btn:hover, .saved-file-btn:focus {
             background: var(--hover-bg);
@@ -1001,6 +1005,7 @@
             flex-wrap: wrap;
             gap: 14px;
             margin-bottom: 10px;
+            align-items: stretch;
         }
         .saved-file-progress-pill {
             display: inline-block;
@@ -1303,6 +1308,189 @@
             border-top: 2px solid var(--border-main);
             margin: 32px 0 18px 0;
             width: 100%;
+        }
+
+        body.modal-open,
+        html.modal-open {
+            overflow: hidden;
+        }
+
+        /* GitHub Modal Refinements */
+        #githubModal.github-modal .modal {
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            max-height: 75vh;
+            min-height: 300px;
+        }
+        .github-modal-header {
+            padding: 18px 24px;
+            border-bottom: 1px solid var(--border-main);
+            flex-shrink: 0;
+            position: relative;
+        }
+        .github-modal-header h2 {
+            margin: 0;
+            font-size: 1.25rem;
+        }
+        .github-modal .modal-close {
+            top: 14px;
+            right: 20px;
+        }
+        .github-modal-search-wrapper {
+            padding: 16px 24px;
+            border-bottom: 1px solid var(--border-main);
+            background: var(--bg-accent);
+            flex-shrink: 0;
+        }
+        .github-modal-search {
+            width: 100%;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1.5px solid var(--border-main);
+            background: var(--bg-main);
+            color: var(--text-main);
+            font-size: 1.05rem;
+            box-sizing: border-box;
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .github-modal-search:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px var(--accent);
+        }
+        .github-modal .modal-list {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding: 8px;
+            max-height: initial; /* Override old style */
+            margin-bottom: 0; /* Override old style */
+        }
+        .github-modal .modal-list-item {
+            padding: 14px 20px;
+            border-radius: 8px;
+            border-bottom: none;
+            gap: 12px;
+            flex-direction: row; /* Changed from column */
+            align-items: center;
+        }
+        .github-modal .modal-list-item svg {
+            width: 1.5em;
+            height: 1.5em;
+            color: var(--accent);
+            flex-shrink: 0;
+        }
+        .github-modal .modal-list-item strong {
+            font-size: 1.1em;
+            font-weight: 600;
+        }
+        .github-modal .back-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            background: var(--bg-accent);
+            color: var(--text-muted);
+            transition: background 0.2s, color 0.2s;
+            border: 1px solid var(--border-main);
+        }
+        .github-modal .back-btn:hover {
+            background: var(--hover-bg);
+            color: var(--accent);
+        }
+        .github-modal .modal-list-item:hover, .github-modal .modal-list-item:focus {
+            background: var(--hover-bg);
+            color: var(--text-main); /* Keep main text color */
+        }
+        .github-modal .modal-list-item:hover strong {
+            color: var(--accent); /* Highlight title on hover */
+        }
+        .github-modal .modal-list-item-desc {
+            font-size: 0.9em;
+            color: var(--text-muted);
+        }
+        .github-modal .modal-loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            gap: 16px;
+            flex-grow: 1;
+        }
+        .github-modal .spinner {
+            width: 48px;
+            height: 48px;
+            border: 5px solid var(--border-main);
+            border-bottom-color: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            box-sizing: border-box;
+            animation: rotation 1s linear infinite;
+        }
+        @keyframes rotation {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Revamped Footer */
+        .site-footer {
+            background: var(--bg-card);
+            color: var(--text-muted);
+            padding: 48px 32px;
+            margin-top: 40px;
+            border-top: 1.5px solid var(--border-main);
+            font-size: 0.98em;
+        }
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 32px;
+        }
+        .footer-column h4 {
+            font-size: 1.1em;
+            color: var(--text-main);
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+        .footer-column p, .footer-column ul {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            line-height: 1.7;
+        }
+        .footer-column a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-column a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+        .footer-links li {
+            margin-bottom: 8px;
+        }
+        .footer-socials {
+            display: flex;
+            gap: 16px;
+            margin-top: 12px;
+        }
+        .footer-socials a {
+            color: var(--text-muted);
+            font-size: 1.5em;
+        }
+        .footer-bottom {
+            margin-top: 40px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-main);
+            text-align: center;
+            font-size: 0.9em;
         }
     </style>
 </head>
@@ -1747,11 +1935,10 @@
             container.innerHTML = '';
             
             [...savedFiles.entries()].forEach(([fileName, fileInfo]) => {
-                const fileBtn = document.createElement('div');
-                fileBtn.style.cssText = 'display: flex; align-items: flex-start; margin-bottom: 5px; position: relative;';
-                
                 const loadBtn = document.createElement('button');
                 loadBtn.className = 'saved-file-btn' + (currentFileName === fileName ? ' active' : '');
+                loadBtn.onclick = () => loadSavedFile(fileName);
+
                 // Show completed/total
                 const total = fileInfo.data ? fileInfo.data.length : 0;
                 function capitalizeWords(str) {
@@ -1776,9 +1963,18 @@
                     completed = fileInfo.progress.filter(id => validIds.has(id?.toString())).length;
                 }
                 let displayName = addSpaceBeforeYear(capitalizeWords(fileName));
-                loadBtn.innerHTML = `📄 ${displayName}<br><span class="saved-file-progress-pill">${completed} / ${total}</span>`;
-                loadBtn.style.cssText = 'line-height: 1.3; text-align: left; min-height: 50px; flex: 1;';
-                loadBtn.onclick = () => loadSavedFile(fileName);
+
+                const contentSpan = document.createElement('span');
+                contentSpan.style.cssText = 'display: flex; flex-direction: column; text-align: left; width: 100%; gap: 4px;';
+                contentSpan.innerHTML = `
+                    <div style="display: flex; align-items: flex-start; gap: 6px;">
+                        <span>📄</span>
+                        <span style="word-break: break-word;">${displayName}</span>
+                    </div>
+                    <div hidden style="height: 1px; background: var(--divider); width: calc(100% + 48px + 18px); margin-left: -18px; opacity: 0.7;"></div>
+                    <span class="saved-file-progress-pill" style="margin-top: 10px; width:fit-content">${completed} / ${total}</span>
+                `;
+                loadBtn.appendChild(contentSpan);
 
                 // Three-dots menu
                 const menuActions = document.createElement('div');
@@ -1793,6 +1989,7 @@
                 menuPopover.className = 'file-menu-popover';
                 menuPopover.innerHTML = `<button class="file-menu-item" type="button">Delete</button>`;
                 menuActions.appendChild(menuPopover);
+
                 // Show/hide popover logic
                 menuBtn.onclick = (e) => {
                     e.stopPropagation();
@@ -1810,15 +2007,16 @@
                         document.addEventListener('mousedown', closeMenu);
                     }, 0);
                 };
+
                 // Delete action
                 menuPopover.querySelector('.file-menu-item').onclick = (e) => {
                     e.stopPropagation();
                     menuPopover.classList.remove('show');
                     deleteSavedFile(fileName);
                 };
-                fileBtn.appendChild(loadBtn);
-                fileBtn.appendChild(menuActions);
-                container.appendChild(fileBtn);
+
+                loadBtn.appendChild(menuActions);
+                container.appendChild(loadBtn);
             });
         }
 
@@ -2241,6 +2439,13 @@
                 completedQuestions.delete(idStr);
             } else {
                 completedQuestions.add(idStr);
+                // Increment global solved count
+                fetch(`https://portfolio-api-dwyy.onrender.com/api/count/codecompanywise/solved/hit`)
+                    .then(res => res.json())
+                    .then(data => {
+                        const solvedEl = document.getElementById('totalSolved');
+                        if (solvedEl) solvedEl.textContent = data.value.toLocaleString();
+                    }).catch(e => console.error('Failed to update solved count:', e));
             }
             saveCompletedQuestions();
             updateDisplay();
@@ -2394,97 +2599,149 @@
             let companyFolders = [];
             let csvList = [];
             let filteredList = [];
-            let searchInput;
-            let listContainer;
             let currentView = 'companies'; // or 'csvs'
             let selectedCompany = null;
-            let selectedCompanyUrl = null;
-            function closeModal() { modal.style.display = 'none'; modal.innerHTML = ''; currentView = 'companies'; selectedCompany = null; selectedCompanyUrl = null; }
-            function showCompanyModal() {
+            let funMessageInterval;
+
+            const ICONS = {
+                folder: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12.75V12A2.25 2.25 0 014.5 9.75h15A2.25 2.25 0 0121.75 12v.75m-8.69-6.44l-2.12-2.12a1.5 1.5 0 00-1.061-.44H4.5A2.25 2.25 0 002.25 6v12a2.25 2.25 0 002.25 2.25h15A2.25 2.25 0 0021.75 18V9a2.25 2.25 0 00-2.25-2.25h-5.379a1.5 1.5 0 01-1.06-.44z" /></svg>`,
+                file: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z" /></svg>`,
+                backArrow: `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="20" height="20"><path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" /></svg>`
+            };
+
+            function closeModal() {
+                document.body.classList.remove('modal-open');
+                document.documentElement.classList.remove('modal-open');
+                modal.style.display = 'none';
+                modal.innerHTML = '';
+                currentView = 'companies';
+                selectedCompany = null;
+                if (funMessageInterval) clearInterval(funMessageInterval);
+            }
+            
+            function buildModal(title, showSearch, showBack) {
+                document.body.classList.add('modal-open');
+                document.documentElement.classList.add('modal-open');
                 modal.innerHTML = `
                     <div class="modal-overlay">
                         <div class="modal">
-                            <button class="modal-close" title="Close">&times;</button>
-                            <h2>Browse Companies from GitHub</h2>
-                            <input class="modal-search" placeholder="Search company..." />
-                            <div class="modal-list"></div>
+                            <div class="github-modal-header">
+                                <button class="modal-close" title="Close">&times;</button>
+                                <h2>${title}</h2>
+                            </div>
+                            <div id="github-modal-content-wrapper"></div>
                         </div>
                     </div>
                 `;
+                modal.classList.add('github-modal');
                 modal.style.display = 'block';
-                searchInput = modal.querySelector('.modal-search');
-                listContainer = modal.querySelector('.modal-list');
+
                 modal.querySelector('.modal-close').onclick = closeModal;
                 modal.querySelector('.modal-overlay').onclick = e => { if (e.target === modal.querySelector('.modal-overlay')) closeModal(); };
-                searchInput.oninput = function() { renderCompanyList(searchInput.value); };
-                renderCompanyList('');
-            }
-            function showCSVModal(company, folderUrl) {
-                modal.innerHTML = `
-                    <div class="modal-overlay">
-                        <div class="modal">
-                            <button class="modal-close" title="Close">&times;</button>
-                            <button class="reset-btn" id="backToCompanies" style="margin-bottom:12px;">← Back to Companies</button>
-                            <h2>CSVs for <span style="color:var(--accent);">${company}</span></h2>
-                            <input class="modal-search" placeholder="Search period..." />
-                            <div class="modal-list"></div>
+
+                const contentWrapper = document.getElementById('github-modal-content-wrapper');
+                let contentHtml = '';
+                if (showBack) {
+                    contentHtml += `
+                        <div class="github-modal-search-wrapper" style="border-bottom:none; padding-bottom:0;">
+                            <button class="back-btn" id="backToCompanies">
+                                ${ICONS.backArrow}
+                                <span>Back to Companies</span>
+                            </button>
                         </div>
+                    `;
+                }
+                if (showSearch) {
+                    contentHtml += `
+                        <div class="github-modal-search-wrapper">
+                            <input class="github-modal-search" id="github-search-input" placeholder="Search..." />
+                        </div>
+                    `;
+                }
+                contentHtml += '<div class="modal-list"></div>';
+                contentWrapper.innerHTML = contentHtml;
+
+                if (showBack) {
+                    document.getElementById('backToCompanies').onclick = () => fetchAndShowCompanies(false);
+                }
+            }
+
+            function renderLoading(messages) {
+                const contentWrapper = document.getElementById('github-modal-content-wrapper');
+                if (!contentWrapper) return;
+
+                let msgIdx = 0;
+                contentWrapper.innerHTML = `
+                    <div class="modal-loading">
+                        <div class="spinner"></div>
+                        <span id="fun-message">${messages[msgIdx]}</span>
                     </div>
                 `;
-                modal.style.display = 'block';
-                searchInput = modal.querySelector('.modal-search');
-                listContainer = modal.querySelector('.modal-list');
-                modal.querySelector('.modal-close').onclick = closeModal;
-                modal.querySelector('.modal-overlay').onclick = e => { if (e.target === modal.querySelector('.modal-overlay')) closeModal(); };
-                document.getElementById('backToCompanies').onclick = function() {
-                    currentView = 'companies';
-                    selectedCompany = null;
-                    selectedCompanyUrl = null;
-                    showCompanyModal();
-                };
-                searchInput.oninput = function() { renderCSVList(searchInput.value); };
-                renderCSVList('');
+                
+                if (funMessageInterval) clearInterval(funMessageInterval);
+                funMessageInterval = setInterval(() => {
+                    msgIdx = (msgIdx + 1) % messages.length;
+                    const msgEl = document.getElementById('fun-message');
+                    if (msgEl) msgEl.textContent = messages[msgIdx];
+                }, 1800);
             }
+
             function renderCompanyList(query) {
+                const listContainer = modal.querySelector('.modal-list');
+                if (!listContainer) return;
+
                 listContainer.innerHTML = '';
                 filteredList = companyFolders.filter(f => f.name.toLowerCase().includes(query.toLowerCase()));
                 if (filteredList.length === 0) {
-                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No companies found.</div>';
+                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa; text-align:center;">No companies found.</div>';
                     return;
                 }
                 filteredList.forEach(f => {
                     const item = document.createElement('div');
                     item.className = 'modal-list-item';
                     item.tabIndex = 0;
-                    item.innerHTML = `<strong>${f.name.replace(/_/g, ' ')}</strong>`;
+                    item.innerHTML = `
+                        ${ICONS.folder}
+                        <div>
+                            <strong>${f.name.replace(/_/g, ' ')}</strong>
+                        </div>
+                    `;
                     item.onclick = () => {
                         selectedCompany = f.name.replace(/_/g, ' ');
-                        selectedCompanyUrl = f.url;
-                        currentView = 'csvs';
                         fetchCSVsForCompany(f.url, selectedCompany);
                     };
                     item.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') item.onclick(); };
                     listContainer.appendChild(item);
                 });
             }
+
             function renderCSVList(query) {
+                const listContainer = modal.querySelector('.modal-list');
+                if (!listContainer) return;
+
                 listContainer.innerHTML = '';
                 filteredList = csvList.filter(f => f.period.toLowerCase().includes(query.toLowerCase()));
                 if (filteredList.length === 0) {
-                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa;">No CSVs found for this company.</div>';
+                    listContainer.innerHTML = '<div style="padding: 18px; color: #a1a1aa; text-align:center;">No lists found.</div>';
                     return;
                 }
                 filteredList.forEach(f => {
                     const item = document.createElement('div');
                     item.className = 'modal-list-item';
                     item.tabIndex = 0;
-                    item.innerHTML = `<strong>${f.period}</strong>`;
+                    item.innerHTML = `
+                        ${ICONS.file}
+                        <div>
+                            <strong>${f.period}</strong>
+                            <div class="modal-list-item-desc">CSV File</div>
+                        </div>
+                    `;
                     item.onclick = () => selectCSV(f);
                     item.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') selectCSV(f); };
                     listContainer.appendChild(item);
                 });
             }
-            // Remove the hardcoded GITHUB_TOKEN and add a function to fetch it
+
             let GITHUB_TOKEN = null;
             async function getGithubToken() {
                 if (GITHUB_TOKEN) return GITHUB_TOKEN;
@@ -2494,22 +2751,17 @@
                     if (data.token) {
                         GITHUB_TOKEN = data.token;
                         return GITHUB_TOKEN;
-                    } else {
-                        throw new Error('Token not found in response');
-                    }
+                    } else { throw new Error('Token not found in response'); }
                 } catch (e) {
                     throw new Error('Failed to fetch GitHub token: ' + (e.message || e));
                 }
             }
+
             async function fetchCompanyFolders() {
                 try {
                     const token = await getGithubToken();
                     const rootUrl = 'https://api.github.com/repos/liquidslr/leetcode-company-wise-problems/contents';
-                    const rootRes = await fetch(rootUrl, {
-                        headers: {
-                            'Authorization': `token ${token}`
-                        }
-                    });
+                    const rootRes = await fetch(rootUrl, { headers: { 'Authorization': `token ${token}` } });
                     if (!rootRes.ok) throw new Error('GitHub API error: ' + rootRes.status);
                     const rootFiles = await rootRes.json();
                     companyFolders = rootFiles.filter(f => f.type === 'dir');
@@ -2519,95 +2771,179 @@
                     return err.message || 'Unknown error';
                 }
             }
-            async function fetchCSVsForCompany(folderUrl, company) {
-                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading CSVs...</h2></div></div>';
-                modal.style.display = 'block';
-                try {
-                    const token = await getGithubToken();
-                    const folderRes = await fetch(folderUrl, {
-                        headers: {
-                            'Authorization': `token ${token}`
-                        }
-                    });
-                    if (!folderRes.ok) throw new Error('GitHub API error: ' + folderRes.status);
-                    const folderFiles = await folderRes.json();
-                    csvList = folderFiles.filter(f => f.name.endsWith('.csv')).map(f => {
-                        const period = f.name.replace('.csv', '').replace(/_/g, ' ');
-                        return {
-                            name: f.name,
-                            download_url: f.download_url,
-                            company: company,
-                            period: period
-                        };
-                    });
-                    showCSVModal(company, folderUrl);
-                } catch (err) {
-                    csvList = [];
-                    modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error loading CSVs</h2><div style=\"color:#ef4444; margin:18px 0;\">${err.message || 'Unknown error'}</div></div></div>`;
-                    modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
-                }
-            }
-            githubBtn.onclick = async function() {
-                modal.innerHTML = '<div class="modal-overlay"><div class="modal"><h2>Loading Companies...</h2></div></div>';
-                modal.style.display = 'block';
-                const result = await fetchCompanyFolders();
-                if (result === true) {
-                    if (companyFolders.length === 0) {
-                        modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>No companies found.</h2></div></div>`;
-                        modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
+            
+            async function fetchAndShowCompanies(isFirstLoad) {
+                if (isFirstLoad) {
+                    buildModal('Browse Companies', false, false);
+                    renderLoading([
+                        "Grepping the GitHub firehose...",
+                        "Polishing our DSA skills...",
+                        "Brewing coffee for the code crawl...",
+                        "Asking an AI for interview tips..."
+                    ]);
+                    const result = await fetchCompanyFolders();
+                    if (funMessageInterval) clearInterval(funMessageInterval);
+                    if (result !== true) {
+                        modal.querySelector('.modal-loading').innerHTML = `<h2>Error</h2><p>${result}</p>`;
                         return;
                     }
-                    showCompanyModal();
-                } else {
-                    // result is error message
-                    modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error loading from GitHub</h2><div style=\"color:#ef4444; margin:18px 0;\">${result}</div><div style=\"color:#a1a1aa; font-size:0.98em;\">Try again later or check your internet connection.<br>If you are using a VPN or firewall, GitHub API may be blocked.</div></div></div>`;
-                    modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
                 }
-            };
+                
+                buildModal('Browse Companies', true, false);
+                modal.querySelector('#github-search-input').oninput = e => renderCompanyList(e.target.value);
+                modal.querySelector('#github-search-input').placeholder = 'Search companies...';
+                renderCompanyList('');
+            }
+
+            async function fetchCSVsForCompany(folderUrl, company) {
+                buildModal(`Lists for ${company}`, true, true);
+                renderLoading([
+                    "Sorting CSVs by date...",
+                    "Finding the latest question list...",
+                    "Preparing your practice session..."
+                ]);
+
+                try {
+                    const token = await getGithubToken();
+                    const folderRes = await fetch(folderUrl, { headers: { 'Authorization': `token ${token}` } });
+                    if (!folderRes.ok) throw new Error('GitHub API error: ' + folderRes.status);
+                    const folderFiles = await folderRes.json();
+                    if (funMessageInterval) clearInterval(funMessageInterval);
+
+                    csvList = folderFiles.filter(f => f.name.endsWith('.csv')).map(f => ({
+                        name: f.name,
+                        download_url: f.download_url,
+                        company: company,
+                        period: f.name.replace('.csv', '').replace(/_/g, ' ')
+                    }));
+                    
+                    buildModal(`Lists for ${company}`, true, true);
+                    modal.querySelector('#github-search-input').oninput = e => renderCSVList(e.target.value);
+                    modal.querySelector('#github-search-input').placeholder = 'Search by period (e.g., 6 months)...';
+                    renderCSVList('');
+                } catch (err) {
+                    if (funMessageInterval) clearInterval(funMessageInterval);
+                    modal.querySelector('.modal-list').innerHTML = `<div style="padding:18px; color:var(--accent4);">${err.message || 'Unknown error'}</div>`;
+                }
+            }
+
+            githubBtn.onclick = () => fetchAndShowCompanies(true);
+            
             async function selectCSV(file) {
-                closeModal();
-                // Fetch and parse CSV
+                // Don't close the modal, just change its content to the download progress UI.
+                // This keeps the backdrop and scroll-lock active.
+                const headerTitle = modal.querySelector('.github-modal-header h2');
+                if(headerTitle) headerTitle.textContent = 'Downloading...';
+
+                const contentWrapper = modal.querySelector('#github-modal-content-wrapper');
+                if (contentWrapper) {
+                    contentWrapper.innerHTML = `
+                        <div class="modal-loading" style="justify-content:flex-start; padding-top:24px;">
+                            <h2 style="font-size:1.1em; margin-top:0;">${file.period} list for ${file.company}</h2>
+                            <div class="progress-bar" style="height: 24px; width: 100%; max-width: 300px;">
+                                <div class="progress-fill" id="downloadProgressFill" style="width: 0%; transition: width 0.1s linear;"></div>
+                            </div>
+                            <div id="downloadProgressText" style="margin-top: 12px; color: var(--text-muted);">0%</div>
+                        </div>
+                    `;
+                } else {
+                    // Fallback for safety, though it shouldn't be needed with the new structure.
+                    closeModal();
+                    document.body.classList.add('modal-open');
+                    modal.innerHTML = `
+                        <div class="modal-overlay"><div class="modal" style="text-align:center;">
+                            <h2>Downloading...</h2>
+                            <div class="progress-bar" style="height:24px;"><div id="downloadProgressFill" class="progress-fill" style="width:0%;"></div></div>
+                            <div id="downloadProgressText" style="margin-top:12px;">0%</div>
+                        </div></div>
+                    `;
+                    modal.style.display = 'block';
+                }
+
                 try {
                     const res = await fetch(file.download_url);
-                    const csvText = await res.text();
-                    Papa.parse(csvText, {
-                        header: true,
-                        skipEmptyLines: true,
-                        dynamicTyping: true,
-                        complete: function(results) {
-                            // Map to internal format
-                            currentFileData = results.data.map(mapCSVRow);
-                            questionsData = currentFileData;
-                            // Remove any leading numbers/dots/spaces from company and period
-                            const cleanCompany = file.company.replace(/^\d+\.\s*/, '');
-                            const cleanPeriod = file.period.replace(/^\d+\.\s*/, '');
-                            currentFileName = cleanCompany + ' ' + cleanPeriod;
-                            loadCompletedQuestions();
-                            updateDisplay();
-                            showSections();
-                            // Suggest saving
-                            setTimeout(() => {
-                                if (confirm('Do you want to save this file for progress tracking?')) {
-                                    savedFiles.set(cleanCompany + ' ' + cleanPeriod, {
-                                        data: currentFileData,
-                                        progress: [...completedQuestions],
-                                        uploadDate: new Date().toISOString(),
-                                        lastUpdated: new Date().toISOString(),
-                                        originalName: file.name
-                                    });
-                                    currentFileName = cleanCompany + ' ' + cleanPeriod;
-                                    saveSavedFiles();
-                                    displaySavedFiles();
-                                    alert('File saved successfully!');
-                                }
-                            }, 300);
-                        },
-                        error: function(error) {
-                            alert('Error parsing CSV: ' + error.message);
+                    if (!res.ok) throw new Error(`Network response was not ok: ${res.statusText}`);
+                    
+                    const contentLength = res.headers.get('content-length');
+                    const totalSize = contentLength ? parseInt(contentLength, 10) : 0;
+                    let loadedSize = 0;
+                    
+                    const reader = res.body.getReader();
+                    const chunks = [];
+                    const progressFill = document.getElementById('downloadProgressFill');
+                    const progressText = document.getElementById('downloadProgressText');
+
+                    while(true) {
+                        const { done, value } = await reader.read();
+                        if (done) break;
+                        
+                        chunks.push(value);
+                        loadedSize += value.length;
+                        
+                        if (totalSize > 0) {
+                            const percent = Math.min(100, Math.round((loadedSize / totalSize) * 100));
+                            if (progressFill) progressFill.style.width = `${percent}%`;
+                            if (progressText) progressText.textContent = `${percent}%`;
                         }
+                    }
+
+                    if (progressFill) progressFill.style.width = '100%';
+                    if (progressText) progressText.textContent = 'Parsing data...';
+
+                    // Combine chunks and decode
+                    const allChunks = new Uint8Array(loadedSize);
+                    let position = 0;
+                    chunks.forEach(chunk => {
+                        allChunks.set(chunk, position);
+                        position += chunk.length;
                     });
+                    const csvText = new TextDecoder('utf-8').decode(allChunks);
+                    
+                    // Give a moment for the user to see the "Parsing" message
+                    setTimeout(() => {
+                        Papa.parse(csvText, {
+                            header: true,
+                            skipEmptyLines: true,
+                            dynamicTyping: true,
+                            complete: function(results) {
+                                closeModal(); // Close modal on success
+                                // Map to internal format
+                                currentFileData = results.data.map(mapCSVRow);
+                                questionsData = currentFileData;
+                                // Remove any leading numbers/dots/spaces from company and period
+                                const cleanCompany = file.company.replace(/^\d+\.\s*/, '');
+                                const cleanPeriod = file.period.replace(/^\d+\.\s*/, '');
+                                currentFileName = cleanCompany + ' ' + cleanPeriod;
+                                loadCompletedQuestions();
+                                updateDisplay();
+                                showSections();
+                                // Suggest saving
+                                setTimeout(async () => {
+                                    if (await window.confirm('Do you want to save this file for progress tracking?')) {
+                                        savedFiles.set(cleanCompany + ' ' + cleanPeriod, {
+                                            data: currentFileData,
+                                            progress: [...completedQuestions],
+                                            uploadDate: new Date().toISOString(),
+                                            lastUpdated: new Date().toISOString(),
+                                            originalName: file.name
+                                        });
+                                        currentFileName = cleanCompany + ' ' + cleanPeriod;
+                                        saveSavedFiles();
+                                        displaySavedFiles();
+                                        await window.alert('File saved successfully!');
+                                    }
+                                }, 300);
+                            },
+                            error: function(error) {
+                                modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error parsing CSV</h2><div style=\"color:#ef4444; margin:18px 0;\">${error.message}</div></div></div>`;
+                                modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
+                            }
+                        });
+                    }, 200);
+
                 } catch (e) {
-                    alert('Error fetching CSV: ' + e.message);
+                    modal.innerHTML = `<div class=\"modal-overlay\"><div class=\"modal\"><button class=\"modal-close\" title=\"Close\">&times;</button><h2>Error downloading CSV</h2><div style=\"color:#ef4444; margin:18px 0;\">${e.message || 'Unknown error'}</div></div></div>`;
+                    modal.querySelector('.modal-close').onclick = () => { modal.style.display = 'none'; modal.innerHTML = ''; };
                 }
             }
         })();
@@ -2725,6 +3061,8 @@
 
         // Custom Modal Dialog Logic
         function showCustomModal(type, message, onConfirm, onCancel) {
+          document.body.classList.add('modal-open');
+          document.documentElement.classList.add('modal-open');
           const overlay = document.getElementById('customModalOverlay');
           const modal = document.getElementById('customModal');
           const msg = document.getElementById('customModalMessage');
@@ -2732,7 +3070,11 @@
           msg.textContent = message;
           btns.innerHTML = '';
           overlay.style.display = 'flex';
-          function close() { overlay.style.display = 'none'; }
+          function close() {
+            overlay.style.display = 'none';
+            document.body.classList.remove('modal-open');
+            document.documentElement.classList.remove('modal-open');
+          }
           if (type === 'alert') {
             const ok = document.createElement('button');
             ok.textContent = 'OK';
@@ -2773,14 +3115,98 @@
         window.alert = (msg) => showCustomModal('alert', msg);
         window.confirm = (msg) => new Promise(res => showCustomModal('confirm', msg, () => res(true), () => res(false)));
         window.prompt = (msg, def) => new Promise(res => showCustomModal('prompt', msg, v => res(v), () => res(null)));
+
+        // --- CounterAPI V2 integration for global stats ---
+        const counter = new Counter({ workspace: 'leetcode-tracker' });
+
+        async function updateGlobalStats() {
+            const visitsEl = document.getElementById('totalVisits');
+            const solvedEl = document.getElementById('totalSolved');
+
+            // Increment and get visit count
+            counter.up('visit').then(result => {
+                if (visitsEl) visitsEl.textContent = (result.value || 0).toLocaleString();
+            }).catch(error => {
+                console.error('CounterAPI visit error:', error);
+                if (visitsEl) visitsEl.textContent = 'N/A';
+            });
+
+            // Get total solved count
+            counter.get('total-solved').then(result => {
+                if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
+            }).catch(error => {
+                console.error('CounterAPI get solved error:', error);
+                if (solvedEl) solvedEl.textContent = 'N/A';
+            });
+        }
+
+        async function incrementSolvedCounter() {
+            const solvedEl = document.getElementById('totalSolved');
+            counter.up('total-solved').then(result => {
+                if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
+            }).catch(error => {
+                console.error('CounterAPI increment solved error:', error);
+            });
+        }
+
+        function toggleQuestion(id) {
+            if (id == null) return;
+            const idStr = id.toString();
+            if (completedQuestions.has(idStr)) {
+                completedQuestions.delete(idStr);
+            } else {
+                completedQuestions.add(idStr);
+                incrementSolvedCounter();
+            }
+            saveCompletedQuestions();
+            updateDisplay();
+        }
+
+        // Initialize
+        loadSavedFiles();
+        displaySavedFiles();
+        updateGlobalStats();
     </script>
-    <footer style="width: fit-content; margin: 24px auto 0px auto; background:var(--bg-card); color:var(--text-muted); border-top:1.5px solid var(--border-main); border-radius: 24px 24px 0px 0px; text-align:center; padding:18px 32px 20px 32px; font-size:1.08em; box-sizing:border-box;">
-        Created with <span id="footer-emoji" aria-label="love">❤️</span> by 
-        <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer" style="color: var(--accent); font-weight: 600; text-decoration: none;">Ronak Raj</a>
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>About This Tool</h4>
+                <p>This tracker helps you visualize and manage your LeetCode problem-solving progress, with a focus on company-specific question lists to better prepare for technical interviews.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Credits & Data</h4>
+                <ul class="footer-links">
+                    <li>Problem data sourced from <a href="https://github.com/liquidslr/leetcode-company-wise-problems" target="_blank" rel="noopener noreferrer">liquidslr's Repo</a>.</li>
+                    <li>UI & functionality developed by <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Ronak Raj</a>.</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Developer</h4>
+                <p>Ronak Raj</p>
+                <div class="footer-socials">
+                    <a href="https://github.com/Ronakraj00" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
+                        <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
+                    </a>
+                    <a href="https://www.linkedin.com/in/ronakraj00/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+                        <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
+                    </a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h4>Global Stats</h4>
+                <p>Total Visits: <span id="totalVisits">Loading...</span></p>
+                <p>Total Problems Solved: <span id="totalSolved">Loading...</span></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and coffee by Ronak Raj.
+        </div>
     </footer>
     <style>
       @media (max-width: 600px) {
-        footer { font-size: 0.98em !important; padding: 20px 30px 20px 30px !important; }
+        .site-footer { padding: 32px 24px; }
+        .footer-container { text-align: center; }
+        .footer-socials { justify-content: center; }
       }
       .container { padding-bottom: 0 !important; }
     </style>
@@ -2791,14 +3217,17 @@
         if (!emojiSpan) return;
         const emojis = [
           { char: '❤️', label: 'love' },
-          { char: '\ud83e\udde0', label: 'brain' } // 🧠
+          { char: '🧠', label: 'brain' },
+          { char: '☕', label: 'coffee' },
+          { char: '🔥', label: 'fire' },
+          { char: '💻', label: 'laptop' }
         ];
         let idx = 0;
         setInterval(() => {
-          idx = 1 - idx;
+          idx = (idx + 1) % emojis.length;
           emojiSpan.textContent = emojis[idx].char;
           emojiSpan.setAttribute('aria-label', emojis[idx].label);
-        }, 1000);
+        }, 1200);
       })();
     </script>
 </body>
