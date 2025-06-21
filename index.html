@@ -526,7 +526,7 @@
             background: var(--bg-card);
             border-radius: 10px;
             padding: 24px;
-            box-shadow: 0 2px 8px 0 #0000000d;
+            /* box-shadow: 0 2px 8px 0 #0000000d; */
             border: 1px solid var(--border-main);
             overflow-x: auto;
             min-width: 0;
@@ -556,7 +556,7 @@
             border-bottom: 1px solid var(--border-main);
         }
         th {
-            background: var(--bg-card);
+            /* background: var(--bg-card); */
             font-weight: 600;
             color: var(--text-main);
             position: sticky;
@@ -688,7 +688,7 @@
             font-size: 1.1rem;
         }
         .saved-file-btn {
-            background: var(--bg-card);
+            background: none;
             color: var(--text-main);
             border: 1px solid var(--border-main);
             padding: 12px 48px 12px 18px;
@@ -829,7 +829,6 @@
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            background: linear-gradient(90deg, var(--bg-main) 80%, var(--bg-accent) 100%) !important;
             color: var(--text-main) !important;
             font-size: 1.18rem;
             font-weight: 600;
@@ -845,11 +844,11 @@
             box-shadow: 0 0 0 2px #6366f1;
             z-index: 2;
         }
-        .collapsible-header:hover {
+        /* .collapsible-header:hover {
             background: var(--hover-bg);
             color: var(--accent);
             border-color: var(--accent);
-        }
+        } */
         .collapsible-chevron {
             display: flex;
             align-items: center;
@@ -1536,7 +1535,6 @@
           z-index: 2;
           top: 0; left: 0; right: 0; bottom: 0;
           pointer-events: none;
-          /* Radial fade mask: center is clear, edges are dark */
           background: radial-gradient(circle at 50% 55%, rgba(20,22,34,0) 55%, rgba(20,22,34,0.7) 100%);
         }
         body.aurora-enabled #aurora-bg {
@@ -1551,6 +1549,7 @@
           pointer-events: none;
           z-index: 1;
           animation: aurora-move 32s linear infinite alternate;
+          will-change: transform, filter, opacity;
         }
         #aurora-bg .aurora1 {
           left: -20vw;
@@ -1570,10 +1569,60 @@
           background: radial-gradient(ellipse 40% 60% at 60% 20%, var(--aurora3) 0%, var(--aurora1) 60%, transparent 100%);
           animation-delay: 16s;
         }
+        /* --- Enhanced: Add more layers for depth and color --- */
+        #aurora-bg .aurora4 {
+          left: 10vw;
+          bottom: -30vh;
+          width: 70vw;
+          height: 60vh;
+          background: radial-gradient(ellipse 50% 60% at 20% 80%, var(--aurora4) 0%, var(--aurora2) 60%, transparent 100%);
+          opacity: 0.13;
+          filter: blur(160px);
+          animation: aurora-move2 38s linear infinite alternate;
+          animation-delay: 12s;
+        }
+        #aurora-bg .aurora5 {
+          right: 10vw;
+          top: 10vh;
+          width: 60vw;
+          height: 60vh;
+          background: radial-gradient(ellipse 60% 40% at 80% 20%, var(--aurora3) 0%, var(--aurora1) 60%, transparent 100%);
+          opacity: 0.11;
+          filter: blur(100px);
+          animation: aurora-move3 44s linear infinite alternate;
+          animation-delay: 20s;
+        }
+        #aurora-bg .aurora6 {
+          left: 40vw;
+          top: 40vh;
+          width: 50vw;
+          height: 50vh;
+          background: radial-gradient(ellipse 40% 60% at 50% 50%, var(--aurora2) 0%, var(--aurora3) 60%, transparent 100%);
+          opacity: 0.09;
+          filter: blur(80px);
+          animation: aurora-move4 52s linear infinite alternate;
+          animation-delay: 28s;
+        }
         @keyframes aurora-move {
           0% { transform: scale(1) translateY(0) rotate(0deg); }
-          50% { transform: scale(1.08) translateY(-2vw) rotate(6deg); }
-          100% { transform: scale(1.12) translateY(2vw) rotate(-6deg); }
+          30% { filter: blur(120px) brightness(1.1); }
+          50% { transform: scale(1.08) translateY(-2vw) rotate(6deg); filter: blur(140px) brightness(1.2); }
+          100% { transform: scale(1.12) translateY(2vw) rotate(-6deg); filter: blur(120px) brightness(1.1); }
+        }
+        @keyframes aurora-move2 {
+          0% { transform: scale(1) translateX(0) rotate(0deg); }
+          50% { transform: scale(1.1) translateX(4vw) rotate(8deg); }
+          100% { transform: scale(1.05) translateX(-4vw) rotate(-8deg); }
+        }
+        @keyframes aurora-move3 {
+          0% { transform: scale(1) translateY(0) rotate(0deg); }
+          50% { transform: scale(1.15) translateY(-6vw) rotate(12deg); }
+          100% { transform: scale(1.1) translateY(6vw) rotate(-12deg); }
+        }
+        @keyframes aurora-move4 {
+          0% { transform: scale(1) translate(0,0) rotate(0deg); }
+          50% { transform: scale(1.08) translate(2vw, -2vw) rotate(4deg); }
+          100% { transform: scale(1.12) translate(-2vw, 2vw) rotate(-4deg); }
         }
         @media (max-width: 700px) {
           #aurora-bg .aurora-layer {
@@ -1584,7 +1633,6 @@
         body.aurora-enabled {
           /* Ensure content is above aurora */
         }
-
         /* Aurora refinement for light and solarized themes: two big glowing balls in corners */
         .theme-light #aurora-bg::before, .theme-solarized #aurora-bg::before {
           background: none;
@@ -1633,6 +1681,19 @@
         .theme-solarized #aurora-bg .aurora3 {
           display: none !important;
         }
+        /* --- Enhanced: Noise overlay for organic look --- */
+        #aurora-bg .aurora-noise {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          width: 100vw;
+          height: 100vh;
+          pointer-events: none;
+          z-index: 3;
+          opacity: 0.13;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" seed="2"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+          background-size: 200px 200px;
+          mix-blend-mode: soft-light;
+        }
     </style>
 </head>
 <body>
@@ -1640,6 +1701,10 @@
       <div class="aurora-layer aurora1"></div>
       <div class="aurora-layer aurora2"></div>
       <div class="aurora-layer aurora3"></div>
+      <div class="aurora-layer aurora4"></div>
+      <div class="aurora-layer aurora5"></div>
+      <div class="aurora-layer aurora6"></div>
+      <div class="aurora-noise"></div>
     </div>
     <div class="container">
         <div class="header" style="position: relative;">
@@ -3283,37 +3348,37 @@
         window.prompt = (msg, def) => new Promise(res => showCustomModal('prompt', msg, v => res(v), () => res(null)));
 
         // --- CounterAPI V2 integration for global stats ---
-        const counter = new Counter({ workspace: 'leetcode-tracker' });
+        // const counter = new Counter({ workspace: 'leetcode-tracker' });
 
-        async function updateGlobalStats() {
-            const visitsEl = document.getElementById('totalVisits');
-            const solvedEl = document.getElementById('totalSolved');
+        // async function updateGlobalStats() {
+        //     const visitsEl = document.getElementById('totalVisits');
+        //     const solvedEl = document.getElementById('totalSolved');
 
-            // Increment and get visit count
-            counter.up('visit').then(result => {
-                if (visitsEl) visitsEl.textContent = (result.value || 0).toLocaleString();
-            }).catch(error => {
-                console.error('CounterAPI visit error:', error);
-                if (visitsEl) visitsEl.textContent = 'N/A';
-            });
+        //     // Increment and get visit count
+        //     counter.up('visit').then(result => {
+        //         if (visitsEl) visitsEl.textContent = (result.value || 0).toLocaleString();
+        //     }).catch(error => {
+        //         console.error('CounterAPI visit error:', error);
+        //         if (visitsEl) visitsEl.textContent = 'N/A';
+        //     });
 
-            // Get total solved count
-            counter.get('total-solved').then(result => {
-                if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
-            }).catch(error => {
-                console.error('CounterAPI get solved error:', error);
-                if (solvedEl) solvedEl.textContent = 'N/A';
-            });
-        }
+        //     // Get total solved count
+        //     counter.get('total-solved').then(result => {
+        //         if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
+        //     }).catch(error => {
+        //         console.error('CounterAPI get solved error:', error);
+        //         if (solvedEl) solvedEl.textContent = 'N/A';
+        //     });
+        // }
 
-        async function incrementSolvedCounter() {
-            const solvedEl = document.getElementById('totalSolved');
-            counter.up('total-solved').then(result => {
-                if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
-            }).catch(error => {
-                console.error('CounterAPI increment solved error:', error);
-            });
-        }
+        // async function incrementSolvedCounter() {
+        //     const solvedEl = document.getElementById('totalSolved');
+        //     counter.up('total-solved').then(result => {
+        //         if (solvedEl) solvedEl.textContent = (result.value || 0).toLocaleString();
+        //     }).catch(error => {
+        //         console.error('CounterAPI increment solved error:', error);
+        //     });
+        // }
 
         function toggleQuestion(id) {
             if (id == null) return;
@@ -3356,6 +3421,49 @@
             switchEl.firstElementChild.style.background = 'var(--accent)';
           }
         }
+
+        // --- Aurora Dynamic Color Animation (JS) ---
+        (function() {
+          if (!window.requestAnimationFrame) return;
+          const root = document.documentElement;
+          let t = 0;
+          function lerpColor(a, b, t) {
+            return a + (b - a) * t;
+          }
+          function hslToHex(h, s, l) {
+            l /= 100; s /= 100;
+            let c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c/2, r=0, g=0, b=0;
+            if (0 <= h && h < 60) { r = c; g = x; b = 0; }
+            else if (60 <= h && h < 120) { r = x; g = c; b = 0; }
+            else if (120 <= h && h < 180) { r = 0; g = c; b = x; }
+            else if (180 <= h && h < 240) { r = 0; g = x; b = c; }
+            else if (240 <= h && h < 300) { r = x; g = 0; b = c; }
+            else if (300 <= h && h < 360) { r = c; g = 0; b = x; }
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+            return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
+          }
+          function animateAurora() {
+            t += 0.008;
+            // Animate the CSS variables for aurora colors
+            const h1 = (200 + 40 * Math.sin(t)) % 360;
+            const h2 = (260 + 60 * Math.cos(t * 0.7)) % 360;
+            const h3 = (50 + 30 * Math.sin(t * 1.3)) % 360;
+            const h4 = (170 + 80 * Math.cos(t * 0.5)) % 360;
+            root.style.setProperty('--aurora1', hslToHex(h1, 100, 70));
+            root.style.setProperty('--aurora2', hslToHex(h2, 90, 60));
+            root.style.setProperty('--aurora3', hslToHex(h3, 95, 65));
+            root.style.setProperty('--aurora4', hslToHex(h4, 80, 60));
+            requestAnimationFrame(animateAurora);
+          }
+          if (document.body.classList.contains('aurora-enabled')) animateAurora();
+          // Also re-run if aurora is toggled on
+          const observer = new MutationObserver(() => {
+            if (document.body.classList.contains('aurora-enabled')) animateAurora();
+          });
+          observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+        })();
     </script>
     <footer class="site-footer">
         <div class="footer-container">
