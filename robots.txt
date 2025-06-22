@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://ronakraj00.github.io/CodeCompanyWise/sitemap.xml 
