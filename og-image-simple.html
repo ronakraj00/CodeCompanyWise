@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Company Questions OG Image</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            width: 1200px;
+            height: 630px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        /* Background pattern */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="0.5"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 24px;
+            padding: 80px 60px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(10px);
+            max-width: 1000px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .emoji {
+            font-size: 72px;
+            margin-bottom: 30px;
+            display: block;
+        }
+        
+        .title {
+            font-size: 56px;
+            font-weight: 900;
+            color: #1a1a1a;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
+        
+        .title-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .subtitle {
+            font-size: 28px;
+            color: #666;
+            margin-bottom: 40px;
+            font-weight: 500;
+            line-height: 1.3;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 40px;
+        }
+        
+        .feature {
+            text-align: center;
+        }
+        
+        .feature-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+            display: block;
+        }
+        
+        .feature-text {
+            font-size: 18px;
+            font-weight: 700;
+            color: #555;
+        }
+        
+        .url {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #667eea;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 20px;
+            border-radius: 12px;
+        }
+        
+        .badge {
+            position: absolute;
+            top: 30px;
+            right: 30px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="badge">Free Tool</div>
+        <span class="emoji">🏢</span>
+        <h1 class="title">LeetCode <span class="title-highlight">Company Questions</span></h1>
+        <p class="subtitle">Company-wise Interview Questions and Solutions<br>for Software Engineering Interviews</p>
+        
+        <div class="features">
+            <div class="feature">
+                <span class="feature-icon">📊</span>
+                <div class="feature-text">Progress<br>Tracking</div>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">🏢</span>
+                <div class="feature-text">Company<br>Specific</div>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">💾</span>
+                <div class="feature-text">Save<br>Sessions</div>
+            </div>
+            <div class="feature">
+                <span class="feature-icon">📱</span>
+                <div class="feature-text">Mobile<br>Friendly</div>
+            </div>
+        </div>
+        
+        <div class="url">ronakraj00.github.io/CodeCompanyWise</div>
+    </div>
+</body>
+</html> 
