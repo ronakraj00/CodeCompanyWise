@@ -1366,6 +1366,9 @@
             background: var(--bg-accent);
             flex-shrink: 0;
             background: var(--bg-card);
+            position: sticky;
+            top: 0;
+            z-index: 10;
         }
         .github-modal-search {
             width: 100%;
@@ -2880,7 +2883,7 @@
                 }
                 if (showSearch) {
                     contentHtml += `
-                        <div class="github-modal-search-wrapper">
+                        <div class="github-modal-search-wrapper" style="position: sticky; top: 0; z-index: 10;">
                             <input class="github-modal-search" id="github-search-input" placeholder="Search..." />
                         </div>
                     `;
@@ -2960,7 +2963,7 @@
                         ${ICONS.file}
                         <div>
                             <strong>${f.period}</strong>
-                            <div class="modal-list-item-desc">CSV File</div>
+                            <div class="modal-list-item-desc">${f.description}</div>
                         </div>
                     `;
                     item.onclick = () => selectCSV(f);
@@ -3037,12 +3040,16 @@
                     const folderFiles = await folderRes.json();
                     if (funMessageInterval) clearInterval(funMessageInterval);
 
-                    csvList = folderFiles.filter(f => f.name.endsWith('.csv')).map(f => ({
-                        name: f.name,
-                        download_url: f.download_url,
-                        company: company,
-                        period: f.name.replace('.csv', '').replace(/_/g, ' ')
-                    }));
+                    csvList = folderFiles.filter(f => f.name.endsWith('.csv')).map(f => {
+                        const periodDescription = getPeriodDescription(f.name);
+                        return {
+                            name: f.name,
+                            download_url: f.download_url,
+                            company: company,
+                            period: periodDescription.label,
+                            description: periodDescription.description
+                        };
+                    });
                     
                     buildModal(`Lists for ${company}`, true, true);
                     modal.querySelector('#github-search-input').oninput = e => renderCSVList(e.target.value);
@@ -3051,6 +3058,67 @@
                 } catch (err) {
                     if (funMessageInterval) clearInterval(funMessageInterval);
                     modal.querySelector('.modal-list').innerHTML = `<div style="padding:18px; color:var(--accent4);">${err.message || 'Unknown error'}</div>`;
+                }
+            }
+
+            function getPeriodDescription(period) {
+                const periodLower = period.toLowerCase().trim();
+                
+                // Convert common period names to descriptive labels based on actual API response
+                if (periodLower.includes('thirty days') || periodLower.includes('30 days') || periodLower.includes('30day')) {
+                    return {
+                        label: 'Last 30 Days',
+                        description: 'Questions asked in the past 30 days'
+                    };
+                } else if (periodLower.includes('three months') || periodLower.includes('3 months') || periodLower.includes('3month')) {
+                    return {
+                        label: 'Last 3 Months',
+                        description: 'Questions asked in the past 3 months'
+                    };
+                } else if (periodLower.includes('six months') || periodLower.includes('6 months') || periodLower.includes('6month')) {
+                    return {
+                        label: 'Last 6 Months',
+                        description: 'Questions asked in the past 6 months'
+                    };
+                } else if (periodLower.includes('more than six months') || periodLower.includes('more than 6 months')) {
+                    return {
+                        label: 'More Than 6 Months',
+                        description: 'Questions asked more than 6 months ago'
+                    };
+                } else if (periodLower.includes('all') && !periodLower.includes('more than')) {
+                    return {
+                        label: 'All Time',
+                        description: 'All questions ever asked by this company'
+                    };
+                } else if (periodLower.includes('one year') || periodLower.includes('1 year') || periodLower.includes('year') || periodLower.includes('12months')) {
+                    return {
+                        label: 'Last 1 Year',
+                        description: 'Questions asked in the past year'
+                    };
+                } else if (periodLower.includes('two months') || periodLower.includes('2 months') || periodLower.includes('2month')) {
+                    return {
+                        label: 'Last 2 Months',
+                        description: 'Questions asked in the past 2 months'
+                    };
+                } else if (periodLower.includes('four months') || periodLower.includes('4 months') || periodLower.includes('4month')) {
+                    return {
+                        label: 'Last 4 Months',
+                        description: 'Questions asked in the past 4 months'
+                    };
+                } else if (periodLower.includes('nine months') || periodLower.includes('9 months') || periodLower.includes('9month')) {
+                    return {
+                        label: 'Last 9 Months',
+                        description: 'Questions asked in the past 9 months'
+                    };
+                } else {
+                    // For any other period, format it nicely and try to extract time information
+                    // Remove numbered prefixes like "1. ", "2. " etc.
+                    const cleanPeriod = period.replace(/^\d+\.\s*/, '').replace('.csv', '');
+                    const formattedPeriod = cleanPeriod.replace(/(\d+)([a-zA-Z]+)/g, '$1 $2').replace(/\b\w/g, l => l.toUpperCase());
+                    return {
+                        label: formattedPeriod,
+                        description: 'Questions from this time period'
+                    };
                 }
             }
 
