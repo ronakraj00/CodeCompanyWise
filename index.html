@@ -1542,7 +1542,7 @@
             font-size: 0.9em;
         }
 
-        /* Aurora Background Styles */
+        /* Aurora Background Styles - Optimized for Performance */
         #aurora-bg {
           position: fixed;
           z-index: 0;
@@ -1553,6 +1553,27 @@
           overflow: hidden;
           opacity: 0;
           transition: opacity 0.7s cubic-bezier(.4,2,.6,1);
+          /* Disable on mobile for better performance */
+          display: none;
+        }
+        body.aurora-enabled #aurora-bg {
+          opacity: 1;
+          display: block;
+        }
+        /* Only show aurora on desktop/larger screens */
+        @media (min-width: 768px) {
+          body.aurora-enabled #aurora-bg {
+            display: block;
+          }
+        }
+        /* Hide aurora completely on mobile for performance */
+        @media (max-width: 767px) {
+          #aurora-bg {
+            display: none !important;
+          }
+          body.aurora-enabled #aurora-bg {
+            display: none !important;
+          }
         }
         #aurora-bg::before {
           content: '';
@@ -1562,19 +1583,18 @@
           pointer-events: none;
           background: radial-gradient(circle at 50% 55%, rgba(20,22,34,0) 55%, rgba(20,22,34,0.7) 100%);
         }
-        body.aurora-enabled #aurora-bg {
-          opacity: 1;
-        }
         #aurora-bg .aurora-layer {
           position: absolute;
           width: 90vw;
           height: 90vh;
           filter: blur(120px);
-          opacity: 0.18;
+          opacity: 0.15;
           pointer-events: none;
           z-index: 1;
-          animation: aurora-move 32s linear infinite alternate;
-          will-change: transform, filter, opacity;
+          animation: aurora-move 40s linear infinite alternate;
+          will-change: transform;
+          /* Reduce animation complexity for better performance */
+          transform-origin: center;
         }
         #aurora-bg .aurora1 {
           left: -20vw;
@@ -1586,86 +1606,37 @@
           right: -25vw;
           bottom: -25vh;
           background: radial-gradient(ellipse 50% 30% at 70% 60%, var(--aurora2) 0%, var(--aurora4) 60%, transparent 100%);
-          animation-delay: 8s;
+          animation-delay: 20s;
         }
         #aurora-bg .aurora3 {
           right: -15vw;
           top: -10vh;
           background: radial-gradient(ellipse 40% 60% at 60% 20%, var(--aurora3) 0%, var(--aurora1) 60%, transparent 100%);
-          animation-delay: 16s;
+          animation-delay: 10s;
         }
-        /* --- Enhanced: Add more layers for depth and color --- */
-        #aurora-bg .aurora4 {
-          left: 10vw;
-          bottom: -30vh;
-          width: 70vw;
-          height: 60vh;
-          background: radial-gradient(ellipse 50% 60% at 20% 80%, var(--aurora4) 0%, var(--aurora2) 60%, transparent 100%);
-          opacity: 0.13;
-          filter: blur(160px);
-          animation: aurora-move2 38s linear infinite alternate;
-          animation-delay: 12s;
-        }
-        #aurora-bg .aurora5 {
-          right: 10vw;
-          top: 10vh;
-          width: 60vw;
-          height: 60vh;
-          background: radial-gradient(ellipse 60% 40% at 80% 20%, var(--aurora3) 0%, var(--aurora1) 60%, transparent 100%);
-          opacity: 0.11;
-          filter: blur(100px);
-          animation: aurora-move3 44s linear infinite alternate;
-          animation-delay: 20s;
-        }
-        #aurora-bg .aurora6 {
-          left: 40vw;
-          top: 40vh;
-          width: 50vw;
-          height: 50vh;
-          background: radial-gradient(ellipse 40% 60% at 50% 50%, var(--aurora2) 0%, var(--aurora3) 60%, transparent 100%);
-          opacity: 0.09;
-          filter: blur(80px);
-          animation: aurora-move4 52s linear infinite alternate;
-          animation-delay: 28s;
-        }
+        /* Simplified animation - removed extra layers for better performance */
         @keyframes aurora-move {
-          0% { transform: scale(1) translateY(0) rotate(0deg); }
-          30% { filter: blur(120px) brightness(1.1); }
-          50% { transform: scale(1.08) translateY(-2vw) rotate(6deg); filter: blur(140px) brightness(1.2); }
-          100% { transform: scale(1.12) translateY(2vw) rotate(-6deg); filter: blur(120px) brightness(1.1); }
-        }
-        @keyframes aurora-move2 {
-          0% { transform: scale(1) translateX(0) rotate(0deg); }
-          50% { transform: scale(1.1) translateX(4vw) rotate(8deg); }
-          100% { transform: scale(1.05) translateX(-4vw) rotate(-8deg); }
-        }
-        @keyframes aurora-move3 {
-          0% { transform: scale(1) translateY(0) rotate(0deg); }
-          50% { transform: scale(1.15) translateY(-6vw) rotate(12deg); }
-          100% { transform: scale(1.1) translateY(6vw) rotate(-12deg); }
-        }
-        @keyframes aurora-move4 {
-          0% { transform: scale(1) translate(0,0) rotate(0deg); }
-          50% { transform: scale(1.08) translate(2vw, -2vw) rotate(4deg); }
-          100% { transform: scale(1.12) translate(-2vw, 2vw) rotate(-4deg); }
-        }
-        @media (max-width: 700px) {
-          #aurora-bg .aurora-layer {
-            opacity: 0.09;
-            filter: blur(80px);
+          0% { 
+            transform: scale(1) translateY(0) rotate(0deg); 
+            filter: blur(120px);
+          }
+          50% { 
+            transform: scale(1.05) translateY(-1vw) rotate(3deg); 
+            filter: blur(130px);
+          }
+          100% { 
+            transform: scale(1.1) translateY(1vw) rotate(-3deg); 
+            filter: blur(120px);
           }
         }
-        body.aurora-enabled {
-          /* Ensure content is above aurora */
-        }
-        /* Aurora refinement for light and solarized themes: two big glowing balls in corners */
+        /* Reduced opacity and simplified for light themes */
         .theme-light #aurora-bg::before, .theme-solarized #aurora-bg::before {
           background: none;
         }
         .theme-light #aurora-bg .aurora-layer,
         .theme-solarized #aurora-bg .aurora-layer {
-          opacity: 0.22 !important;
-          filter: blur(120px) !important;
+          opacity: 0.12 !important;
+          filter: blur(100px) !important;
           animation: none !important;
         }
         .theme-light #aurora-bg .aurora1 {
@@ -1706,7 +1677,23 @@
         .theme-solarized #aurora-bg .aurora3 {
           display: none !important;
         }
-        /* --- Enhanced: Noise overlay for organic look --- */
+        /* Remove noise overlay for better performance */
+        /* #aurora-bg .aurora-noise {
+          position: absolute;
+          top: 0; left: 0; right: 0; bottom: 0;
+          width: 100vw;
+          height: 100vh;
+          pointer-events: none;
+          z-index: 3;
+          opacity: 0.13;
+          background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><filter id="noise"><feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="4" seed="2"/></filter><rect width="100%" height="100%" filter="url(%23noise)"/></svg>');
+          background-size: 200px 200px;
+          mix-blend-mode: soft-light;
+        } */
+        .theme-solarized #aurora-bg .aurora3 {
+          display: none !important;
+        }
+        /* Noise overlay for organic look */
         #aurora-bg .aurora-noise {
           position: absolute;
           top: 0; left: 0; right: 0; bottom: 0;
@@ -1726,9 +1713,6 @@
       <div class="aurora-layer aurora1"></div>
       <div class="aurora-layer aurora2"></div>
       <div class="aurora-layer aurora3"></div>
-      <div class="aurora-layer aurora4"></div>
-      <div class="aurora-layer aurora5"></div>
-      <div class="aurora-layer aurora6"></div>
       <div class="aurora-noise"></div>
     </div>
     <div class="container">
@@ -1775,6 +1759,7 @@
                       <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:1.2em;height:1.2em;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
                       <span>Aurora Background</span>
                       <span id="auroraToggleSwitch" style="margin-left:auto;display:inline-block;width:36px;height:20px;background:var(--bg-accent);border-radius:12px;position:relative;vertical-align:middle;transition:background 0.2s;"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--accent);transition:left 0.2s;"></span></span>
+                      <span id="auroraMobileIndicator" style="font-size:0.8em;color:var(--text-muted);display:none;">(Mobile disabled)</span>
                     </button>
                 </div>
             </div>
@@ -3423,18 +3408,59 @@
 
         // Aurora Toggle Logic
         function setAuroraEnabled(enabled) {
+          // Check if device is mobile
+          const isMobile = window.innerWidth <= 768;
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          // Disable aurora on mobile or if user prefers reduced motion
+          if (isMobile || prefersReducedMotion) {
+            enabled = false;
+            if (isMobile) {
+              // Show a subtle message that aurora is disabled on mobile
+              console.log('Aurora background is disabled on mobile devices for better performance');
+            }
+          }
+          
           if (enabled) document.body.classList.add('aurora-enabled');
           else document.body.classList.remove('aurora-enabled');
           localStorage.setItem('leetcode_aurora_enabled', enabled ? '1' : '0');
           updateAuroraSwitchUI(enabled);
         }
         function getAuroraEnabled() {
+          // Check if device is mobile
+          const isMobile = window.innerWidth <= 768;
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          // Force disable on mobile or reduced motion preference
+          if (isMobile || prefersReducedMotion) {
+            return false;
+          }
+          
           return localStorage.getItem('leetcode_aurora_enabled') === '1';
         }
         function updateAuroraSwitchUI(enabled) {
           const switchEl = document.getElementById('auroraToggleSwitch');
+          const mobileIndicator = document.getElementById('auroraMobileIndicator');
           if (!switchEl) return;
-          if (enabled) {
+          
+          // Check if device is mobile
+          const isMobile = window.innerWidth <= 768;
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          // Show mobile indicator if on mobile
+          if (mobileIndicator) {
+            if (isMobile) {
+              mobileIndicator.style.display = 'inline';
+              mobileIndicator.textContent = '(Mobile disabled)';
+            } else if (prefersReducedMotion) {
+              mobileIndicator.style.display = 'inline';
+              mobileIndicator.textContent = '(Motion reduced)';
+            } else {
+              mobileIndicator.style.display = 'none';
+            }
+          }
+          
+          if (enabled && !isMobile && !prefersReducedMotion) {
             switchEl.style.background = 'var(--accent)';
             switchEl.firstElementChild.style.left = '18px';
             switchEl.firstElementChild.style.background = '#fff';
@@ -3445,14 +3471,21 @@
           }
         }
 
-        // --- Aurora Dynamic Color Animation (JS) ---
+        // --- Aurora Dynamic Color Animation (JS) - Optimized for Performance ---
         (function() {
           if (!window.requestAnimationFrame) return;
+          
+          // Check if device is mobile or has reduced motion preference
+          const isMobile = window.innerWidth <= 768;
+          const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+          
+          // Skip animation on mobile or if user prefers reduced motion
+          if (isMobile || prefersReducedMotion) return;
+          
           const root = document.documentElement;
           let t = 0;
-          function lerpColor(a, b, t) {
-            return a + (b - a) * t;
-          }
+          let animationId = null;
+          
           function hslToHex(h, s, l) {
             l /= 100; s /= 100;
             let c = (1 - Math.abs(2 * l - 1)) * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = l - c/2, r=0, g=0, b=0;
@@ -3467,25 +3500,52 @@
             b = Math.round((b + m) * 255);
             return `#${((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1)}`;
           }
+          
           function animateAurora() {
-            t += 0.008;
-            // Animate the CSS variables for aurora colors
+            t += 0.005; // Reduced speed for better performance
+            // Animate the CSS variables for aurora colors (only 3 colors now)
             const h1 = (200 + 40 * Math.sin(t)) % 360;
             const h2 = (260 + 60 * Math.cos(t * 0.7)) % 360;
             const h3 = (50 + 30 * Math.sin(t * 1.3)) % 360;
-            const h4 = (170 + 80 * Math.cos(t * 0.5)) % 360;
+            
             root.style.setProperty('--aurora1', hslToHex(h1, 100, 70));
             root.style.setProperty('--aurora2', hslToHex(h2, 90, 60));
             root.style.setProperty('--aurora3', hslToHex(h3, 95, 65));
-            root.style.setProperty('--aurora4', hslToHex(h4, 80, 60));
-            requestAnimationFrame(animateAurora);
+            
+            animationId = requestAnimationFrame(animateAurora);
           }
-          if (document.body.classList.contains('aurora-enabled')) animateAurora();
-          // Also re-run if aurora is toggled on
+          
+          function startAuroraAnimation() {
+            if (isMobile || prefersReducedMotion) return;
+            if (!animationId && document.body.classList.contains('aurora-enabled')) {
+              animateAurora();
+            }
+          }
+          
+          function stopAuroraAnimation() {
+            if (animationId) {
+              cancelAnimationFrame(animationId);
+              animationId = null;
+            }
+          }
+          
+          // Start animation if aurora is enabled on load
+          if (document.body.classList.contains('aurora-enabled')) {
+            startAuroraAnimation();
+          }
+          
+          // Observer for aurora toggle changes
           const observer = new MutationObserver(() => {
-            if (document.body.classList.contains('aurora-enabled')) animateAurora();
+            if (document.body.classList.contains('aurora-enabled')) {
+              startAuroraAnimation();
+            } else {
+              stopAuroraAnimation();
+            }
           });
           observer.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+          
+          // Clean up on page unload
+          window.addEventListener('beforeunload', stopAuroraAnimation);
         })();
     </script>
     <footer class="site-footer">
