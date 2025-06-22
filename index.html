@@ -3,30 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Company-wise LeetCode Progress Tracker | Track Coding Interview Prep by Company</title>
-    <meta name="description" content="Track your LeetCode progress company-wise, visualize your coding interview preparation, and save your progress. Upload or browse company-specific LeetCode question lists. Perfect for FAANG, tech, and startup interview prep.">
-    <meta name="keywords" content="LeetCode, Company-wise, Progress Tracker, Coding Interview, Interview Prep, FAANG, Tech Companies, Software Engineering, CSV, Visualization, Save Progress, Data Structures, Algorithms, Practice, Company Questions, SDE, Placement, DSA, Programming, Job Prep, Company Tags, Google, Amazon, Microsoft, Meta, Apple, Netflix, Startups, India, US, Europe, Tech Jobs, Software Developer, Engineer, Practice Tracker, LeetCode CSV, LeetCode Company, LeetCode Interview, LeetCode Progress, LeetCode Save, LeetCode Visualize, LeetCode Analytics, LeetCode Company-wise, LeetCode Company Tracker, LeetCode Company Questions">
+    <title>LeetCode Company Questions - Company-wise Interview Questions and Solutions</title>
+    <meta name="description" content="Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more. Track your progress, visualize completion rates, and save your practice sessions.">
+    <meta name="keywords" content="LeetCode, LeetCode questions by company, coding interview prep, software engineering interview, FAANG interview questions, top tech companies interview prep, Google interview questions, Amazon interview questions, Facebook interview questions, Apple interview questions, Netflix interview questions, Microsoft interview questions, algorithm problems, data structure questions, coding practice, interview guide, technical interviews, problem-solving, software developer interview prep, SDE interviews, tech job preparation, coding challenge solutions, computer science interviews, tech hiring, LeetCode progress tracker, company-wise LeetCode, LeetCode company tracker, LeetCode interview prep, LeetCode practice tracker">
+    <meta name="author" content="Ronak Raj">
+    <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://yourdomain.com/" />
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://yourdomain.com/">
-    <meta property="og:title" content="Company-wise LeetCode Progress Tracker | Track Coding Interview Prep by Company">
-    <meta property="og:description" content="Track your LeetCode progress company-wise, visualize your coding interview preparation, and save your progress. Upload or browse company-specific LeetCode question lists.">
+    <meta property="og:title" content="LeetCode Company Questions - Company-wise Interview Questions and Solutions">
+    <meta property="og:description" content="Access categorized LeetCode interview questions for top tech companies. Optimize your preparation for software engineering roles at Google, Amazon, Facebook, Apple, and more. Track progress and save your practice sessions.">
     <meta property="og:image" content="https://yourdomain.com/og-image.png">
     <!-- Twitter -->
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://yourdomain.com/">
-    <meta property="twitter:title" content="Company-wise LeetCode Progress Tracker | Track Coding Interview Prep by Company">
-    <meta property="twitter:description" content="Track your LeetCode progress company-wise, visualize your coding interview preparation, and save your progress. Upload or browse company-specific LeetCode question lists.">
+    <meta property="twitter:title" content="LeetCode Company Questions - Company-wise Interview Questions and Solutions">
+    <meta property="twitter:description" content="Access categorized LeetCode interview questions for top tech companies. Optimize your preparation for software engineering roles at Google, Amazon, Facebook, Apple, and more.">
     <meta property="twitter:image" content="https://yourdomain.com/og-image.png">
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="LeetCode Company Questions">
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
       "@type": "WebApplication",
-      "name": "Company-wise LeetCode Progress Tracker",
+      "name": "LeetCode Company Questions",
+      "alternateName": "Company-wise LeetCode Progress Tracker",
       "url": "https://yourdomain.com/",
-      "description": "Track your LeetCode progress company-wise, visualize your coding interview preparation, and save your progress. Upload or browse company-specific LeetCode question lists.",
+      "description": "Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more.",
       "applicationCategory": "DeveloperApplication",
       "operatingSystem": "All",
       "offers": {
@@ -38,13 +47,28 @@
         "@type": "Person",
         "name": "Ronak Raj",
         "url": "https://ronakraj00.github.io/portfolio/"
+      },
+      "keywords": "LeetCode, coding interview prep, software engineering interview, FAANG interview questions, algorithm problems, data structure questions",
+      "audience": {
+        "@type": "Audience",
+        "audienceType": "Software Engineers, Computer Science Students, Tech Job Seekers"
       }
     }
+    </script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZ8LK7B9KN"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-MZ8LK7B9KN');
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏢%3C/text%3E%3C/svg%3E">
+    <link rel="shortcut icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🏢%3C/text%3E%3C/svg%3E" type="image/x-icon">
     <style>
         :root {
             --bg-main: #18181b;
@@ -1767,8 +1791,11 @@
                     </button>
                 </div>
             </div>
-            <h1>🏢 Company-wise LeetCode Progress Tracker</h1>
-            <h2 style="text-align:center; color:var(--text-muted); font-size:1.2em; font-weight:500; margin-top:-10px;">Track, visualize, and save your LeetCode progress by company for coding interviews and placements</h2>
+            <h1>🏢 LeetCode Company Questions</h1>
+            <h2 style="text-align:center; color:var(--text-muted); font-size:1.2em; font-weight:500; margin-top:-10px;">Company-wise Interview Questions and Solutions for Software Engineering Interviews</h2>
+            <p style="text-align:center; color:var(--text-muted); font-size:1rem; margin-top:10px; max-width:800px; margin-left:auto; margin-right:auto;">
+                Prepare for FAANG, Microsoft, Apple, Netflix, and other top tech companies with our comprehensive collection of LeetCode questions organized by company. Track your progress, visualize completion rates, and save your practice sessions for better interview preparation.
+            </p>
         </div>
 
         <div class="upload-section">
@@ -3620,19 +3647,32 @@
     <footer class="site-footer">
         <div class="footer-container">
             <div class="footer-column">
-                <h4>About This Tool</h4>
-                <p>This tracker helps you visualize and manage your LeetCode problem-solving progress, with a focus on company-specific question lists to better prepare for technical interviews.</p>
+                <h4>About LeetCode Company Questions</h4>
+                <p>This comprehensive tool helps software engineers and computer science students prepare for technical interviews by providing company-specific LeetCode questions. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, Microsoft, and more.</p>
             </div>
             <div class="footer-column">
-                <h4>Credits & Data</h4>
+                <h4>Features & Benefits</h4>
                 <ul class="footer-links">
-                    <li>Problem data sourced from <a href="https://github.com/liquidslr/leetcode-company-wise-problems" target="_blank" rel="noopener noreferrer">liquidslr's Repo</a>.</li>
-                    <li>UI & functionality developed by <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Ronak Raj</a>.</li>
+                    <li>📊 Progress tracking and visualization</li>
+                    <li>🏢 Company-specific question lists</li>
+                    <li>📈 Completion rate analytics</li>
+                    <li>💾 Save and manage practice sessions</li>
+                    <li>🎯 Filter by difficulty and status</li>
+                    <li>📱 Mobile-friendly interface</li>
                 </ul>
             </div>
             <div class="footer-column">
-                <h4>Developer</h4>
-                <p>Ronak Raj</p>
+                <h4>Credits & Data Sources</h4>
+                <ul class="footer-links">
+                    <li>Problem data sourced from <a href="https://github.com/liquidslr/leetcode-company-wise-problems" target="_blank" rel="noopener noreferrer">liquidslr's Repository</a></li>
+                    <li>UI & functionality developed by <a href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Ronak Raj</a></li>
+                    <li>Free tool for interview preparation</li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Developer & Contact</h4>
+                <p>Ronak Raj - Software Engineer</p>
+                <p style="font-size:0.9em; color:var(--text-muted);">Creating tools to help developers succeed in technical interviews</p>
                 <div class="footer-socials">
                     <a href="https://github.com/Ronakraj00" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
                         <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
@@ -3642,14 +3682,9 @@
                     </a>
                 </div>
             </div>
-            <!-- <div class="footer-column">
-                <h4>Global Stats</h4>
-                <p>Total Visits: <span id="totalVisits">Loading...</span></p>
-                <p>Total Problems Solved: <span id="totalSolved">Loading...</span></p>
-            </div> -->
         </div>
         <div class="footer-bottom">
-            <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and coffee by Ronak Raj.
+            <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and coffee by Ronak Raj. Free tool for LeetCode interview preparation.
         </div>
     </footer>
     <style>
