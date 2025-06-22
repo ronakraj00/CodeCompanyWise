@@ -3075,15 +3075,15 @@
                         label: 'Last 3 Months',
                         description: 'Questions asked in the past 3 months'
                     };
-                } else if (periodLower.includes('six months') || periodLower.includes('6 months') || periodLower.includes('6month')) {
+                } else if (periodLower.includes('more than six months') || periodLower.includes('6 months') || periodLower.includes('6month')) {
+                    return {
+                        label: 'More Than 6 Months',
+                        description: 'Questions asked in more than past 6 months ago'
+                    };
+                } else if (periodLower.includes('six months') || periodLower.includes('more than 6 months')) {
                     return {
                         label: 'Last 6 Months',
                         description: 'Questions asked in the past 6 months'
-                    };
-                } else if (periodLower.includes('more than six months') || periodLower.includes('more than 6 months')) {
-                    return {
-                        label: 'More Than 6 Months',
-                        description: 'Questions asked more than 6 months ago'
                     };
                 } else if (periodLower.includes('all') && !periodLower.includes('more than')) {
                     return {
