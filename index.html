@@ -1739,6 +1739,16 @@
           background-size: 200px 200px;
           mix-blend-mode: soft-light;
         }
+        .collapsible-title {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+        }
+        .collapsible-chevron {
+          display: inline-block;
+          vertical-align: middle;
+          margin-right: 4px;
+        }
     </style>
 </head>
 <body>
@@ -1946,7 +1956,10 @@
         </div>
 
         <div id="questionsSection" class="questions-table collapsible-section">
-            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Questions List</div>
+            <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center;">
+                <span class="collapsible-title"><span class="collapsible-chevron">▶</span> Questions List</span>
+                <button class="reset-btn" id="zenModeBtn" type="button" style="background: #23232b; color: #f4f4f5; margin-left: auto; font-size: 1.15em; padding: 7px 12px; min-width: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" title="Toggle Full Screen">🗖</button>
+            </div>
             <div class="collapsible-content">
                 <div id="questionsContainer">
                     <div class="no-data">No data available. Please upload a CSV file.</div>
@@ -3676,6 +3689,17 @@
           // Clean up on page unload
           window.addEventListener('beforeunload', stopAuroraAnimation);
         })();
+
+        document.getElementById('zenModeBtn').addEventListener('click', function(e) {
+          e.stopPropagation();
+          const isZen = document.body.classList.toggle('zen-mode');
+          this.innerText = isZen ? '🗗' : '🗖';
+          this.title = isZen ? 'Exit Full Screen' : 'Full Screen';
+          if (isZen) {
+            document.getElementById('questionsSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          // Do not scroll on exit
+        });
     </script>
     <footer class="site-footer">
         <div class="footer-container">
@@ -3748,5 +3772,24 @@
         }, 1200);
       })();
     </script>
+    <style id="zen-mode-style">
+        .zen-mode .header,
+        .zen-mode .upload-section,
+        .zen-mode #statsSection,
+        .zen-mode #chartSection,
+        .zen-mode #controlsSection,
+        .zen-mode .site-footer {
+          display: none !important;
+        }
+        .zen-mode #questionsSection {
+          margin-top: 32px !important;
+          border-radius: 18px !important;
+          box-shadow: 0 4px 32px 0 #00000022 !important;
+          border: 2px solid var(--accent);
+        }
+        .zen-mode body, body.zen-mode {
+          background: var(--bg-main) !important;
+        }
+    </style>
 </body>
 </html>
