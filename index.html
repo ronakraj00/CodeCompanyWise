@@ -2702,13 +2702,6 @@
                 completedQuestions.delete(idStr);
             } else {
                 completedQuestions.add(idStr);
-                // Increment global solved count
-                fetch(`https://portfolio-api-dwyy.onrender.com/api/count/codecompanywise/solved/hit`)
-                    .then(res => res.json())
-                    .then(data => {
-                        const solvedEl = document.getElementById('totalSolved');
-                        if (solvedEl) solvedEl.textContent = data.value.toLocaleString();
-                    }).catch(e => console.error('Failed to update solved count:', e));
             }
             saveCompletedQuestions();
             updateDisplay();
@@ -3489,18 +3482,18 @@
         //     });
         // }
 
-        function toggleQuestion(id) {
-            if (id == null) return;
-            const idStr = id.toString();
-            if (completedQuestions.has(idStr)) {
-                completedQuestions.delete(idStr);
-            } else {
-                completedQuestions.add(idStr);
-                incrementSolvedCounter();
-            }
-            saveCompletedQuestions();
-            updateDisplay();
-        }
+        // function toggleQuestion(id) {
+        //     if (id == null) return;
+        //     const idStr = id.toString();
+        //     if (completedQuestions.has(idStr)) {
+        //         completedQuestions.delete(idStr);
+        //     } else {
+        //         completedQuestions.add(idStr);
+        //         incrementSolvedCounter();
+        //     }
+        //     saveCompletedQuestions();
+        //     updateDisplay();
+        // }
 
         // Initialize
         loadSavedFiles();
