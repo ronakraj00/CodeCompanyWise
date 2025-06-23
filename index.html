@@ -1959,7 +1959,7 @@
         let currentFileName = '';
         let currentFileData = null;
         let currentQuestionsPage = 1;
-        const QUESTIONS_PER_PAGE = 20; // Number of questions per page in the table
+        const QUESTIONS_PER_PAGE = 10; // Number of questions per page in the table
         function getPageKey(fileName) {
             return 'leetcode_page_' + fileName;
         }
@@ -2686,8 +2686,23 @@
             if (totalPages > 1) {
                 paginationHTML = '<div class="pagination">';
                 paginationHTML += `<button class="pagination-btn" ${currentQuestionsPage === 1 ? 'disabled' : ''} onclick="window.changeQuestionsPage(${currentQuestionsPage - 1})">Prev</button>`;
-                for (let i = 1; i <= totalPages; i++) {
+                // Always show page 1
+                paginationHTML += `<button class="pagination-btn${currentQuestionsPage === 1 ? ' active' : ''}" onclick="window.changeQuestionsPage(1)">1</button>`;
+                // Ellipsis after 1 if needed
+                if (currentQuestionsPage > 4) {
+                    paginationHTML += `<span style='padding:0 6px;color:var(--text-muted);user-select:none;'>...</span>`;
+                }
+                // Pages around current
+                for (let i = Math.max(2, currentQuestionsPage - 2); i <= Math.min(totalPages - 1, currentQuestionsPage + 2); i++) {
                     paginationHTML += `<button class="pagination-btn${i === currentQuestionsPage ? ' active' : ''}" onclick="window.changeQuestionsPage(${i})">${i}</button>`;
+                }
+                // Ellipsis before last if needed
+                if (currentQuestionsPage < totalPages - 3) {
+                    paginationHTML += `<span style='padding:0 6px;color:var(--text-muted);user-select:none;'>...</span>`;
+                }
+                // Always show last page if more than 1
+                if (totalPages > 1) {
+                    paginationHTML += `<button class="pagination-btn${currentQuestionsPage === totalPages ? ' active' : ''}" onclick="window.changeQuestionsPage(${totalPages})">${totalPages}</button>`;
                 }
                 paginationHTML += `<button class="pagination-btn" ${currentQuestionsPage === totalPages ? 'disabled' : ''} onclick="window.changeQuestionsPage(${currentQuestionsPage + 1})">Next</button>`;
                 paginationHTML += '</div>';
