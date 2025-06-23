@@ -1956,8 +1956,9 @@
         </div>
 
         <div id="questionsSection" class="questions-table collapsible-section">
-            <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; position: relative;">
                 <span class="collapsible-title"><span class="collapsible-chevron">▶</span> Questions List</span>
+                <span id="currentFileDisplay" style="position: absolute; left: 50%; transform: translateX(-50%); font-weight: 600; color: var(--accent); white-space: nowrap; cursor: pointer;"></span>
                 <button class="reset-btn" id="zenModeBtn" type="button" style="background: #23232b; color: #f4f4f5; margin-left: auto; font-size: 1.15em; padding: 7px 12px; min-width: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" title="Toggle Full Screen">🗖</button>
             </div>
             <div class="collapsible-content">
@@ -2157,6 +2158,7 @@
                         questionsData = currentFileData;
                         // Remove .csv and any leading numbers/dots/spaces
                         currentFileName = file.name.replace('.csv', '').replace(/^\d+\.\s*/, '');
+                        updateCurrentFileDisplay();
                         loadCompletedQuestions();
                         updateDisplay();
                         showSections();
@@ -2340,6 +2342,7 @@
 
             // Update last selected file
             persistentStorage.setItem('leetcode_last_selected_file', fileName);
+            updateCurrentFileDisplay();
         }
 
         function deleteSavedFile(fileName) {
@@ -2364,6 +2367,7 @@
                 if (currentFileName === fileName) {
                     persistentStorage.removeItem('leetcode_last_selected_file');
                 }
+                updateCurrentFileDisplay();
             }
         }
 
@@ -3283,6 +3287,7 @@
                                 const cleanCompany = file.company.replace(/^\d+\.\s*/, '');
                                 const cleanPeriod = file.period.replace(/^\d+\.\s*/, '');
                                 currentFileName = cleanCompany + ' ' + cleanPeriod;
+                                updateCurrentFileDisplay();
                                 loadCompletedQuestions();
                                 updateDisplay();
                                 showSections();
@@ -3700,6 +3705,22 @@
           }
           // Do not scroll on exit
         });
+
+        function updateCurrentFileDisplay() {
+          const el = document.getElementById('currentFileDisplay');
+          if (!el) return;
+          if (currentFileName && currentFileName.trim() && window.innerWidth > 600) {
+            const firstWord = currentFileName.trim().split(/\s+/)[0];
+            el.textContent = firstWord;
+            el.title = currentFileName;
+            el.style.display = '';
+          } else {
+            el.textContent = '';
+            el.title = '';
+            el.style.display = 'none';
+          }
+        }
+        window.addEventListener('resize', updateCurrentFileDisplay);
     </script>
     <footer class="site-footer">
         <div class="footer-container">
@@ -3785,7 +3806,7 @@
           margin-top: 32px !important;
           border-radius: 18px !important;
           box-shadow: 0 4px 32px 0 #00000022 !important;
-          border: 2px solid var(--accent);
+          border: 1px solid var(--accent);
         }
         .zen-mode body, body.zen-mode {
           background: var(--bg-main) !important;
