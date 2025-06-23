@@ -1911,9 +1911,23 @@
                     </div>
                     <div class="filter-group">
                         <label>&nbsp;</label>
-                        <div style="display: flex; align-items: center; gap: 8px; height: 42.5px; padding-bottom: 1px;">
-                            <input type="checkbox" id="hideDifficultyCheckbox" class="checkbox">
-                            <label for="hideDifficultyCheckbox" style="cursor: pointer; user-select: none;">Hide Difficulty</label>
+                        <div style="display: flex; flex-direction: column; gap: 6px;">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="hideDifficultyCheckbox" class="checkbox">
+                                <label for="hideDifficultyCheckbox" style="cursor: pointer; user-select: none;">Hide Difficulty</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="hideIdCheckbox" class="checkbox">
+                                <label for="hideIdCheckbox" style="cursor: pointer; user-select: none;">Hide ID</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="hideAcceptanceCheckbox" class="checkbox">
+                                <label for="hideAcceptanceCheckbox" style="cursor: pointer; user-select: none;">Hide Acceptance</label>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <input type="checkbox" id="hideFrequencyCheckbox" class="checkbox">
+                                <label for="hideFrequencyCheckbox" style="cursor: pointer; user-select: none;">Hide Frequency</label>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -2610,6 +2624,9 @@
             const statusFilter = document.getElementById('statusFilter').value;
             const searchQuery = document.getElementById('searchInput').value.toLowerCase();
             const hideDifficulty = document.getElementById('hideDifficultyCheckbox').checked;
+            const hideId = document.getElementById('hideIdCheckbox')?.checked;
+            const hideAcceptance = document.getElementById('hideAcceptanceCheckbox')?.checked;
+            const hideFrequency = document.getElementById('hideFrequencyCheckbox')?.checked;
 
             let filteredQuestions = questionsData.filter(question => {
                 const matchesDifficulty = !difficultyFilter || question.Difficulty === difficultyFilter;
@@ -2644,11 +2661,11 @@
                         <thead>
                             <tr>
                                 <th>✓</th>
-                                <th>ID</th>
+                                ${!hideId ? '<th>ID</th>' : ''}
                                 <th>Title</th>
                                 ${!hideDifficulty ? '<th>Difficulty</th>' : ''}
-                                <th>Acceptance</th>
-                                <th>Frequency</th>
+                                ${!hideAcceptance ? '<th>Acceptance</th>' : ''}
+                                ${!hideFrequency ? '<th>Frequency</th>' : ''}
                             </tr>
                         </thead>
                         <tbody>
@@ -2661,19 +2678,19 @@
                                         <td><label class="checkbox-label"><input type="checkbox" class="checkbox" 
                                                    ${isCompleted ? 'checked' : ''} 
                                                    onchange="toggleQuestion(${question.ID != null ? question.ID : 'null'})"></label></td>
-                                        <td class="question-id">${question.ID != null ? question.ID : ''}</td>
+                                        ${!hideId ? `<td class="question-id">${question.ID != null ? question.ID : ''}</td>` : ''}
                                         <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title || ''}</a></td>
                                         ${!hideDifficulty ? `<td>
                                             <span class="difficulty-badge difficulty-${question.Difficulty ? question.Difficulty.toLowerCase() : ''}">
                                                 ${question.Difficulty || ''}
                                             </span>
                                         </td>` : ''}
-                                        <td class="acceptance-rate">${question.Acceptance || ''}</td>
-                                        <td>
+                                        ${!hideAcceptance ? `<td class="acceptance-rate">${question.Acceptance || ''}</td>` : ''}
+                                        ${!hideFrequency ? `<td>
                                             <div class="frequency-bar">
                                                 <div class="frequency-fill" style="width: ${frequencyWidth}%"></div>
                                             </div>
-                                        </td>
+                                        </td>` : ''}
                                     </tr>
                                 `;
                             }).join('')}
@@ -2804,6 +2821,9 @@
             persistentStorage.setItem('leetcode_hide_difficulty', String(this.checked));
             renderQuestions();
         });
+        document.getElementById('hideIdCheckbox').addEventListener('change', renderQuestions);
+        document.getElementById('hideAcceptanceCheckbox').addEventListener('change', renderQuestions);
+        document.getElementById('hideFrequencyCheckbox').addEventListener('change', renderQuestions);
 
         // Initialize
         loadSavedFiles();
