@@ -2846,9 +2846,18 @@
             persistentStorage.setItem('leetcode_hide_difficulty', String(this.checked));
             renderQuestions();
         });
-        document.getElementById('hideIdCheckbox').addEventListener('change', renderQuestions);
-        document.getElementById('hideAcceptanceCheckbox').addEventListener('change', renderQuestions);
-        document.getElementById('hideFrequencyCheckbox').addEventListener('change', renderQuestions);
+        document.getElementById('hideIdCheckbox').addEventListener('change', function() {
+            persistentStorage.setItem('leetcode_hide_id', String(this.checked));
+            renderQuestions();
+        });
+        document.getElementById('hideAcceptanceCheckbox').addEventListener('change', function() {
+            persistentStorage.setItem('leetcode_hide_acceptance', String(this.checked));
+            renderQuestions();
+        });
+        document.getElementById('hideFrequencyCheckbox').addEventListener('change', function() {
+            persistentStorage.setItem('leetcode_hide_frequency', String(this.checked));
+            renderQuestions();
+        });
 
         // Initialize
         loadSavedFiles();
@@ -2863,6 +2872,14 @@
         if (hideDifficultySaved) {
             difficultyFilterInput.value = '';
         }
+
+        // Restore hide states on load
+        const hideIdSaved = persistentStorage.getItem('leetcode_hide_id') === 'true';
+        const hideAcceptanceSaved = persistentStorage.getItem('leetcode_hide_acceptance') === 'true';
+        const hideFrequencySaved = persistentStorage.getItem('leetcode_hide_frequency') === 'true';
+        document.getElementById('hideIdCheckbox').checked = hideIdSaved;
+        document.getElementById('hideAcceptanceCheckbox').checked = hideAcceptanceSaved;
+        document.getElementById('hideFrequencyCheckbox').checked = hideFrequencySaved;
 
         // Collapsible section toggling
         window.addEventListener('DOMContentLoaded', function() {
