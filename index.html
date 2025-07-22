@@ -1854,7 +1854,7 @@
                         </div>
                     </div>
                     <div style="margin-top: 8px; color: #6366f1; font-size: 0.97em;">
-                        <span>CSV columns required: <b>ID, Title, Acceptance, Difficulty, Frequency, Leetcode Question Link</b></span>
+                        <span>CSV columns required: <b>Difficulty,	Title,	Frequency,	Acceptance Rate,	Link,	Topics</b></span>
                     </div>
                 </div>
             </div>
@@ -2343,8 +2343,8 @@
             updateCurrentFileDisplay();
         }
 
-        function deleteSavedFile(fileName) {
-            if (confirm(`Are you sure you want to delete "${fileName}"? This cannot be undone.`)) {
+        async function deleteSavedFile(fileName) {
+            if (await confirm(`Are you sure you want to delete "${fileName}"? This cannot be undone.`)) {
                 savedFiles.delete(fileName);
                 persistentStorage.removeItem('leetcode_completed_' + fileName);
                 saveSavedFiles();
@@ -2756,8 +2756,8 @@
             updateDisplay();
         }
 
-        function resetProgress() {
-            if (confirm('Are you sure you want to reset progress for the current file? This cannot be undone.')) {
+        async function resetProgress() {
+            if (await confirm('Are you sure you want to reset progress for the current file? This cannot be undone.')) {
                 completedQuestions.clear();
                 saveCompletedQuestions();
                 updateDisplay();
@@ -2789,7 +2789,7 @@
             URL.revokeObjectURL(url);
         }
 
-        function importProgress() {
+        async function importProgress() {
             if (!currentFileName) {
                 alert('Please load a file first before importing progress');
                 return;
@@ -2802,11 +2802,11 @@
                 const file = event.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function(e) {
+                    reader.onload = async function(e) {
                         try {
                             const importData = JSON.parse(e.target.result);
                             if (importData.completedQuestions && Array.isArray(importData.completedQuestions)) {
-                                if (confirm(`Import ${importData.completedQuestions.length} completed questions? This will replace your current progress.`)) {
+                                if (await confirm(`Import ${importData.completedQuestions.length} completed questions? This will replace your current progress.`)) {
                                     completedQuestions = new Set(importData.completedQuestions);
                                     saveCompletedQuestions();
                                     updateDisplay();
@@ -3739,7 +3739,8 @@
         }
         window.addEventListener('resize', updateCurrentFileDisplay);
 
-        function clearAllProgress() {
+        async function clearAllProgress() {
+            if (!(await confirm('Are you sure you want to clear ALL data? This will remove all saved files and progress.'))) return;
             // Clear localStorage
             if (isLocalStorageAvailable()) {
                 localStorage.clear();
@@ -3759,6 +3760,18 @@
             hideSections();
             alert('All data has been cleared!');
         }
+
+        document.querySelectorAll('.reset-btn').forEach(btn => {
+            if (btn.getAttribute('onclick') === 'resetProgress()') {
+                btn.onclick = async () => { await resetProgress(); };
+            }
+            if (btn.getAttribute('onclick') === 'importProgress()') {
+                btn.onclick = async () => { await importProgress(); };
+            }
+            if (btn.getAttribute('onclick') === 'clearAllProgress()') {
+                btn.onclick = async () => { await clearAllProgress(); };
+            }
+        });
     </script>
     <footer class="site-footer">
         <div class="footer-container">
