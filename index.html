@@ -1961,6 +1961,7 @@
                     <button class="reset-btn" onclick="resetProgress()">🔄 Reset Current Progress</button>
                     <button class="reset-btn" onclick="exportProgress()" style="background: #059669;">📥 Export Progress</button>
                     <button class="reset-btn" onclick="importProgress()" style="background: #7c3aed;">📤 Import Progress</button>
+                    <button class="reset-btn" onclick="clearAllProgress()" style="background: #ef4444; color: #fff;">🧹 Clear All Data</button>
                 </div>
             </div>
         </div>
@@ -2028,31 +2029,14 @@
             
             getItem: function(key) {
                 if (isLocalStorageAvailable()) {
-                    return localStorage.getItem(key);
-                } else {
-                    // Fallback to cookies
-                    const name = key + "=";
-                    const decodedCookie = decodeURIComponent(document.cookie);
-                    const ca = decodedCookie.split(';');
-                    for (let i = 0; i < ca.length; i++) {
-                        let c = ca[i];
-                        while (c.charAt(0) === ' ') {
-                            c = c.substring(1);
-                        }
-                        if (c.indexOf(name) === 0) {
-                            return c.substring(name.length, c.length);
-                        }
-                    }
-                    return null;
-                }
+                    const val = localStorage.getItem(key);
+                    if (val !== null) return val;
+                } 
             },
             
             removeItem: function(key) {
                 if (isLocalStorageAvailable()) {
                     localStorage.removeItem(key);
-                } else {
-                    // Remove cookie by setting expired date
-                    document.cookie = `${key}=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/;`;
                 }
             }
         };
@@ -2062,7 +2046,10 @@
             try {
                 const saved = persistentStorage.getItem('leetcode_completed_' + currentFileName);
                 if (saved) {
-                    completedQuestions = new Set(JSON.parse(saved));
+                    // Always store as string
+                    completedQuestions = new Set(JSON.parse(saved).map(id => id != null ? String(id) : id));
+                } else {
+                    completedQuestions = new Set();
                 }
             } catch (e) {
                 console.log('No saved progress found for', currentFileName);
@@ -2074,12 +2061,12 @@
         function saveCompletedQuestions() {
             if (currentFileName) {
                 try {
-                    persistentStorage.setItem('leetcode_completed_' + currentFileName, JSON.stringify([...completedQuestions]));
+                    persistentStorage.setItem('leetcode_completed_' + currentFileName, JSON.stringify([...completedQuestions].map(id => id != null ? String(id) : id)));
                     
                     // Also update the saved file's progress
                     if (savedFiles.has(currentFileName)) {
                         const fileInfo = savedFiles.get(currentFileName);
-                        fileInfo.progress = [...completedQuestions];
+                        fileInfo.progress = [...completedQuestions].map(id => id != null ? String(id) : id);
                         fileInfo.lastUpdated = new Date().toISOString();
                         saveSavedFiles();
                     }
@@ -2136,8 +2123,9 @@
                 if (!isNaN(val)) acceptance = (val * 100).toFixed(1) + '%';
             }
 
+            // Always set ID as a string
             return {
-                ID: idx + 1,
+                ID: String(idx + 1),
                 Title: cleanRow['Title'] || '',
                 Acceptance: acceptance,
                 Difficulty: difficulty,
@@ -2332,7 +2320,7 @@
             questionsData = fileInfo.data;
             currentFileName = fileName;
             currentFileData = fileInfo.data;
-            completedQuestions = new Set(fileInfo.progress || []);
+            completedQuestions = new Set((fileInfo.progress || []).map(id => id != null ? String(id) : id));
             
             // Restore page for this file
             const savedPage = persistentStorage.getItem(getPageKey(fileName));
@@ -2656,14 +2644,15 @@
             const hideFrequency = document.getElementById('hideFrequencyCheckbox')?.checked;
 
             let filteredQuestions = questionsData.filter(question => {
+                const idStr = question.ID != null ? String(question.ID) : '';
                 const matchesDifficulty = !difficultyFilter || question.Difficulty === difficultyFilter;
-                const isCompleted = question.ID != null && completedQuestions.has(question.ID.toString());
+                const isCompleted = idStr && completedQuestions.has(idStr);
                 const matchesStatus = !statusFilter || 
                     (statusFilter === 'completed' && isCompleted) ||
                     (statusFilter === 'pending' && !isCompleted);
                 const matchesSearch = !searchQuery || 
                     (question.Title && question.Title.toLowerCase().includes(searchQuery)) ||
-                    (question.ID != null && question.ID.toString().includes(searchQuery));
+                    (idStr && idStr.includes(searchQuery));
 
                 return matchesDifficulty && matchesStatus && matchesSearch;
             });
@@ -2697,15 +2686,16 @@
                         </thead>
                         <tbody>
                             ${pageQuestions.map(question => {
-                                const isCompleted = question.ID != null && completedQuestions.has(question.ID.toString());
+                                const idStr = question.ID != null ? String(question.ID) : '';
+                                const isCompleted = idStr && completedQuestions.has(idStr);
                                 const frequencyWidth = maxFrequency > 0 ? (question.Frequency / maxFrequency) * 100 : 0;
                                 
                                 return `
                                     <tr class="${isCompleted ? 'question-row-completed' : ''}">
                                         <td><label class="checkbox-label"><input type="checkbox" class="checkbox" 
                                                    ${isCompleted ? 'checked' : ''} 
-                                                   onchange="toggleQuestion(${question.ID != null ? question.ID : 'null'})"></label></td>
-                                        ${!hideId ? `<td class="question-id">${question.ID != null ? question.ID : ''}</td>` : ''}
+                                                   onchange="toggleQuestion('${idStr}')"></label></td>
+                                        ${!hideId ? `<td class="question-id">${idStr}</td>` : ''}
                                         <td><a href="${question['Leetcode Question Link']}" target="_blank" class="question-title">${question.Title || ''}</a></td>
                                         ${!hideDifficulty ? `<td>
                                             <span class="difficulty-badge difficulty-${question.Difficulty ? question.Difficulty.toLowerCase() : ''}">
@@ -2756,7 +2746,7 @@
 
         function toggleQuestion(id) {
             if (id == null) return;
-            const idStr = id.toString();
+            const idStr = String(id);
             if (completedQuestions.has(idStr)) {
                 completedQuestions.delete(idStr);
             } else {
@@ -3748,6 +3738,27 @@
           }
         }
         window.addEventListener('resize', updateCurrentFileDisplay);
+
+        function clearAllProgress() {
+            // Clear localStorage
+            if (isLocalStorageAvailable()) {
+                localStorage.clear();
+            }
+            // Clear all cookies set by the app
+            document.cookie.split(';').forEach(function(c) {
+                document.cookie = c.replace(/^ +/, '').replace(/=.*/, '=;expires=Thu, 01 Jan 1970 00:00:00 UTC;path=/');
+            });
+            // Also clear in-memory state
+            completedQuestions = new Set();
+            savedFiles = new Map();
+            currentFileName = '';
+            currentFileData = null;
+            questionsData = [];
+            updateDisplay();
+            displaySavedFiles();
+            hideSections();
+            alert('All data has been cleared!');
+        }
     </script>
     <footer class="site-footer">
         <div class="footer-container">
