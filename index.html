@@ -1379,7 +1379,10 @@
             padding: 18px 24px;
             border-bottom: 1px solid var(--border-main);
             flex-shrink: 0;
-            position: relative;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background-color: var(--bg-accent);
         }
         .github-modal-header h2 {
             margin: 0;
@@ -1396,7 +1399,7 @@
             flex-shrink: 0;
             background: var(--bg-card);
             position: sticky;
-            top: 0;
+            top: 60px;
             z-index: 10;
         }
         .github-modal-search {
@@ -2975,7 +2978,7 @@
                 }
                 if (showSearch) {
                     contentHtml += `
-                        <div class="github-modal-search-wrapper" style="position: sticky; top: 0; z-index: 10;">
+                        <div class="github-modal-search-wrapper">
                             <input class="github-modal-search" id="github-search-input" placeholder="Search..." />
                         </div>
                     `;
