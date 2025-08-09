@@ -82,7 +82,7 @@
     --text-muted: #a3c9a3;
     --border-main: #3a5c3a;
     --accent: #4ade80;
-    --accent2: #22d3ee;
+    --accent2: #2230ee;
     --accent3: #a3e635;
     --accent4: #facc15;
     --shadow: 0 2px 12px 0 #4ade8033;
@@ -107,7 +107,7 @@
     --text-muted: #7dd3fc;
     --border-main: #334155;
     --accent: #38bdf8;
-    --accent2: #06b6d4;
+    --accent2: #c6d406;
     --accent3: #818cf8;
     --accent4: #f472b6;
     --shadow: 0 2px 12px 0 #38bdf833;
@@ -1709,3 +1709,56 @@ body.aurora-enabled #aurora-bg {
 }
 
 
+@import url('https://fonts.googleapis.com/css2?family=Belanosima&family=Rubik+Vinyl&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lilita+One&display=swap');
+.spectacledcoder-glowing-button1
+{
+    /* margin: auto; */
+    width: fit-content;
+    height: 70px;
+    display: flex;
+    border-radius: 35px;
+    animation: rotation 3s linear 0s infinite;
+    background: linear-gradient(var(--gradient-angle), var(--accent2), var(--accent));
+}
+
+.spectacledcoder-button1
+{
+    cursor: pointer;
+    width: 98%;
+    height: 94%;
+    background-color: rgba(0, 0, 0, 0.903);
+    margin: auto;
+    outline: none;
+    border: none;
+    border-radius: 35px;
+    color: rgb(255, 255, 255);
+    font-size: 1rem;
+    font-family: monospace;
+    /* padding: 12px; */
+    justify-self: flex-start;
+    align-self: flex-start;
+}
+
+::selection
+{
+    background-color: #000000;
+    color: rgb(255, 255, 255);
+}
+@keyframes rotation 
+{
+    0%
+    {
+        --gradient-angle: 0deg;
+    }
+    100%
+    {
+        --gradient-angle: 360deg;
+    }    
+}
+@property --gradient-angle
+{
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
