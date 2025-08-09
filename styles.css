@@ -1677,3 +1677,28 @@ body.aurora-enabled #aurora-bg {
     display: inline-block;
     vertical-align: middle;
 }
+
+@media (max-width: 600px) {
+    .site-footer { padding: 32px 24px; }
+    .footer-container { text-align: center; }
+    .footer-socials { justify-content: center; }
+}
+.container { padding-bottom: 0 !important; }
+
+.zen-mode .header,
+.zen-mode .upload-section,
+.zen-mode #statsSection,
+.zen-mode #chartSection,
+.zen-mode #controlsSection,
+.zen-mode .site-footer {
+    display: none !important;
+}
+.zen-mode #questionsSection {
+    margin-top: 32px !important;
+    border-radius: 18px !important;
+    box-shadow: 0 4px 32px 0 #00000022 !important;
+    border: 1px solid var(--accent);
+}
+.zen-mode body, body.zen-mode {
+    background: var(--bg-main) !important;
+}
