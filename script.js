@@ -271,7 +271,6 @@ function displaySavedFiles() {
                 <span>📄</span>
                 <span style="word-break: break-word;">${displayName}</span>
             </div>
-            <div hidden style="height: 1px; background: var(--divider); width: calc(100% + 48px + 18px); margin-left: -18px; opacity: 0.7;"></div>
             <span class="saved-file-progress-pill" style="margin-top: 10px; width:fit-content">${completed} / ${total}</span>
         `;
         loadBtn.appendChild(contentSpan);

@@ -638,13 +638,14 @@ td:first-child {
     background: none;
     color: var(--text-main);
     border: 1px solid var(--border-main);
-    padding: 12px 48px 12px 18px;
+    padding: 12px 12px 12px 18px;
     border-radius: 8px;
     cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
+    font-size: 0.8rem;
+    font-weight: 400;
+    font-family: monospace;
     transition: background 0.2s, border 0.2s, color 0.2s, box-shadow 0.2s;
-    box-shadow: 0 1px 2px 0 #0000000d;
+    /* box-shadow: 0 1px 2px 0 #0000000d; */
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -652,6 +653,8 @@ td:first-child {
     position: relative;
     width: 260px;
     max-width: 260px;
+    width: fit-content;
+    height: fit-content;
     overflow-wrap: break-word;
     word-break: break-word;
     min-height: 50px;
@@ -670,7 +673,7 @@ td:first-child {
 }
 .file-actions {
     position: absolute;
-    bottom: 8px;
+    bottom: 2px;
     right: 8px;
     display: flex;
     align-items: center;
@@ -680,6 +683,7 @@ td:first-child {
     background: none;
     border: none;
     color: #a1a1aa;
+    opacity: 0.1;
     font-size: 1.3rem;
     cursor: pointer;
     padding: 2px 6px;
@@ -687,6 +691,7 @@ td:first-child {
     transition: background 0.2s, color 0.2s;
 }
 .file-menu-btn:hover, .file-menu-btn:focus {
+    opacity: 1;
     background: var(--hover-bg);
     color: var(--accent);
     outline: none;
@@ -1702,3 +1707,5 @@ body.aurora-enabled #aurora-bg {
 .zen-mode body, body.zen-mode {
     background: var(--bg-main) !important;
 }
+
+
