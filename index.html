@@ -317,9 +317,21 @@
       </div>
     </div>
     <footer class="site-footer">
+        <div class="newsletter">
+            <form id="newsletterForm" class="newsletter-form" autocomplete="off" novalidate>
+                <label for="newsletterEmail" class="newsletter-label">
+                    Subscribe for FREE daily <span style="color: var(--accent);">FAANG coding problems</span> right in your inbox
+                </label>
+                <div class="newsletter-input-group">
+                    <input type="email" id="newsletterEmail" name="email" class="newsletter-input" placeholder="Enter your email" required aria-label="Email address" />
+                    <button type="submit" class="newsletter-btn">Subscribe</button>
+                </div>
+                <div id="newsletterMessage" class="newsletter-message" aria-live="polite"></div>
+            </form>
+        </div>
         <div class="footer-container">
             <div class="footer-column">
-                <h4>About LeetCode Company Questions</h4>
+                <h4>About codeCompanyWise</h4>
                 <p>This comprehensive tool helps software engineers and computer science students prepare for technical interviews by providing company-specific LeetCode questions. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, Microsoft, and more.</p>
             </div>
             <div class="footer-column">
@@ -359,5 +371,7 @@
             <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and coffee by Ronak Raj. Free tool for LeetCode interview preparation.
         </div>
     </footer>
+    <link rel="stylesheet" href="newsletter.css">
+    <script src="newsletter.js" defer></script>
 </body>
 </html>
