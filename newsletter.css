@@ -8,11 +8,13 @@
 }
 
 .newsletter-reasons{
+    border-top: 2px solid var(--border-main, #33334d);
     font-family: monospace;
     font-size: large;
     display: flex;
     flex-direction: column;
     gap: 6px;
+    padding-top: 8px;
 }
 
 .newsletter-form {
