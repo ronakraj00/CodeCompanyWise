@@ -1,90 +1,142 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>codeCompanyWise - Company-wise Interview Questions and Solutions</title>
-    <meta name="description" content="Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more. Track your progress, visualize completion rates, and save your practice sessions.">
-    <meta name="keywords" content="LeetCode, LeetCode questions by company, coding interview prep, software engineering interview, FAANG interview questions, top tech companies interview prep, Google interview questions, Amazon interview questions, Facebook interview questions, Apple interview questions, Netflix interview questions, Microsoft interview questions, algorithm problems, data structure questions, coding practice, interview guide, technical interviews, problem-solving, software developer interview prep, SDE interviews, tech job preparation, coding challenge solutions, computer science interviews, tech hiring, LeetCode progress tracker, company-wise LeetCode, LeetCode company tracker, LeetCode interview prep, LeetCode practice tracker">
-    <meta name="author" content="Ronak Raj">
-    <meta name="robots" content="index, follow">
-    <link rel="canonical" href="https://ronakraj00.github.io/CodeCompanyWise/" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>
+      codeCompanyWise - Company-wise Interview Questions and Solutions
+    </title>
+    <meta
+      name="description"
+      content="Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more. Track your progress, visualize completion rates, and save your practice sessions."
+    />
+    <meta
+      name="keywords"
+      content="LeetCode, LeetCode questions by company, coding interview prep, software engineering interview, FAANG interview questions, top tech companies interview prep, Google interview questions, Amazon interview questions, Facebook interview questions, Apple interview questions, Netflix interview questions, Microsoft interview questions, algorithm problems, data structure questions, coding practice, interview guide, technical interviews, problem-solving, software developer interview prep, SDE interviews, tech job preparation, coding challenge solutions, computer science interviews, tech hiring, LeetCode progress tracker, company-wise LeetCode, LeetCode company tracker, LeetCode interview prep, LeetCode practice tracker"
+    />
+    <meta name="author" content="Ronak Raj" />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="canonical"
+      href="https://ronakraj00.github.io/CodeCompanyWise/"
+    />
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://ronakraj00.github.io/CodeCompanyWise/">
-    <meta property="og:title" content="LeetCode Company Questions - Company-wise Interview Questions and Solutions">
-    <meta property="og:description" content="Prepare for software engineering interviews with company-specific LeetCode questions. Track progress, save sessions, and visualize completion rates for FAANG and tech company interviews.">
-    <meta property="og:image" content="https://ronakraj00.github.io/CodeCompanyWise/og-image.png">
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:url"
+      content="https://ronakraj00.github.io/CodeCompanyWise/"
+    />
+    <meta
+      property="og:title"
+      content="LeetCode Company Questions - Company-wise Interview Questions and Solutions"
+    />
+    <meta
+      property="og:description"
+      content="Prepare for software engineering interviews with company-specific LeetCode questions. Track progress, save sessions, and visualize completion rates for FAANG and tech company interviews."
+    />
+    <meta
+      property="og:image"
+      content="https://ronakraj00.github.io/CodeCompanyWise/og-image.png"
+    />
     <!-- <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630"> -->
-    <meta property="og:site_name" content="LeetCode Company Questions">
+    <meta property="og:site_name" content="LeetCode Company Questions" />
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://ronakraj00.github.io/CodeCompanyWise/">
-    <meta property="twitter:title" content="LeetCode Company Questions - Company-wise Interview Questions and Solutions">
-    <meta property="twitter:description" content="Prepare for software engineering interviews with company-specific LeetCode questions. Track progress, save sessions, and visualize completion rates for FAANG and tech company interviews.">
-    <meta property="twitter:image" content="https://ronakraj00.github.io/CodeCompanyWise/og-image.png">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta
+      property="twitter:url"
+      content="https://ronakraj00.github.io/CodeCompanyWise/"
+    />
+    <meta
+      property="twitter:title"
+      content="LeetCode Company Questions - Company-wise Interview Questions and Solutions"
+    />
+    <meta
+      property="twitter:description"
+      content="Prepare for software engineering interviews with company-specific LeetCode questions. Track progress, save sessions, and visualize completion rates for FAANG and tech company interviews."
+    />
+    <meta
+      property="twitter:image"
+      content="https://ronakraj00.github.io/CodeCompanyWise/og-image.png"
+    />
     <!-- Additional SEO Meta Tags -->
-    <meta name="theme-color" content="#6366f1">
-    <meta name="msapplication-TileColor" content="#6366f1">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="default">
-    <meta name="apple-mobile-web-app-title" content="LeetCode Company Questions">
+    <meta name="theme-color" content="#6366f1" />
+    <meta name="msapplication-TileColor" content="#6366f1" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta
+      name="apple-mobile-web-app-title"
+      content="LeetCode Company Questions"
+    />
     <!-- Google Search Console Verification -->
     <!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE" /> -->
 
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="styles.css" />
 
     <!-- Structured Data JSON-LD -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "WebApplication",
-      "name": "LeetCode Company Questions",
-      "alternateName": "Company-wise LeetCode Progress Tracker",
-      "url": "https://ronakraj00.github.io/CodeCompanyWise/",
-      "description": "Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more.",
-      "applicationCategory": "DeveloperApplication",
-      "operatingSystem": "All",
-      "offers": {
-        "@type": "Offer",
-        "price": "0",
-        "priceCurrency": "USD"
-      },
-      "creator": {
-        "@type": "Person",
-        "name": "Ronak Raj",
-        "url": "https://ronakraj00.github.io/portfolio/"
-      },
-      "keywords": "LeetCode, coding interview prep, software engineering interview, FAANG interview questions, algorithm problems, data structure questions",
-      "audience": {
-        "@type": "Audience",
-        "audienceType": "Software Engineers, Computer Science Students, Tech Job Seekers"
+      {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "LeetCode Company Questions",
+        "alternateName": "Company-wise LeetCode Progress Tracker",
+        "url": "https://ronakraj00.github.io/CodeCompanyWise/",
+        "description": "Prepare for software engineering interviews with our extensive collection of LeetCode questions categorized by company. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, and more.",
+        "applicationCategory": "DeveloperApplication",
+        "operatingSystem": "All",
+        "offers": {
+          "@type": "Offer",
+          "price": "0",
+          "priceCurrency": "USD"
+        },
+        "creator": {
+          "@type": "Person",
+          "name": "Ronak Raj",
+          "url": "https://ronakraj00.github.io/portfolio/"
+        },
+        "keywords": "LeetCode, coding interview prep, software engineering interview, FAANG interview questions, algorithm problems, data structure questions",
+        "audience": {
+          "@type": "Audience",
+          "audienceType": "Software Engineers, Computer Science Students, Tech Job Seekers"
+        }
       }
-    }
     </script>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-MZ8LK7B9KN"></script>
+    <script
+      async
+      src="https://www.googletagmanager.com/gtag/js?id=G-MZ8LK7B9KN"
+    ></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {
+        dataLayer.push(arguments);
+      }
+      gtag("js", new Date());
 
-    gtag('config', 'G-MZ8LK7B9KN');
+      gtag("config", "G-MZ8LK7B9KN");
     </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.0/papaparse.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/counterapi/dist/counter.browser.min.js"></script>
-    
-    <link rel="icon" type="image/png" href="favicon.png/favicon-96x96.png" sizes="96x96" />
+
+    <link
+      rel="icon"
+      type="image/png"
+      href="favicon.png/favicon-96x96.png"
+      sizes="96x96"
+    />
     <link rel="icon" type="image/svg+xml" href="favicon.png/favicon.svg" />
     <link rel="shortcut icon" href="favicon.png/favicon.ico" />
-    <link rel="apple-touch-icon" sizes="180x180" href="favicon.png/apple-touch-icon.png" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="favicon.png/apple-touch-icon.png"
+    />
     <meta name="apple-mobile-web-app-title" content="CodeCW" />
     <link rel="manifest" href="favicon.png/site.webmanifest" />
     <script src="script.js" defer></script>
-</head>
-<body>
+  </head>
+  <body>
     <div id="aurora-bg">
       <div class="aurora-layer aurora1"></div>
       <div class="aurora-layer aurora2"></div>
@@ -92,286 +144,859 @@
       <div class="aurora-noise"></div>
     </div>
     <div class="container">
-        <div class="header" style="position: relative;">
-            <div class="theme-toggle" id="themeToggle">
-                <button class="theme-toggle-btn" id="themeToggleBtn" aria-haspopup="true" aria-expanded="false" aria-label="Change theme" tabindex="0">
-                    <span id="themeIcon" aria-hidden="true">
-                        <svg id="icon-moon" style="display:block;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
-                        <svg id="icon-sun" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"/></svg>
-                        <svg id="icon-solar" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="6" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
-                        <svg id="icon-forest" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
-                        <svg id="icon-ocean" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/></svg>
-                        <svg id="icon-cyberpunk" style="display:none;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 12h10M7 17h6"/></svg>
-                    </span>
-                    <!-- <span class="theme-toggle-arrow" aria-hidden="true">▼</span> -->
+      <div class="header" style="position: relative">
+        <div class="theme-toggle" id="themeToggle">
+          <button
+            class="theme-toggle-btn"
+            id="themeToggleBtn"
+            aria-haspopup="true"
+            aria-expanded="false"
+            aria-label="Change theme"
+            tabindex="0"
+          >
+            <span id="themeIcon" aria-hidden="true">
+              <svg
+                id="icon-moon"
+                style="display: block"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
+                />
+              </svg>
+              <svg
+                id="icon-sun"
+                style="display: none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="5" stroke-width="2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"
+                />
+              </svg>
+              <svg
+                id="icon-solar"
+                style="display: none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="6" stroke-width="2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"
+                />
+              </svg>
+              <svg
+                id="icon-forest"
+                style="display: none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"
+                />
+              </svg>
+              <svg
+                id="icon-ocean"
+                style="display: none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"
+                />
+              </svg>
+              <svg
+                id="icon-cyberpunk"
+                style="display: none"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 7h10M7 12h10M7 17h6"
+                />
+              </svg>
+            </span>
+            <!-- <span class="theme-toggle-arrow" aria-hidden="true">▼</span> -->
+          </button>
+          <div
+            class="theme-dropdown"
+            id="themeDropdown"
+            role="menu"
+            aria-label="Theme selection"
+          >
+            <button
+              class="theme-dropdown-item"
+              data-theme="dark"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
+                />
+              </svg>
+              Dark
+            </button>
+            <button
+              class="theme-dropdown-item"
+              data-theme="light"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="5" stroke-width="2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"
+                />
+              </svg>
+              Light
+            </button>
+            <button
+              class="theme-dropdown-item"
+              data-theme="solarized"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <circle cx="12" cy="12" r="6" stroke-width="2" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"
+                />
+              </svg>
+              Solarized
+            </button>
+            <button
+              class="theme-dropdown-item"
+              data-theme="forest"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"
+                />
+              </svg>
+              Forest
+            </button>
+            <button
+              class="theme-dropdown-item"
+              data-theme="ocean"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"
+                />
+              </svg>
+              Ocean
+            </button>
+            <button
+              class="theme-dropdown-item"
+              data-theme="cyberpunk"
+              role="menuitem"
+              tabindex="0"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <rect x="3" y="3" width="18" height="18" rx="4" />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M7 7h10M7 12h10M7 17h6"
+                />
+              </svg>
+              Cyberpunk
+            </button>
+            <hr
+              style="
+                border: none;
+                border-top: 1px solid var(--border-main);
+                margin: 6px 0 6px 0;
+              "
+            />
+            <button
+              class="theme-dropdown-item"
+              id="auroraToggleBtn"
+              tabindex="0"
+              style="display: flex; align-items: center; gap: 10px"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+                style="width: 1.2em; height: 1.2em"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M12 4v16m8-8H4"
+                />
+              </svg>
+              <span>Aurora Background</span>
+              <span
+                id="auroraToggleSwitch"
+                style="
+                  margin-left: auto;
+                  display: inline-block;
+                  width: 36px;
+                  height: 20px;
+                  background: var(--bg-accent);
+                  border-radius: 12px;
+                  position: relative;
+                  vertical-align: middle;
+                  transition: background 0.2s;
+                "
+                ><span
+                  style="
+                    position: absolute;
+                    top: 2px;
+                    left: 2px;
+                    width: 16px;
+                    height: 16px;
+                    border-radius: 50%;
+                    background: var(--accent);
+                    transition: left 0.2s;
+                  "
+                ></span
+              ></span>
+              <span
+                id="auroraMobileIndicator"
+                style="
+                  font-size: 0.8em;
+                  color: var(--text-muted);
+                  display: none;
+                "
+                >(Mobile disabled)</span
+              >
+            </button>
+          </div>
+        </div>
+        <h1>codeCompanyWise</h1>
+        <h2
+          style="
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1.2em;
+            font-weight: 500;
+            margin-top: -10px;
+          "
+        >
+          Company-wise Interview Questions and Solutions for Software
+          Engineering Interviews
+        </h2>
+        <p
+          style="
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 1rem;
+            margin-top: 10px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+          "
+        >
+          Prepare for FAANG, Microsoft, Apple, Netflix, and other top tech
+          companies with our comprehensive collection of LeetCode questions
+          organized by company. Track your progress, visualize completion rates,
+          and save your practice sessions for better interview preparation.
+        </p>
+      </div>
+
+      <div class="upload-section">
+        <h2 style="margin-bottom: 20px">Browse</h2>
+        <div class="spectacledcoder-glowing-button1">
+          <button
+            id="githubBrowseBtn"
+            class="spectacledcoder-button1"
+            type="button"
+          >
+            Click To Browse Company Questions
+          </button>
+        </div>
+
+        <!-- <button id="githubBrowseBtn" class="reset-btn" style="background: black; color: rgb(206, 206, 206);border-radius: 100px ;border: 2px solid var(--accent) ;padding: 15px 20px; font-size: 1.1rem; font-weight: 600; margin-bottom: 18px;">Click To Browse Company Questions</button> -->
+        <div id="githubModal" style="display: none"></div>
+        <hr class="themed-hr" />
+        <div id="savedFilesSection">
+          <h2>Your Saved Files</h2>
+          <div
+            id="savedFilesList"
+            style="display: flex; flex-wrap: wrap; gap: 10px"
+          >
+            <!-- Saved files will be dynamically added here -->
+          </div>
+        </div>
+        <div class="advanced-features collapsed" id="advancedFeatures">
+          <div class="advanced-header">
+            <span class="advanced-chevron">▶</span> Upload Your Own CSV File
+          </div>
+          <div class="advanced-content">
+            <div style="margin-bottom: 12px; color: #a1a1aa; font-size: 1.01em">
+              <span
+                >Want to track your own set of LeetCode questions? Upload a
+                custom CSV file below and save it for progress tracking.</span
+              >
+            </div>
+            <div
+              style="
+                display: flex;
+                flex-wrap: wrap;
+                gap: 18px;
+                align-items: flex-end;
+                margin-bottom: 10px;
+              "
+            >
+              <div class="file-input-wrapper" style="margin-bottom: 0">
+                <input type="file" id="csvFile" accept=".csv" />
+                <span>Select File</span>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <input
+                  type="text"
+                  id="fileNameInput"
+                  placeholder="Enter file name (required to save)"
+                  style="
+                    padding: 10px;
+                    border: 2px solid #23232b;
+                    background: #23232b;
+                    color: #f4f4f5;
+                    border-radius: 8px;
+                    font-size: 1em;
+                  "
+                />
+                <button
+                  id="saveFileBtn"
+                  style="
+                    display: none;
+                    background: #10b981;
+                    color: white;
+                    border: none;
+                    padding: 10px 15px;
+                    border-radius: 8px;
+                    cursor: pointer;
+                    font-size: 1em;
+                    font-weight: 500;
+                  "
+                >
+                  💾 Save File
                 </button>
-                <div class="theme-dropdown" id="themeDropdown" role="menu" aria-label="Theme selection">
-                    <button class="theme-dropdown-item" data-theme="dark" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"/></svg>
-                        Dark
-                    </button>
-                    <button class="theme-dropdown-item" data-theme="light" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="5" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 1v2m0 18v2m11-11h-2M3 12H1m16.95 6.95l-1.41-1.41M6.05 6.05L4.64 4.64m12.02 0l-1.41 1.41M6.05 17.95l-1.41 1.41"/></svg>
-                        Light
-                    </button>
-                    <button class="theme-dropdown-item" data-theme="solarized" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><circle cx="12" cy="12" r="6" stroke-width="2"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 12h2m12 0h2M12 4v2m0 12v2m7.07-7.07l-1.41-1.41M6.34 6.34L4.93 4.93m12.73 12.73l-1.41-1.41M6.34 17.66l-1.41 1.41"/></svg>
-                        Solarized
-                    </button>
-                    <button class="theme-dropdown-item" data-theme="forest" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2l2.09 6.26L20 9.27l-5 3.64L16.18 20 12 16.77 7.82 20 9 12.91l-5-3.64 5.91-.01z"/></svg>
-                        Forest
-                    </button>
-                    <button class="theme-dropdown-item" data-theme="ocean" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 20c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2 16c1.5-2 4.5-2 6 0s4.5 2 6 0 4.5-2 6 0"/></svg>
-                        Ocean
-                    </button>
-                    <button class="theme-dropdown-item" data-theme="cyberpunk" role="menuitem" tabindex="0">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><rect x="3" y="3" width="18" height="18" rx="4"/><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 7h10M7 12h10M7 17h6"/></svg>
-                        Cyberpunk
-                    </button>
-                    <hr style="border:none; border-top:1px solid var(--border-main); margin: 6px 0 6px 0;">
-                    <button class="theme-dropdown-item" id="auroraToggleBtn" tabindex="0" style="display:flex;align-items:center;gap:10px;">
-                      <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" style="width:1.2em;height:1.2em;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
-                      <span>Aurora Background</span>
-                      <span id="auroraToggleSwitch" style="margin-left:auto;display:inline-block;width:36px;height:20px;background:var(--bg-accent);border-radius:12px;position:relative;vertical-align:middle;transition:background 0.2s;"><span style="position:absolute;top:2px;left:2px;width:16px;height:16px;border-radius:50%;background:var(--accent);transition:left 0.2s;"></span></span>
-                      <span id="auroraMobileIndicator" style="font-size:0.8em;color:var(--text-muted);display:none;">(Mobile disabled)</span>
-                    </button>
-                </div>
+              </div>
             </div>
-            <h1>codeCompanyWise</h1>
-            <h2 style="text-align:center; color:var(--text-muted); font-size:1.2em; font-weight:500; margin-top:-10px;">Company-wise Interview Questions and Solutions for Software Engineering Interviews</h2>
-            <p style="text-align:center; color:var(--text-muted); font-size:1rem; margin-top:10px; max-width:800px; margin-left:auto; margin-right:auto;">
-                Prepare for FAANG, Microsoft, Apple, Netflix, and other top tech companies with our comprehensive collection of LeetCode questions organized by company. Track your progress, visualize completion rates, and save your practice sessions for better interview preparation.
-            </p>
+            <div style="margin-top: 8px; color: #6366f1; font-size: 0.97em">
+              <span
+                >CSV columns required:
+                <b
+                  >Difficulty, Title, Frequency, Acceptance Rate, Link,
+                  Topics</b
+                ></span
+              >
+            </div>
+          </div>
         </div>
+      </div>
 
-        <div class="upload-section">
-            <h2 style="margin-bottom: 20px;">Browse</h2>
-            <div class="spectacledcoder-glowing-button1">
-                <button id="githubBrowseBtn" class="spectacledcoder-button1" type="button">
-                    Click To Browse Company Questions
-                </button>
-            </div>
-        
-            <!-- <button id="githubBrowseBtn" class="reset-btn" style="background: black; color: rgb(206, 206, 206);border-radius: 100px ;border: 2px solid var(--accent) ;padding: 15px 20px; font-size: 1.1rem; font-weight: 600; margin-bottom: 18px;">Click To Browse Company Questions</button> -->
-            <div id="githubModal" style="display:none;"></div>
-            <hr class="themed-hr">
-            <div id="savedFilesSection">
-                <h2>Your Saved Files</h2>
-                <div id="savedFilesList" style="display: flex; flex-wrap: wrap; gap: 10px;">
-                    <!-- Saved files will be dynamically added here -->
-                </div>
-            </div>
-            <div class="advanced-features collapsed" id="advancedFeatures">
-                <div class="advanced-header"><span class="advanced-chevron">▶</span> Upload Your Own CSV File</div>
-                <div class="advanced-content">
-                    <div style="margin-bottom: 12px; color: #a1a1aa; font-size: 1.01em;">
-                        <span>Want to track your own set of LeetCode questions? Upload a custom CSV file below and save it for progress tracking.</span>
-                    </div>
-                    <div style="display: flex; flex-wrap: wrap; gap: 18px; align-items: flex-end; margin-bottom: 10px;">
-                        <div class="file-input-wrapper" style="margin-bottom: 0;">
-                            <input type="file" id="csvFile" accept=".csv" />
-                            <span>Select File</span>
-                        </div>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <input type="text" id="fileNameInput" placeholder="Enter file name (required to save)" 
-                                style="padding: 10px; border: 2px solid #23232b; background: #23232b; color: #f4f4f5; border-radius: 8px; font-size: 1em;">
-                            <button id="saveFileBtn" style="display: none; background: #10b981; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 1em; font-weight: 500;">
-                                💾 Save File
-                            </button>
-                        </div>
-                    </div>
-                    <div style="margin-top: 8px; color: #6366f1; font-size: 0.97em;">
-                        <span>CSV columns required: <b>Difficulty,	Title,	Frequency,	Acceptance Rate,	Link,	Topics</b></span>
-                    </div>
-                </div>
-            </div>
+      <div id="statsSection" class="collapsible-section stats-card collapsed">
+        <div class="collapsible-header">
+          <span class="collapsible-chevron">▶</span> Stats
         </div>
+        <div class="collapsible-content">
+          <div class="stats-section">
+            <div class="stat-card">
+              <div class="stat-number completed" id="completedCount">0</div>
+              <div class="stat-label">Completed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="totalCount">0</div>
+              <div class="stat-label">Total Questions</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number easy" id="easyCount">0</div>
+              <div class="stat-label">Easy</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number medium" id="mediumCount">0</div>
+              <div class="stat-label">Medium</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number hard" id="hardCount">0</div>
+              <div class="stat-label">Hard</div>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div id="statsSection" class="collapsible-section stats-card collapsed">
-            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Stats</div>
-            <div class="collapsible-content">
-                <div class="stats-section">
-                    <div class="stat-card">
-                        <div class="stat-number completed" id="completedCount">0</div>
-                        <div class="stat-label">Completed</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number" id="totalCount">0</div>
-                        <div class="stat-label">Total Questions</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number easy" id="easyCount">0</div>
-                        <div class="stat-label">Easy</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number medium" id="mediumCount">0</div>
-                        <div class="stat-label">Medium</div>
-                    </div>
-                    <div class="stat-card">
-                        <div class="stat-number hard" id="hardCount">0</div>
-                        <div class="stat-label">Hard</div>
-                    </div>
-                </div>
-            </div>
+      <div id="chartSection" class="collapsible-section collapsed" hidden>
+        <div class="collapsible-header">
+          <span class="collapsible-chevron">▶</span> Progress Visulalized
         </div>
+        <div class="collapsible-content">
+          <div class="chart-container refined-charts">
+            <div class="chart-card" style="max-width: 320px; min-width: 220px">
+              <h3 class="chart-title">Bar: Completed vs Remaining</h3>
+              <canvas id="progressChart" width="260" height="200"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3 class="chart-title">Doughnut: Completion by Difficulty</h3>
+              <canvas id="doughnutChart" width="220" height="220"></canvas>
+            </div>
+            <div class="chart-card">
+              <h3 class="chart-title">Line: Cumulative Progress Over Time</h3>
+              <canvas id="lineChart" width="420" height="200"></canvas>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div id="chartSection" class="collapsible-section collapsed" hidden>
-            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Progress Visulalized</div>
-            <div class="collapsible-content">
-                <div class="chart-container refined-charts">
-                    <div class="chart-card" style="max-width: 320px; min-width: 220px;">
-                        <h3 class="chart-title">Bar: Completed vs Remaining</h3>
-                        <canvas id="progressChart" width="260" height="200"></canvas>
-                    </div>
-                    <div class="chart-card">
-                        <h3 class="chart-title">Doughnut: Completion by Difficulty</h3>
-                        <canvas id="doughnutChart" width="220" height="220"></canvas>
-                    </div>
-                    <div class="chart-card">
-                        <h3 class="chart-title">Line: Cumulative Progress Over Time</h3>
-                        <canvas id="lineChart" width="420" height="200"></canvas>
-                    </div>
-                </div>
-            </div>
+      <div
+        id="controlsSection"
+        class="collapsible-section controls-card collapsed"
+      >
+        <div class="collapsible-header">
+          <span class="collapsible-chevron">▶</span> Filters & Controls
         </div>
+        <div class="collapsible-content">
+          <div class="filter-controls-group">
+            <div class="filter-group">
+              <label>Difficulty:</label>
+              <select id="difficultyFilter">
+                <option value="">All Difficulties</option>
+                <option value="Easy">Easy</option>
+                <option value="Medium">Medium</option>
+                <option value="Hard">Hard</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>Status:</label>
+              <select id="statusFilter">
+                <option value="">All Status</option>
+                <option value="completed">Completed</option>
+                <option value="pending">Not Completed</option>
+              </select>
+            </div>
+            <div class="filter-group">
+              <label>&nbsp;</label>
+              <div style="display: flex; flex-direction: column; gap: 6px">
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <input
+                    type="checkbox"
+                    id="hideDifficultyCheckbox"
+                    class="checkbox"
+                  />
+                  <label
+                    for="hideDifficultyCheckbox"
+                    style="cursor: pointer; user-select: none"
+                    >Hide Difficulty</label
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <input type="checkbox" id="hideIdCheckbox" class="checkbox" />
+                  <label
+                    for="hideIdCheckbox"
+                    style="cursor: pointer; user-select: none"
+                    >Hide ID</label
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <input
+                    type="checkbox"
+                    id="hideAcceptanceCheckbox"
+                    class="checkbox"
+                  />
+                  <label
+                    for="hideAcceptanceCheckbox"
+                    style="cursor: pointer; user-select: none"
+                    >Hide Acceptance</label
+                  >
+                </div>
+                <div style="display: flex; align-items: center; gap: 8px">
+                  <input
+                    type="checkbox"
+                    id="hideFrequencyCheckbox"
+                    class="checkbox"
+                  />
+                  <label
+                    for="hideFrequencyCheckbox"
+                    style="cursor: pointer; user-select: none"
+                    >Hide Frequency</label
+                  >
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="filter-search-group">
+            <div class="filter-group">
+              <label>Search:</label>
+              <input
+                type="text"
+                id="searchInput"
+                placeholder="Search questions..."
+              />
+            </div>
+          </div>
+          <div class="filter-actions-group">
+            <button class="reset-btn" onclick="resetProgress()">
+              🔄 Reset Current Progress
+            </button>
+            <button
+              class="reset-btn"
+              onclick="exportProgress()"
+              style="background: #059669"
+            >
+              📥 Export Progress
+            </button>
+            <button
+              class="reset-btn"
+              onclick="importProgress()"
+              style="background: #7c3aed"
+            >
+              📤 Import Progress
+            </button>
+            <button
+              hidden
+              class="reset-btn"
+              onclick="clearAllProgress()"
+              style="background: #ef4444; color: #fff"
+            >
+              🧹 Clear All Data
+            </button>
+          </div>
+        </div>
+      </div>
 
-        <div id="controlsSection" class="collapsible-section controls-card collapsed">
-            <div class="collapsible-header"><span class="collapsible-chevron">▶</span> Filters & Controls</div>
-            <div class="collapsible-content">
-                <div class="filter-controls-group">
-                    <div class="filter-group">
-                        <label>Difficulty:</label>
-                        <select id="difficultyFilter">
-                            <option value="">All Difficulties</option>
-                            <option value="Easy">Easy</option>
-                            <option value="Medium">Medium</option>
-                            <option value="Hard">Hard</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>Status:</label>
-                        <select id="statusFilter">
-                            <option value="">All Status</option>
-                            <option value="completed">Completed</option>
-                            <option value="pending">Not Completed</option>
-                        </select>
-                    </div>
-                    <div class="filter-group">
-                        <label>&nbsp;</label>
-                        <div style="display: flex; flex-direction: column; gap: 6px;">
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="hideDifficultyCheckbox" class="checkbox">
-                                <label for="hideDifficultyCheckbox" style="cursor: pointer; user-select: none;">Hide Difficulty</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="hideIdCheckbox" class="checkbox">
-                                <label for="hideIdCheckbox" style="cursor: pointer; user-select: none;">Hide ID</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="hideAcceptanceCheckbox" class="checkbox">
-                                <label for="hideAcceptanceCheckbox" style="cursor: pointer; user-select: none;">Hide Acceptance</label>
-                            </div>
-                            <div style="display: flex; align-items: center; gap: 8px;">
-                                <input type="checkbox" id="hideFrequencyCheckbox" class="checkbox">
-                                <label for="hideFrequencyCheckbox" style="cursor: pointer; user-select: none;">Hide Frequency</label>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="filter-search-group">
-                    <div class="filter-group">
-                        <label>Search:</label>
-                        <input type="text" id="searchInput" placeholder="Search questions...">
-                    </div>
-                </div>
-                <div class="filter-actions-group">
-                    <button class="reset-btn" onclick="resetProgress()">🔄 Reset Current Progress</button>
-                    <button class="reset-btn" onclick="exportProgress()" style="background: #059669;">📥 Export Progress</button>
-                    <button class="reset-btn" onclick="importProgress()" style="background: #7c3aed;">📤 Import Progress</button>
-                    <button hidden class="reset-btn" onclick="clearAllProgress()" style="background: #ef4444; color: #fff;">🧹 Clear All Data</button>
-                </div>
-            </div>
+      <div id="questionsSection" class="questions-table collapsible-section">
+        <div
+          class="collapsible-header"
+          style="
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+          "
+        >
+          <span class="collapsible-title"
+            ><span class="collapsible-chevron">▶</span> Questions List</span
+          >
+          <span
+            id="currentFileDisplay"
+            style="
+              position: absolute;
+              left: 50%;
+              transform: translateX(-50%);
+              font-weight: 600;
+              color: var(--accent);
+              white-space: nowrap;
+              cursor: pointer;
+            "
+          ></span>
+          <button
+            class="reset-btn"
+            id="zenModeBtn"
+            type="button"
+            style="
+              background: #23232b;
+              color: #f4f4f5;
+              margin-left: auto;
+              font-size: 1.15em;
+              padding: 7px 12px;
+              min-width: 0;
+              width: 36px;
+              height: 36px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+            "
+            title="Toggle Full Screen"
+          >
+            🗖
+          </button>
         </div>
-
-        <div id="questionsSection" class="questions-table collapsible-section">
-            <div class="collapsible-header" style="display: flex; justify-content: space-between; align-items: center; position: relative;">
-                <span class="collapsible-title"><span class="collapsible-chevron">▶</span> Questions List</span>
-                <span id="currentFileDisplay" style="position: absolute; left: 50%; transform: translateX(-50%); font-weight: 600; color: var(--accent); white-space: nowrap; cursor: pointer;"></span>
-                <button class="reset-btn" id="zenModeBtn" type="button" style="background: #23232b; color: #f4f4f5; margin-left: auto; font-size: 1.15em; padding: 7px 12px; min-width: 0; width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;" title="Toggle Full Screen">🗖</button>
+        <div class="collapsible-content">
+          <div id="questionsContainer">
+            <div class="no-data">
+              No data available. Please either download a CSV file from browse
+              section or upload a CSV file.
             </div>
-            <div class="collapsible-content">
-                <div id="questionsContainer">
-                    <div class="no-data">No data available. Please either download a CSV file from browse section or upload a CSV file.</div>
-                </div>
-            </div>
+          </div>
         </div>
+      </div>
     </div>
 
     <!-- Custom Modal Dialog -->
-    <div id="customModalOverlay" style="display:none; position:fixed; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,0.45); z-index:2000; align-items:center; justify-content:center;">
-      <div id="customModal" style="background:var(--bg-card); color:var(--text-main); border-radius:14px; box-shadow:0 8px 32px #00000044; padding:32px 28px 24px 28px; min-width:320px; max-width:90vw; max-height:80vh; display:flex; flex-direction:column; align-items:center; border:1.5px solid var(--border-main);">
-        <div id="customModalMessage" style="font-size:1.08rem; margin-bottom:24px; text-align:center;"></div>
-        <div id="customModalButtons" style="display:flex; gap:16px;"></div>
+    <div
+      id="customModalOverlay"
+      style="
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.45);
+        z-index: 2000;
+        align-items: center;
+        justify-content: center;
+      "
+    >
+      <div
+        id="customModal"
+        style="
+          background: var(--bg-card);
+          color: var(--text-main);
+          border-radius: 14px;
+          box-shadow: 0 8px 32px #00000044;
+          padding: 32px 28px 24px 28px;
+          min-width: 320px;
+          max-width: 90vw;
+          max-height: 80vh;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          border: 1.5px solid var(--border-main);
+        "
+      >
+        <div
+          id="customModalMessage"
+          style="font-size: 1.08rem; margin-bottom: 24px; text-align: center"
+        ></div>
+        <div id="customModalButtons" style="display: flex; gap: 16px"></div>
       </div>
     </div>
     <footer class="site-footer">
-        <div class="newsletter">
-            <form id="newsletterForm" class="newsletter-form" autocomplete="off" novalidate>
-                <label for="newsletterEmail" class="newsletter-label">
-                    Subscribe for FREE daily <span style="color: var(--accent);">FAANG coding problems</span> right in your inbox
-                </label>
-                <div class="newsletter-input-group">
-                    <input type="email" id="newsletterEmail" name="email" class="newsletter-input" placeholder="Enter your email" required aria-label="Email address" />
-                    <button type="submit" class="newsletter-btn">Subscribe</button>
-                </div>
-                <div id="newsletterMessage" class="newsletter-message" aria-live="polite"></div>
-            </form>
+      <div class="newsletter">
+        <form
+          id="newsletterForm"
+          class="newsletter-form"
+          autocomplete="off"
+          novalidate
+        >
+          <label for="newsletterEmail" class="newsletter-label">
+            Subscribe for FREE daily
+            <span style="color: var(--accent)">FAANG coding problems</span>
+            right in your inbox
+          </label>
+          <div class="newsletter-input-group">
+            <input
+              type="email"
+              id="newsletterEmail"
+              name="email"
+              class="newsletter-input"
+              placeholder="Enter your email"
+              required
+              aria-label="Email address"
+            />
+            <button type="submit" class="newsletter-btn">Subscribe</button>
+          </div>
+          <div
+            id="newsletterMessage"
+            class="newsletter-message"
+            aria-live="polite"
+          ></div>
+        </form>
+        <div>
+          <ul class="newsletter-reasons">
+            <li>
+              Get handpicked coding questions asked in FAANG & top tech
+              interviews
+            </li>
+            <li>📬Delivered daily, Solve daily</li>
+            <li>🧠Stay consistent and boost your interview prep</li>
+            <li>💡Solutions and hints included</li>
+            <li>😊1000+ users have already subscribed</li>
+          </ul>
         </div>
-        <div class="footer-container">
-            <div class="footer-column">
-                <h4>About codeCompanyWise</h4>
-                <p>This comprehensive tool helps software engineers and computer science students prepare for technical interviews by providing company-specific LeetCode questions. Access coding challenges and solutions tailored for interviews at top tech companies like Google, Amazon, Facebook, Apple, Netflix, Microsoft, and more.</p>
-            </div>
-            <div class="footer-column">
-                <h4>Features & Benefits</h4>
-                <ul class="footer-links">
-                    <li>📊 Progress tracking and visualization</li>
-                    <li>🏢 Company-specific question lists</li>
-                    <li>📈 Completion rate analytics</li>
-                    <li>💾 Save and manage practice sessions</li>
-                    <li>🎯 Filter by difficulty and status</li>
-                    <li>📱 Mobile-friendly interface</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Credits & Data Sources</h4>
-                <ul class="footer-links">
-                    <li>Problem data sourced from <a href="https://github.com/liquidslr/leetcode-company-wise-problems" target="_blank" rel="noopener noreferrer">liquidslr's Repository ↗</a></li>
-                    <li>UI & functionality developed by <a style="color: var(--accent) !important; font-weight: bold;" href="https://ronakraj00.github.io/portfolio/" target="_blank" rel="noopener noreferrer">Ronak Raj ↗</a></li>
-                    <li>Free tool for interview preparation</li>
-                </ul>
-            </div>
-            <div class="footer-column">
-                <h4>Developer & Contact</h4>
-                <p>Ronak Raj - Software Engineer</p>
-                <p style="font-size:0.9em; color:var(--text-muted);">Creating tools to help developers succeed in technical interviews</p>
-                <div class="footer-socials">
-                    <a href="https://github.com/Ronakraj00" target="_blank" rel="noopener noreferrer" aria-label="GitHub">
-                        <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path fill-rule="evenodd" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z" clip-rule="evenodd"></path></svg>
-                    </a>
-                    <a href="https://www.linkedin.com/in/ronakraj00/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
-                        <svg fill="currentColor" viewBox="0 0 24 24" width="24" height="24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"></path></svg>
-                    </a>
-                </div>
-            </div>
+      </div>
+      <div class="footer-container">
+        <div class="footer-column">
+          <h4>About codeCompanyWise</h4>
+          <p>
+            This comprehensive tool helps software engineers and computer
+            science students prepare for technical interviews by providing
+            company-specific LeetCode questions. Access coding challenges and
+            solutions tailored for interviews at top tech companies like Google,
+            Amazon, Facebook, Apple, Netflix, Microsoft, and more.
+          </p>
         </div>
-        <div class="footer-bottom">
-            <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and coffee by Ronak Raj. Free tool for LeetCode interview preparation.
+        <div class="footer-column">
+          <h4>Features & Benefits</h4>
+          <ul class="footer-links">
+            <li>📊 Progress tracking and visualization</li>
+            <li>🏢 Company-specific question lists</li>
+            <li>📈 Completion rate analytics</li>
+            <li>💾 Save and manage practice sessions</li>
+            <li>🎯 Filter by difficulty and status</li>
+            <li>📱 Mobile-friendly interface</li>
+          </ul>
         </div>
+        <div class="footer-column">
+          <h4>Credits & Data Sources</h4>
+          <ul class="footer-links">
+            <li>
+              Problem data sourced from
+              <a
+                href="https://github.com/liquidslr/leetcode-company-wise-problems"
+                target="_blank"
+                rel="noopener noreferrer"
+                >liquidslr's Repository ↗</a
+              >
+            </li>
+            <li>
+              UI & functionality developed by
+              <a
+                style="color: var(--accent) !important; font-weight: bold"
+                href="https://ronakraj00.github.io/portfolio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                >Ronak Raj ↗</a
+              >
+            </li>
+            <li>Free tool for interview preparation</li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Developer & Contact</h4>
+          <p>Ronak Raj - Software Engineer</p>
+          <p style="font-size: 0.9em; color: var(--text-muted)">
+            Creating tools to help developers succeed in technical interviews
+          </p>
+          <div class="footer-socials">
+            <a
+              href="https://github.com/Ronakraj00"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="GitHub"
+            >
+              <svg
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.168 6.839 9.49.5.092.682-.217.682-.482 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.031-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.378.203 2.398.1 2.651.64.7 1.03 1.595 1.03 2.688 0 3.848-2.338 4.695-4.566 4.943.359.308.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.003 10.003 0 0022 12c0-5.523-4.477-10-10-10z"
+                  clip-rule="evenodd"
+                ></path>
+              </svg>
+            </a>
+            <a
+              href="https://www.linkedin.com/in/ronakraj00/"
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label="LinkedIn"
+            >
+              <svg
+                fill="currentColor"
+                viewBox="0 0 24 24"
+                width="24"
+                height="24"
+              >
+                <path
+                  d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"
+                ></path>
+              </svg>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span id="footer-emoji" aria-label="brain">🧠</span> Made with code and
+        coffee by Ronak Raj. Free tool for LeetCode interview preparation.
+      </div>
     </footer>
-    <link rel="stylesheet" href="newsletter.css">
+    <link rel="stylesheet" href="newsletter.css" />
     <script src="newsletter.js" defer></script>
-</body>
+  </body>
 </html>
