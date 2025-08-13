@@ -1008,5 +1008,26 @@
     </footer>
     <link rel="stylesheet" href="newsletter.css" />
     <script src="newsletter.js" defer></script>
+    <script>
+      // Scroll to questions list when a saved file is clicked
+      document.addEventListener('DOMContentLoaded', function () {
+        const savedFilesList = document.getElementById('savedFilesList');
+        if (savedFilesList) {
+          savedFilesList.addEventListener('click', function (e) {
+            // Find the saved file button (adjust selector if needed)
+            let btn = e.target.closest('.saved-file-btn');
+            if (btn) {
+              // Wait a tick for questions to load, then scroll
+              setTimeout(function () {
+                const questionsSection = document.getElementById('questionsSection');
+                if (questionsSection) {
+                  questionsSection.scrollIntoView({ behavior: 'smooth' });
+                }
+              }, 200);
+            }
+          });
+        }
+      });
+    </script>
   </body>
 </html>
