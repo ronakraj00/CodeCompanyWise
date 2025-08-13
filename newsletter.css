@@ -47,6 +47,7 @@
   display: flex;
   width: 100%;
   gap: 12px;
+  margin: 20px 0;
 }
 
 .newsletter-input {
@@ -96,7 +97,7 @@
   }
   .newsletter-input-group {
     flex-direction: column;
-    gap: 6px;
+    gap: 12px;
   }
   .newsletter-btn {
     width: 100%;
