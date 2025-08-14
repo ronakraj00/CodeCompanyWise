@@ -146,10 +146,14 @@
     <div class="container">
       <!-- Newsletter News Banner -->
       <div class="newsletter-news-banner">
-        <span>📰 New: Get daily FAANG coding questions for FREE in your inbox!</span>
+        <span
+          >📰 New: Get daily FAANG coding questions for FREE in your
+          inbox!</span
+        >
         <button
           class="newsletter-news-btn"
-          onclick="document.querySelector('.site-footer').scrollIntoView({behavior:'smooth'});"
+          id="newsletterScrollBtn"
+          onclick="scrollToNewsletterAndBlink()"
         >
           Subscribe Now
         </button>
@@ -1025,6 +1029,31 @@
           });
         }
       });
+
+      // Scroll to newsletter and blink input
+      function scrollToNewsletterAndBlink() {
+        const newsletterSection = document.querySelector(".site-footer");
+        if (newsletterSection) {
+          newsletterSection.scrollIntoView({ behavior: "smooth" });
+          setTimeout(function () {
+            const input = document.getElementById("newsletterEmail");
+            if (input) {
+              let blinkCount = 0;
+              const blinkMax = 4;
+              const blink = () => {
+                input.classList.add("newsletter-blink");
+                setTimeout(() => {
+                  input.classList.remove("newsletter-blink");
+                  blinkCount++;
+                  if (blinkCount < blinkMax) setTimeout(blink, 180);
+                }, 180);
+              };
+              blink();
+              input.focus();
+            }
+          }, 600); // Wait for scroll animation
+        }
+      }
     </script>
   </body>
 </html>
