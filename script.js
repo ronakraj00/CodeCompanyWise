@@ -1080,7 +1080,7 @@ if (lastFile && savedFiles.has(lastFile)) loadSavedFile(lastFile);
     async function getGithubToken() {
         if (GITHUB_TOKEN) return GITHUB_TOKEN;
         try {
-            const res = await fetch('https://portfolio-api-dwyy.onrender.com/api/github-token');
+            const res = await fetch('https://ccw-backend-ue48.onrender.com/api/github-token');
             const data = await res.json();
             if (data.token) {
                 GITHUB_TOKEN = data.token;
